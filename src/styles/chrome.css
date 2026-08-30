@@ -1,0 +1,435 @@
+/* Chrome recipes. All colors from tokens. Phase 3 WM must reuse these classes. */
+
+.os-raised {
+  background: var(--kellos-face);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--kellos-bevel-light) var(--kellos-bevel-dark) var(--kellos-bevel-dark)
+    var(--kellos-bevel-light);
+  box-shadow: inset -1px -1px 0 var(--kellos-bevel-shadow), inset 1px 1px 0 var(--kellos-bevel-hi);
+}
+
+.os-sunken {
+  background: var(--kellos-face);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--kellos-bevel-shadow) var(--kellos-bevel-light) var(--kellos-bevel-light)
+    var(--kellos-bevel-shadow);
+  box-shadow: inset 1px 1px 0 var(--kellos-bevel-dark), inset -1px -1px 0 var(--kellos-bevel-hi);
+}
+
+.os-window {
+  background: var(--kellos-face);
+  padding: var(--kellos-frame-pad);
+  min-width: var(--kellos-window-min-w);
+  min-height: var(--kellos-window-min-h);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--kellos-bevel-light) var(--kellos-bevel-dark) var(--kellos-bevel-dark)
+    var(--kellos-bevel-light);
+  box-shadow:
+    inset -1px -1px 0 var(--kellos-bevel-shadow),
+    inset 1px 1px 0 var(--kellos-face),
+    2px 2px 0 color-mix(in srgb, var(--kellos-bevel-dark) 35%, transparent);
+}
+
+.os-titlebar {
+  height: var(--kellos-titlebar-h);
+  display: flex;
+  align-items: center;
+  gap: var(--kellos-space-2);
+  padding: 0 var(--kellos-space-2);
+  color: var(--kellos-title-text);
+  font-family: var(--kellos-font-chrome);
+  font-size: var(--kellos-chrome-size);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  user-select: none;
+  background: linear-gradient(
+    90deg,
+    var(--kellos-title-active-from) 0%,
+    var(--kellos-title-active-to) 100%
+  );
+}
+
+.os-titlebar[data-inactive="true"] {
+  background: var(--kellos-title-inactive);
+  color: var(--kellos-title-inactive-text);
+}
+
+.os-titlebar-label {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: inherit;
+  color: inherit;
+}
+
+.os-ctrl {
+  width: var(--kellos-ctrl-w);
+  height: var(--kellos-ctrl-h);
+  padding: 0;
+  display: grid;
+  place-items: center;
+  color: var(--kellos-ink);
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.os-btn {
+  background: var(--kellos-button-face);
+  color: var(--kellos-ink);
+  min-height: 23px;
+  padding: 2px 12px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.os-btn:active,
+.os-btn[data-pressed="true"] {
+  border-color: var(--kellos-bevel-dark) var(--kellos-bevel-light) var(--kellos-bevel-light)
+    var(--kellos-bevel-dark);
+  box-shadow: inset 1px 1px 0 var(--kellos-bevel-shadow);
+  padding: 3px 11px 1px 13px;
+}
+
+.os-btn:disabled {
+  color: var(--kellos-bevel-shadow);
+  text-shadow: 1px 1px 0 var(--kellos-bevel-light);
+  cursor: not-allowed;
+}
+
+.os-start {
+  min-width: var(--kellos-start-min-w);
+  min-height: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  padding: 2px 8px 2px 4px;
+}
+
+.os-taskbar {
+  height: var(--kellos-taskbar-h);
+  display: flex;
+  align-items: center;
+  gap: var(--kellos-space-2);
+  padding: 2px 4px;
+  z-index: var(--kellos-z-taskbar);
+}
+
+.os-task-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--kellos-space-2);
+  min-width: 0;
+  flex: 1;
+  overflow-x: auto;
+}
+
+.os-start-menu {
+  max-height: min(22rem, calc(100vh - var(--kellos-taskbar-h) - var(--kellos-space-8)));
+  overflow-y: auto;
+}
+
+.os-task {
+  min-width: 120px;
+  max-width: 180px;
+  height: 24px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.os-task[data-active="true"] {
+  border-color: var(--kellos-bevel-shadow) var(--kellos-bevel-light) var(--kellos-bevel-light)
+    var(--kellos-bevel-shadow);
+  box-shadow: inset 1px 1px 0 var(--kellos-bevel-dark);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--kellos-face),
+    var(--kellos-face) 1px,
+    var(--kellos-bevel-hi) 1px,
+    var(--kellos-bevel-hi) 2px
+  );
+}
+
+.os-tray {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--kellos-space-2);
+  padding: 0 6px;
+  height: 24px;
+  min-width: 72px;
+}
+
+.os-menubar {
+  display: flex;
+  gap: 0;
+  padding: 1px 0;
+  font-family: var(--kellos-font-chrome);
+}
+
+.os-menubar button,
+.os-menubar a {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 1px 8px;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  font-family: var(--kellos-font-chrome);
+  font-size: var(--kellos-chrome-size);
+}
+
+.os-menubar button:hover,
+.os-menubar button[data-open="true"],
+.os-menubar a:hover {
+  background: var(--kellos-selection);
+  color: var(--kellos-selection-text);
+  border-color: transparent;
+}
+
+.os-menu {
+  min-width: var(--kellos-menu-min);
+  padding: 2px;
+  background: var(--kellos-face);
+}
+
+.os-menu button,
+.os-menu a {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 3px 18px;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  font-family: var(--kellos-font-chrome);
+  font-size: var(--kellos-chrome-size);
+  display: block;
+}
+
+.os-menu button:hover,
+.os-menu button:focus-visible,
+.os-menu button[aria-selected="true"],
+.os-menu a:hover,
+.os-menu a:focus-visible {
+  background: var(--kellos-selection);
+  color: var(--kellos-selection-text);
+}
+
+.os-desktop {
+  background-color: var(--kellos-desktop);
+  background-image: repeating-conic-gradient(
+    var(--kellos-desktop) 0% 25%,
+    var(--kellos-desktop-dither) 0% 50%
+  );
+  background-size: 2px 2px;
+}
+
+.os-icon-label {
+  color: var(--kellos-desktop-icon-label);
+  text-align: center;
+  font-size: var(--kellos-chrome-size);
+  line-height: 1.2;
+  text-shadow:
+    1px 0 0 var(--kellos-ink),
+    -1px 0 0 var(--kellos-ink),
+    0 1px 0 var(--kellos-ink),
+    0 -1px 0 var(--kellos-ink);
+  max-width: 74px;
+}
+
+.os-icon-col {
+  position: absolute;
+  top: var(--kellos-space-3);
+  bottom: var(--kellos-space-3);
+  left: var(--kellos-space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--kellos-space-3);
+  width: calc(var(--kellos-icon-hit) + var(--kellos-space-2));
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.os-icon-grid {
+  display: grid;
+  flex-shrink: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--kellos-space-3);
+  padding: var(--kellos-space-3) var(--kellos-space-3) 0;
+  max-height: calc(var(--kellos-icon-hit) * 2 + var(--kellos-space-3) + var(--kellos-space-4));
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.os-icon[data-selected="true"] .os-icon-label {
+  background: var(--kellos-selection);
+  outline: 1px dotted var(--kellos-window-paper);
+}
+
+.os-icon:focus-visible {
+  outline: 2px dotted var(--kellos-window-paper);
+  outline-offset: 2px;
+}
+
+.os-ctrl:focus-visible {
+  outline: 1px dotted var(--kellos-ink);
+  outline-offset: 1px;
+}
+
+.os-task:focus-visible,
+.os-btn:focus-visible,
+.os-tray a:focus-visible {
+  outline: 2px dotted var(--kellos-focus);
+  outline-offset: 1px;
+}
+
+.os-menu button:focus-visible,
+.os-menu a:focus-visible {
+  outline: 1px dotted var(--kellos-window-paper);
+  outline-offset: -3px;
+}
+
+.os-well {
+  background: var(--kellos-window-paper);
+  color: var(--kellos-ink);
+}
+
+.os-group {
+  margin-top: 8px;
+  padding: 12px 8px 8px;
+  position: relative;
+}
+
+.os-group > legend,
+.os-group-label {
+  position: absolute;
+  top: -7px;
+  left: 8px;
+  background: var(--kellos-face);
+  padding: 0 4px;
+  font-weight: 700;
+}
+
+.os-scroll {
+  overflow: auto;
+  scrollbar-width: auto;
+  scrollbar-color: var(--kellos-face) var(--kellos-bevel-hi);
+}
+
+.os-scroll::-webkit-scrollbar {
+  width: var(--kellos-scrollbar);
+  height: var(--kellos-scrollbar);
+}
+
+.os-scroll::-webkit-scrollbar-track {
+  background: var(--kellos-bevel-hi);
+}
+
+.os-scroll::-webkit-scrollbar-thumb {
+  background: var(--kellos-face);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--kellos-bevel-light) var(--kellos-bevel-dark) var(--kellos-bevel-dark)
+    var(--kellos-bevel-light);
+}
+
+.os-status {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  font-size: var(--kellos-chrome-size);
+}
+
+/* Resize hit targets — Phase 3 WM. Colors unchanged; grips are invisible. */
+.os-resize {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  z-index: 3;
+}
+.os-resize-n,
+.os-resize-s {
+  left: 8px;
+  right: 8px;
+  height: 6px;
+  cursor: ns-resize;
+}
+.os-resize-e,
+.os-resize-w {
+  top: 8px;
+  bottom: 8px;
+  width: 6px;
+  cursor: ew-resize;
+}
+.os-resize-n {
+  top: 0;
+}
+.os-resize-s {
+  bottom: 0;
+}
+.os-resize-e {
+  right: 0;
+}
+.os-resize-w {
+  left: 0;
+}
+.os-resize-ne,
+.os-resize-nw,
+.os-resize-se,
+.os-resize-sw {
+  width: 8px;
+  height: 8px;
+}
+.os-resize-ne {
+  top: 0;
+  right: 0;
+  cursor: nesw-resize;
+}
+.os-resize-nw {
+  top: 0;
+  left: 0;
+  cursor: nwse-resize;
+}
+.os-resize-se {
+  bottom: 0;
+  right: 0;
+  cursor: nwse-resize;
+}
+.os-resize-sw {
+  bottom: 0;
+  left: 0;
+  cursor: nesw-resize;
+}
+
+@media (max-width: 47.99rem) {
+  .os-taskbar {
+    height: var(--kellos-taskbar-h-touch);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .os-start,
+  .os-task,
+  .os-btn {
+    min-height: var(--kellos-touch);
+  }
+
+  .os-window {
+    min-width: 0;
+    width: 100%;
+    box-shadow: none;
+  }
+}

@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+/*
+  KELL.OS design tokens — frozen in Phase 1.
+  Components consume these names. Never ad-hoc hex in chrome or blocks.
+  Chrome type is retro. Body/reading type is not.
+*/
+
+@font-face {
+  font-family: "W95FA";
+  src: url("/fonts/ms_sans_serif.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "W95FA";
+  src: url("/fonts/ms_sans_serif_bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* —— Color: desktop & chrome (Win95 / RobbyOS reference, not a clone) —— */
+  --kellos-desktop: #008080;
+  --kellos-desktop-dither: #007373;
+  --kellos-face: #c0c0c0;
+  --kellos-button-face: #c0c0c0;
+  --kellos-window-paper: #ffffff;
+  --kellos-ink: #000000;
+  --kellos-muted: #404040;
+
+  --kellos-bevel-light: #ffffff;
+  --kellos-bevel-hi: #dfdfdf;
+  --kellos-bevel-shadow: #808080;
+  --kellos-bevel-dark: #000000;
+
+  --kellos-title-active-from: #000080;
+  --kellos-title-active-to: #1084d0;
+  --kellos-title-inactive: #808080;
+  --kellos-title-inactive-text: #c0c0c0;
+  --kellos-title-text: #ffffff;
+
+  --kellos-selection: #000080;
+  --kellos-selection-text: #ffffff;
+
+  --kellos-taskbar: #c0c0c0;
+  --kellos-desktop-icon-label: #ffffff;
+
+  /* Semantic — intent, not skill level. Do not map these to skill tiers. */
+  --kellos-disclosure: #000080;
+  --kellos-disclosure-wash: #e8eef8;
+  --kellos-note: #000080;
+  --kellos-caution-face: #ffffcc;
+  --kellos-limitation: #404040;
+  --kellos-focus: #000000;
+
+  /* Reader Mode is a different surface, not a dark theme. */
+  --kellos-reader-bg: #f6f1e8;
+  --kellos-reader-ink: #1a1916;
+  --kellos-reader-muted: #5c5852;
+  --kellos-reader-rule: #d4cbbd;
+  --kellos-reader-paper: #fffdf8;
+
+  /* Code */
+  --kellos-code-bg: #1e1e28;
+  --kellos-code-ink: #e8e6e3;
+  --kellos-code-chrome: #c0c0c0;
+  --kellos-highlight-line: #2a3355;
+
+  /* Empty / missing asset */
+  --kellos-empty-well: #d4d0c8;
+
+  /* —— Type —— */
+  --kellos-font-chrome: "W95FA", "Tahoma", "MS Sans Serif", "Segoe UI", sans-serif;
+  --kellos-font-body: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  --kellos-font-ui-sans: "Source Sans 3", "Tahoma", sans-serif;
+  --kellos-font-mono: "IBM Plex Mono", "Consolas", "Courier New", monospace;
+  --kellos-font-wordmark: "W95FA", "Tahoma", sans-serif;
+
+  --kellos-chrome-size: 11px;
+  --kellos-chrome-size-sm: 11px;
+  --kellos-body-size: 18px;
+  --kellos-body-size-sm: 17px;
+  --kellos-lead-size: 20px;
+  --kellos-h2-size: 28px;
+  --kellos-h3-size: 22px;
+  --kellos-h4-size: 18px;
+  --kellos-measure: 65ch;
+  --kellos-line-body: 1.62;
+  --kellos-line-chrome: 1.15;
+
+  /* —— Spacing (4px grid) —— */
+  --kellos-space-1: 2px;
+  --kellos-space-2: 4px;
+  --kellos-space-3: 8px;
+  --kellos-space-4: 12px;
+  --kellos-space-5: 16px;
+  --kellos-space-6: 24px;
+  --kellos-space-7: 32px;
+  --kellos-space-8: 48px;
+
+  /* —— Window metrics —— */
+  --kellos-titlebar-h: 22px;
+  --kellos-ctrl-w: 16px;
+  --kellos-ctrl-h: 14px;
+  --kellos-frame-pad: 3px;
+  --kellos-window-min-w: 280px;
+  --kellos-window-min-h: 160px;
+  --kellos-taskbar-h: 32px;
+  --kellos-taskbar-h-touch: 48px;
+  --kellos-icon: 32px;
+  --kellos-icon-hit: 76px;
+  --kellos-start-min-w: 72px;
+  --kellos-menu-min: 180px;
+  --kellos-scrollbar: 16px;
+  --kellos-touch: 44px;
+
+  /* —— Z-index (spec for Phase 3 WM; playground uses the same names) —— */
+  --kellos-z-desktop: 0;
+  --kellos-z-wallpaper: 0;
+  --kellos-z-icons: 10;
+  --kellos-z-window-base: 100;
+  --kellos-z-start: 8000;
+  --kellos-z-taskbar: 9000;
+  --kellos-z-boot: 10000;
+  --kellos-z-skip: 10010;
+  --kellos-z-playground: 11000;
+
+  /* Breakpoint documented for Phase 2+ (CSS uses 48rem) */
+  --kellos-bp-os: 48rem;
+
+  /* Motion — named in design-system §10; GSAP must read these, not invent ms. */
+  --kellos-duration-boot: 400ms;
+  --kellos-duration-window: 180ms;
+  --kellos-duration-focus: 120ms;
+  --kellos-duration-menu: 150ms;
+
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-desktop: var(--kellos-desktop);
+  --color-desktop-dither: var(--kellos-desktop-dither);
+  --color-face: var(--kellos-face);
+  --color-button-face: var(--kellos-button-face);
+  --color-window-paper: var(--kellos-window-paper);
+  --color-ink: var(--kellos-ink);
+  --color-muted: var(--kellos-muted);
+  --color-bevel-light: var(--kellos-bevel-light);
+  --color-bevel-hi: var(--kellos-bevel-hi);
+  --color-bevel-shadow: var(--kellos-bevel-shadow);
+  --color-bevel-dark: var(--kellos-bevel-dark);
+  --color-title-from: var(--kellos-title-active-from);
+  --color-title-to: var(--kellos-title-active-to);
+  --color-title-inactive: var(--kellos-title-inactive);
+  --color-title-text: var(--kellos-title-text);
+  --color-selection: var(--kellos-selection);
+  --color-selection-text: var(--kellos-selection-text);
+  --color-disclosure: var(--kellos-disclosure);
+  --color-disclosure-wash: var(--kellos-disclosure-wash);
+  --color-caution-face: var(--kellos-caution-face);
+  --color-reader-bg: var(--kellos-reader-bg);
+  --color-reader-ink: var(--kellos-reader-ink);
+  --color-reader-muted: var(--kellos-reader-muted);
+  --color-reader-rule: var(--kellos-reader-rule);
+  --color-reader-paper: var(--kellos-reader-paper);
+  --color-code-bg: var(--kellos-code-bg);
+  --color-code-ink: var(--kellos-code-ink);
+  --color-empty-well: var(--kellos-empty-well);
+
+  --font-chrome: var(--kellos-font-chrome);
+  --font-body: var(--kellos-font-body);
+  --font-ui: var(--kellos-font-ui-sans);
+  --font-mono: var(--kellos-font-mono);
+
+  --spacing-os-1: var(--kellos-space-1);
+  --spacing-os-2: var(--kellos-space-2);
+  --spacing-os-3: var(--kellos-space-3);
+  --spacing-os-4: var(--kellos-space-4);
+  --spacing-os-5: var(--kellos-space-5);
+  --spacing-os-6: var(--kellos-space-6);
+  --spacing-os-7: var(--kellos-space-7);
+  --spacing-os-8: var(--kellos-space-8);
+
+  --text-chrome: var(--kellos-chrome-size);
+  --text-body: var(--kellos-body-size);
+  --text-lead: var(--kellos-lead-size);
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    background: var(--kellos-desktop);
+    color: var(--kellos-ink);
+    font-family: var(--kellos-font-chrome);
+    font-size: var(--kellos-chrome-size);
+    line-height: var(--kellos-line-chrome);
+  }
+
+  button,
+  input,
+  select {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px dotted var(--kellos-focus);
+    outline-offset: 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

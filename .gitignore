@@ -1,0 +1,11 @@
+node_modules
+dist
+admin/dist
+*.local
+.DS_Store
+.playwright-verify
+.vercel
+.env
+.env.production
+src/content/published/bundle.json
+

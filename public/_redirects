@@ -1,0 +1,4 @@
+# SPA-only routes. Nested prerender URLs (/project/..., /read/...) have real index.html
+# and must not be rewritten to the shell.
+/terminal    /index.html   200
+/settings    /index.html   200

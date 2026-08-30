@@ -1,0 +1,177 @@
+{
+  "bundle": {
+    "initial_js_files": [
+      "index-Dzpd-uUg.js"
+    ],
+    "initial_js_gzip": 75172,
+    "target_gzip": 204800,
+    "all_js_chunks": [
+      "about-Dp3BnMy0.js",
+      "AboutWindow-BV6nb1Rh.js",
+      "BlockRenderer-DZ-yDUD1.js",
+      "CaseStudyWindow-DQRer-4G.js",
+      "contact-kTjCvxa8.js",
+      "ContactWindow-Ctf0KR6y.js",
+      "DesktopShell-DFHMsYyV.js",
+      "index-Dzpd-uUg.js",
+      "langchain-DBtjLoRu.js",
+      "makeBlocks-Cpr25JJb.js",
+      "manifest-BJmGeB84.js",
+      "now-Dcqnj2Uw.js",
+      "NowWindow-NwIFiNP9.js",
+      "projects-ChHQrRoI.js",
+      "ProjectsWindow-BtNGPn61.js",
+      "ReaderMenu-CQuFTBrb.js",
+      "ReaderPage-8yOvw_OJ.js",
+      "recycle-BKRBca0A.js",
+      "RecycleWindow-DMuL8JIX.js",
+      "resume-BK1_e-X4.js",
+      "ResumeWindow-B8154hjr.js",
+      "skills-DEuHjlJF.js",
+      "SkillsWindow-CwmDHv8e.js",
+      "timeline-CSRkmslG.js",
+      "TimelineWindow-2yzVr4tk.js"
+    ],
+    "lazy_js_beyond_initial": [
+      "about-Dp3BnMy0.js",
+      "AboutWindow-BV6nb1Rh.js",
+      "BlockRenderer-DZ-yDUD1.js",
+      "CaseStudyWindow-DQRer-4G.js",
+      "contact-kTjCvxa8.js",
+      "ContactWindow-Ctf0KR6y.js",
+      "DesktopShell-DFHMsYyV.js",
+      "langchain-DBtjLoRu.js",
+      "makeBlocks-Cpr25JJb.js",
+      "manifest-BJmGeB84.js",
+      "now-Dcqnj2Uw.js",
+      "NowWindow-NwIFiNP9.js",
+      "projects-ChHQrRoI.js",
+      "ProjectsWindow-BtNGPn61.js",
+      "ReaderMenu-CQuFTBrb.js",
+      "ReaderPage-8yOvw_OJ.js",
+      "recycle-BKRBca0A.js",
+      "RecycleWindow-DMuL8JIX.js",
+      "resume-BK1_e-X4.js",
+      "ResumeWindow-B8154hjr.js",
+      "skills-DEuHjlJF.js",
+      "SkillsWindow-CwmDHv8e.js",
+      "timeline-CSRkmslG.js",
+      "TimelineWindow-2yzVr4tk.js"
+    ]
+  },
+  "static": {
+    "/": {
+      "html_bytes": 6146,
+      "html_plus_css_bytes": 35166,
+      "has_script": true
+    },
+    "/read/about": {
+      "html_bytes": 6150,
+      "html_plus_css_bytes": 35170,
+      "has_script": true
+    },
+    "/project/langchain-openrouter-provider": {
+      "html_bytes": 22883,
+      "html_plus_css_bytes": 51903,
+      "has_script": true
+    }
+  },
+  "ttfmc_ms": 1867.5000000009313,
+  "drag_fps": {
+    "fps": 71.28007128022901,
+    "frames": 24,
+    "ms": 336.69999999925494,
+    "windows": 3
+  },
+  "lighthouse_a11y": {
+    "home-os": {
+      "score": 100,
+      "fails": []
+    },
+    "read-about": {
+      "score": 100,
+      "fails": []
+    },
+    "read-case": {
+      "score": 100,
+      "fails": []
+    },
+    "skills-os": {
+      "score": 95,
+      "fails": [
+        "Touch targets do not have sufficient size or spacing."
+      ]
+    },
+    "resume-os": {
+      "score": 95,
+      "fails": [
+        "Touch targets do not have sufficient size or spacing."
+      ]
+    },
+    "contact-os": {
+      "score": 95,
+      "fails": [
+        "Touch targets do not have sufficient size or spacing."
+      ]
+    },
+    "case-os": {
+      "score": 95,
+      "fails": [
+        "Touch targets do not have sufficient size or spacing."
+      ]
+    }
+  },
+  "heading_order": {
+    "read-about": [
+      1,
+      2
+    ],
+    "read-recycle": [
+      1,
+      2,
+      2,
+      2
+    ],
+    "read-case": [
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      2,
+      2,
+      2
+    ],
+    "read-skills": [
+      1,
+      2,
+      3,
+      3,
+      3
+    ],
+    "read-resume": [
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "read-contact": [
+      1
+    ],
+    "os-home": [
+      1,
+      2,
+      2
+    ]
+  },
+  "misses": []
+}
