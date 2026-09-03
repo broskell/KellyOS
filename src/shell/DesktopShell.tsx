@@ -39,7 +39,7 @@ function DesktopShellInner() {
   const open = useWmStore((s) => s.open);
   const close = useWmStore((s) => s.close);
   const workspace = useWmStore((s) => s.workspace);
-  const { ceremony, dismissCeremony } = useVersion();
+  const { ceremony, dismissCeremony, viewing } = useVersion();
 
   useLayoutEffect(() => {
     const showBoot = isHome && sessionStorage.getItem(BOOT_KEY) !== "1";
@@ -90,7 +90,7 @@ function DesktopShellInner() {
   const showCeremony = Boolean(ceremony) && !boot;
 
   return (
-    <div className="os-desktop flex h-full min-h-0 flex-1 flex-col overflow-hidden">
+    <div className="os-desktop flex h-full min-h-0 flex-1 flex-col overflow-hidden" data-os-era={viewing}>
       {boot ? <BootOverlay onSkip={skipBoot} /> : null}
       {showCeremony && ceremony ? (
         <UpdateCeremony ceremony={ceremony} onClose={dismissCeremony} />

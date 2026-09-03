@@ -34,7 +34,7 @@ export default function OsUpdateWindow() {
           <h2 className="font-chrome m-0 text-[11px] font-bold">View an era</h2>
           <p className="font-chrome mt-1 m-0">
             Versions are feature flags over one data set, never separate builds. Switching re-filters
-            the OS — the Timeline reflects how it looked in that era.
+            the OS at load — the desktop retints and the Timeline shows only that era.
           </p>
           <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Version to view">
             {OS_VERSIONS.map((v) => (

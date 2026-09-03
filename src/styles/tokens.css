@@ -230,3 +230,22 @@
     }
   }
 }
+
+/*
+ * Phase 17 — version-driven look. Each era retints the desktop wallpaper and
+ * titlebar accent via tokens, applied at content load through the version
+ * switcher (data-os-era on the desktop root). No fork, no second build:
+ * v3 (current) keeps the frozen Phase 1 palette; older eras are variations.
+ */
+[data-os-era="v1"] {
+  --kellos-desktop: #6f6f6f;
+  --kellos-desktop-dither: #686868;
+  --kellos-title-active-from: #4a4a4a;
+  --kellos-title-active-to: #8a8a8a;
+}
+[data-os-era="v2"] {
+  --kellos-desktop: #3b4b7a;
+  --kellos-desktop-dither: #37456f;
+  --kellos-title-active-from: #23235f;
+  --kellos-title-active-to: #4a6fb0;
+}
