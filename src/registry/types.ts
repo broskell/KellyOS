@@ -33,7 +33,12 @@ export type PixelIconName =
   | "recycle"
   | "now"
   | "timeline"
-  | "reader";
+  | "reader"
+  | "terminal"
+  | "settings"
+  | "kellai"
+  | "osUpdate"
+  | "search";
 
 /** Surfaces that consume the same row. A new app is a registry entry, not six edits. */
 export type RegistrySurface =

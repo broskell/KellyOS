@@ -25,6 +25,10 @@ export default function KellAiWindow() {
     scroller.current?.scrollTo(0, scroller.current.scrollHeight);
   }, [turns]);
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   const openPath = (path: string) => {
     const spec = specForPath(path);
     if (spec) openWin(spec);
@@ -97,6 +101,7 @@ function AnswerCard({
 }) {
   return (
     <div className="os-raised bg-face p-2">
+      <p className="font-chrome text-muted m-0 mb-1 text-[11px] font-bold">✦ Kelly.AI</p>
       <p className="font-chrome m-0 leading-snug">{a.text}</p>
       {a.source ? <p className="font-chrome text-muted mt-1 mb-0 text-[11px]">Source: {a.source}</p> : null}
       {(a.open || a.reader) && (

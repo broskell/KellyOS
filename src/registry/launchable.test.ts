@@ -5,52 +5,52 @@ import {
   isVisitorLaunchable,
 } from "./manifest";
 
-const stillEmpty = ["search"] as const;
+const searchOverlay = "search";
+// Command windows now appear on Start (owner directive), but stay off desktop/mobile.
 const commandWindows = ["terminal", "settings", "osUpdate", "kellai"] as const;
 
 describe("honest visitor chrome", () => {
-  it("keeps the Search overlay off Start/desktop/mobile", () => {
-    for (const id of stillEmpty) {
-      const app = APP_REGISTRY.find((a) => a.id === id);
-      expect(app, id).toBeTruthy();
-      expect(app!.route).toBe("");
-      expect(isVisitorLaunchable(app!)).toBe(false);
-      expect(app!.surfaces.startMenu).toBe(false);
-      expect(app!.surfaces.desktopIcon).toBe(false);
-      expect(app!.surfaces.mobileGrid).toBe(false);
-    }
+  it("keeps the Search overlay (empty route) off every launcher surface", () => {
+    const app = APP_REGISTRY.find((a) => a.id === searchOverlay)!;
+    expect(app.route).toBe("");
+    expect(isVisitorLaunchable(app)).toBe(false);
+    expect(app.surfaces.startMenu).toBe(false);
+    expect(app.surfaces.desktopIcon).toBe(false);
+    expect(app.surfaces.mobileGrid).toBe(false);
   });
 
-  it("gives Terminal, Settings, OS Update, and Kelly.AI routes without listing them on Start/desktop/mobile", () => {
+  it("lists command windows on Start now, but keeps them off desktop and mobile", () => {
     for (const id of commandWindows) {
-      const app = APP_REGISTRY.find((a) => a.id === id);
-      expect(app, id).toBeTruthy();
-      expect(app!.route).not.toBe("");
-      expect(isVisitorLaunchable(app!)).toBe(true);
-      expect(app!.surfaces.startMenu).toBe(false);
-      expect(app!.surfaces.desktopIcon).toBe(false);
-      expect(app!.surfaces.mobileGrid).toBe(false);
+      const app = APP_REGISTRY.find((a) => a.id === id)!;
+      expect(app.route, id).not.toBe("");
+      expect(isVisitorLaunchable(app), id).toBe(true);
+      expect(app.surfaces.startMenu, id).toBe(true);
+      expect(app.surfaces.desktopIcon, id).toBe(false);
+      expect(app.surfaces.mobileGrid, id).toBe(false);
     }
   });
 
-  it("lists only apps that actually open on Start, desktop, and mobile grid", () => {
+  it("lists only apps that actually open on every launcher surface", () => {
     for (const surface of ["startMenu", "desktopIcon", "mobileGrid"] as const) {
       const listed = appsLaunchableOn(surface);
       expect(listed.length).toBeGreaterThan(0);
       for (const app of listed) {
         expect(isVisitorLaunchable(app), app.id).toBe(true);
-        expect(stillEmpty).not.toContain(app.id);
-        expect(commandWindows).not.toContain(app.id);
+        expect(app.id).not.toBe(searchOverlay);
       }
     }
     const startTitles = appsLaunchableOn("startMenu").map((a) => a.title);
     expect(startTitles).toContain("Reader Mode");
     expect(startTitles).toContain("Projects");
-    expect(startTitles).not.toContain("Terminal");
-    expect(startTitles).not.toContain("Kelly.AI");
+    expect(startTitles).toContain("Terminal");
+    expect(startTitles).toContain("Kelly.AI");
+    expect(startTitles).toContain("Settings");
+    expect(startTitles).toContain("OS Update");
     expect(startTitles).not.toContain("Search");
-    expect(startTitles).not.toContain("Settings");
-    expect(startTitles).not.toContain("OS Update");
+
+    const deskTitles = appsLaunchableOn("desktopIcon").map((a) => a.title);
+    expect(deskTitles).not.toContain("Terminal");
+    expect(deskTitles).not.toContain("OS Update");
   });
 });
 

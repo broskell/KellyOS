@@ -81,11 +81,9 @@ export function VersionProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const installUpdate = useCallback(() => {
-    setPendingUpdate((p) => {
-      if (p) setCeremony({ from: p.from, to: p.to, real: true });
-      return null;
-    });
-  }, []);
+    if (pendingUpdate) setCeremony({ from: pendingUpdate.from, to: pendingUpdate.to, real: true });
+    setPendingUpdate(null);
+  }, [pendingUpdate]);
 
   const acknowledgeUpdate = useCallback(() => {
     writeSeenVersion(LATEST_VERSION_ID);

@@ -134,7 +134,7 @@
 
   /* Motion — named in design-system §10; GSAP must read these, not invent ms. */
   --kellos-duration-boot: 400ms;
-  --kellos-duration-boot-progress: 1800ms;
+  --kellos-duration-boot-progress: 2200ms;
   --kellos-duration-window: 180ms;
   --kellos-duration-focus: 120ms;
   --kellos-duration-menu: 150ms;

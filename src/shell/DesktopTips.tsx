@@ -57,23 +57,23 @@ export function DesktopTips({ enabled }: { enabled: boolean }) {
   return (
     <div
       ref={cardRef}
-      className="os-raised bg-face absolute right-3 top-3 z-[500] w-64 max-w-[70vw] p-2"
+      className="os-raised bg-face absolute right-3 top-3 z-[500] w-64 max-w-[70vw]"
       data-os-tips=""
       role="status"
       aria-live="polite"
     >
-      <div className="flex items-center justify-between">
-        <span className="font-chrome text-[11px] font-bold">✦ Did you know?</span>
+      <div className="os-titlebar">
+        <span className="os-titlebar-label">✦ Did you know?</span>
         <button
           type="button"
-          className="os-btn os-raised px-1 py-0 text-[11px] leading-none"
+          className="os-ctrl os-raised"
           aria-label="Dismiss tips"
           onClick={dismiss}
         >
           ×
         </button>
       </div>
-      <p className="font-chrome mt-1 mb-0 leading-snug">{TIPS[i]}</p>
+      <p className="font-chrome m-0 p-2 leading-snug">{TIPS[i]}</p>
     </div>
   );
 }

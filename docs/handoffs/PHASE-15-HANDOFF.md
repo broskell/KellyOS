@@ -91,6 +91,16 @@ Untouched on purpose: `src/wm/core.ts` logic; Phase 0 content *words* (only the 
 
 ---
 
+## Polish pass (owner-directed, same session)
+
+After first review Saathvik asked for a more authentic desktop. Applied:
+
+- **Full-screen boot.** Replaced the small grey dialog with a black full-screen splash: large two-tone "Kelly.OS" wordmark, tagline, segmented progress bar, "Starting…" line, Skip. (First cut used a Tailwind `bg-black` class that doesn't exist in this token-only palette — the overlay rendered transparent over the desktop; fixed with an inline `background:#000`.)
+- **Start menu now lists every feature.** Added `startMenu` to Terminal, Settings, OS Update, and Kelly.AI (still off desktop/mobile). This **reverses the earlier "Tier 3 off Start" honesty-shell decision** at the owner's request; the kept invariant is that only launchable apps appear and the empty-route Search overlay never does. `launchable.test.ts` reworked to the new policy.
+- **Real icons, not emoji.** First tried emoji glyphs; Saathvik rejected them as "random." Replaced `PixelIcon` with a cohesive set of **hand-drawn Win95-style SVG icons** (flat fills, dark outline) — ID card, folder, medal, document, envelope, clock, calendar, trash bin, book, console, gear, chat bubble, refresh, magnifier. Expanded `PixelIconName` and gave every Tier-3 app its own icon.
+- **installUpdate bug fix.** The toast's install path nested a `setState` inside another updater (React could drop the side-effect); rewritten to read `pendingUpdate` from closure.
+- Toasts (`DesktopTips`, `UpdateToast`) gained authentic Win95 title bars (`.os-titlebar`); Kelly.AI answers carry a "✦ Kelly.AI" speaker label and the input autofocuses; boot progress tuned to 2.2s.
+
 ## One-paragraph summary for the Phase 16 chat
 
 Phase 15 shipped Kelly.AI — a pure, tested deterministic engine (`answerFor`) that matches questions to a content index and the app registry, always naming its source and refusing to fabricate; no LLM. Its `kellai` row got a real runtime (`/kell-ai`) the same disciplined way OS Update did. On the owner's direction the product was renamed **KELL.OS → Kelly.OS** (visible strings + a text wordmark; internal ids/storage/tokens left intact) and given a "real old desktop" polish pass: a progress-bar boot that auto-advances, an idle Mystify screensaver, rotating honest "Did you know?" tips, and a toast-first update flow with a Taskbar update chip (refining the Phase 14 ceremony). The Clippy mascot was deliberately declined to protect the honesty stance. `src/wm/core.ts` stays pure; Reader/prerender untouched; no backend on the read path. Phase 16 is V2.0 launch & hardening — migration, monitoring, rollback, no new features.

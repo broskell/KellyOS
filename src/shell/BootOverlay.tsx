@@ -1,8 +1,12 @@
 import { useEffect, useRef } from "react";
-import { BootMark, Wordmark } from "../brand/marks";
 import { LATEST_VERSION } from "../content/versions";
 import { playBootOut, playBootProgress } from "../motion/play";
 
+/**
+ * Full-screen boot — a dramatic, authentic OS start splash on black. Skippable
+ * on the first frame, auto-advances when the progress bar fills, and reduced
+ * motion resolves it immediately. Not part of the WM core.
+ */
 export function BootOverlay({ onSkip }: { onSkip: () => void }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
@@ -17,7 +21,6 @@ export function BootOverlay({ onSkip }: { onSkip: () => void }) {
 
   useEffect(() => {
     skipRef.current?.focus();
-    // Auto-advance once the progress fill completes; Skip short-circuits it.
     playBootProgress(fillRef.current, leave);
     return () => {
       leaving.current = true;
@@ -28,23 +31,41 @@ export function BootOverlay({ onSkip }: { onSkip: () => void }) {
   return (
     <div
       ref={rootRef}
-      className="os-desktop absolute inset-0 z-[10000] flex flex-col items-center justify-center gap-6"
+      className="fixed inset-0 z-[10000] flex flex-col items-center justify-center gap-10"
+      style={{ background: "#000" }}
       role="dialog"
       aria-modal="true"
       aria-label="Starting Kelly.OS"
       data-os-boot=""
     >
-      <div className="os-raised bg-face w-[320px] max-w-[86%] p-6 text-center">
-        <BootMark size={64} decorative />
-        <div className="mt-4 flex justify-center">
-          <Wordmark size={22} decorative />
-        </div>
-        <p className="font-chrome text-muted mt-2 m-0">A developer portfolio, built as an operating system.</p>
-        <p className="font-chrome mt-4 m-0">Starting Kelly.OS {LATEST_VERSION.number}…</p>
+      <div className="flex flex-col items-center text-center">
         <div
-          className="os-sunken mt-2 h-4 w-full overflow-hidden p-[2px]"
+          style={{
+            fontFamily: "var(--kellos-font-wordmark)",
+            fontWeight: 700,
+            fontSize: "clamp(44px, 9vw, 88px)",
+            lineHeight: 1,
+            letterSpacing: "-0.02em",
+            userSelect: "none",
+          }}
+        >
+          <span style={{ color: "#ffffff" }}>Kelly</span>
+          <span style={{ color: "var(--kellos-title-active-to)" }}>.OS</span>
+        </div>
+        <p
+          className="font-mono mt-5 mb-0"
+          style={{ color: "var(--kellos-title-active-to)", fontSize: "clamp(11px, 2.4vw, 15px)" }}
+        >
+          A developer portfolio, rebuilt as an operating system · v{LATEST_VERSION.number}
+        </p>
+      </div>
+
+      <div className="w-[min(420px,80vw)]">
+        <div
+          className="h-5 w-full overflow-hidden p-[3px]"
           role="progressbar"
           aria-label="Starting"
+          style={{ border: "2px solid #d4d0c8", background: "#000" }}
         >
           <div
             ref={fillRef}
@@ -52,13 +73,24 @@ export function BootOverlay({ onSkip }: { onSkip: () => void }) {
             style={{
               width: "0%",
               background:
-                "repeating-linear-gradient(90deg, var(--kellos-title-active-from) 0 8px, var(--kellos-face) 8px 10px)",
+                "repeating-linear-gradient(90deg, var(--kellos-title-active-to) 0 12px, #000 12px 15px)",
             }}
           />
         </div>
-        <p className="font-chrome text-muted mt-2 m-0">New visitors boot latest. Always.</p>
+        <p
+          className="font-mono mt-3 mb-0 text-center"
+          style={{ color: "rgba(255,255,255,0.65)", fontSize: "12px" }}
+        >
+          Starting Kelly.OS {LATEST_VERSION.number}…  New visitors boot latest. Always.
+        </p>
       </div>
-      <button ref={skipRef} type="button" className="os-btn os-raised z-[10010]" onClick={leave}>
+
+      <button
+        ref={skipRef}
+        type="button"
+        className="os-btn os-raised z-[10010]"
+        onClick={leave}
+      >
         Skip
       </button>
     </div>
