@@ -65,7 +65,7 @@ export function UpdateCeremony({
           <Wordmark size={14} decorative />
         </div>
         <h1 id="os-ceremony-title" className="font-chrome mt-4 text-[13px] font-bold">
-          {ceremony.real ? "KELL.OS updated while you were away" : "Replaying the last update"}
+          {ceremony.real ? "Kelly.OS updated while you were away" : "Replaying the last update"}
         </h1>
         <p className="font-chrome text-muted mt-1 m-0">
           {from.number} → {to.number}. Same site, more of it — versions are feature flags over one
@@ -75,7 +75,7 @@ export function UpdateCeremony({
           {added.map((v) => (
             <li key={v.id} className="os-sunken os-well p-3">
               <p className="font-chrome m-0 text-[11px] font-bold">
-                KELL.OS {v.number}
+                Kelly.OS {v.number}
                 {v.codename ? ` — ${v.codename}` : ""}
               </p>
               <p className="font-chrome mt-1 m-0">{VERSION_REPRESENTS[v.id]}</p>

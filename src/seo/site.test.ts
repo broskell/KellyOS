@@ -6,13 +6,13 @@ describe("launch metadata", () => {
     for (const page of PAGE_HEADS) {
       expect(page.title).not.toMatch(/^ORIGIN\b/);
       expect(page.title).not.toMatch(/\bORIGIN \d/);
-      expect(page.title).toMatch(/KELL\.OS/);
+      expect(page.title).toMatch(/Kelly\.OS/);
     }
   });
 
-  it("home title is KELL.OS 1.0, with ORIGIN only as era in the description", () => {
+  it("home title is Kelly.OS 1.0, with ORIGIN only as era in the description", () => {
     const home = PAGE_HEADS.find((p) => p.path === "/")!;
-    expect(home.title).toBe("KELL.OS 1.0 — Saathvik Kellampalli");
+    expect(home.title).toBe("Kelly.OS 1.0 — Saathvik Kellampalli");
     expect(home.description).toContain("ORIGIN era");
     expect(home.description).toContain("I develop AI-assisted");
     expect(home.description).not.toMatch(/graduat/i);

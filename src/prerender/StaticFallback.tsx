@@ -7,7 +7,7 @@ export function StaticFallback({ page }: { page: StaticPage }) {
   return (
     <div className="reader-shell" data-static-fallback="true">
       <header className="border-b border-reader-rule px-4 py-3 font-ui text-sm text-reader-muted">
-        <div className="mx-auto max-w-xl">KELL.OS · Reader Mode · static fallback</div>
+        <div className="mx-auto max-w-xl">Kelly.OS · Reader Mode · static fallback</div>
       </header>
       <main>
         <article className="reader-doc">

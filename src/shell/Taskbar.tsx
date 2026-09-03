@@ -8,6 +8,7 @@ import { playMenuIn } from "../motion/play";
 import { taskWindows } from "../wm/core";
 import { specForPath } from "../wm/specs";
 import { useWmStore } from "../wm/store";
+import { useVersion } from "./VersionContext";
 
 export function Taskbar({
   startOpen,
@@ -23,6 +24,7 @@ export function Taskbar({
   const wm = useWmStore((s) => s.wm);
   const focus = useWmStore((s) => s.focus);
   const chips = taskWindows(wm);
+  const { latest, pendingUpdate, installUpdate } = useVersion();
 
   useEffect(() => {
     const fmt = () =>
@@ -53,6 +55,29 @@ export function Taskbar({
         ))}
       </div>
       <div className="os-tray os-sunken font-chrome">
+        <button
+          type="button"
+          className="os-btn os-raised inline-flex items-center gap-1"
+          aria-label={pendingUpdate ? "Install update" : `Kelly.OS ${latest.replace("v", "")}.0 — OS Update`}
+          onClick={() => {
+            if (pendingUpdate) {
+              installUpdate();
+              return;
+            }
+            navigate("/os-update");
+          }}
+        >
+          {pendingUpdate ? (
+            <>
+              <span aria-hidden="true" style={{ color: "var(--kellos-title-active-from)" }}>
+                ●
+              </span>
+              Update
+            </>
+          ) : (
+            <>◇ {latest.replace("v", "")}.0</>
+          )}
+        </button>
         <Link to={readTo} className="os-btn os-raised inline-block no-underline">
           Read
         </Link>

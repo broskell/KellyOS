@@ -80,7 +80,7 @@ export function writeViewingVersion(id: VersionId): void {
 
 /**
  * Cumulative visibility: viewing an era shows everything present up to and
- * including it — KELL.OS 2.0 knew eras 1 and 2, not yet era 3. Used to filter
+ * including it — Kelly.OS 2.0 knew eras 1 and 2, not yet era 3. Used to filter
  * timeline entries (which carry `versionEra`) at content load.
  */
 export function visibleUpTo<T extends { versionEra: VersionId }>(

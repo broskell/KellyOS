@@ -1,16 +1,16 @@
 /**
- * Launch identity. Chrome and metadata say **KELL.OS 1.0**.
+ * Launch identity. Chrome and metadata say **Kelly.OS 1.0**.
  * Optional subtitle: ORIGIN era. Never a naked ORIGIN as the OS title.
  * The scrollytelling **project** ORIGIN is a project name, not a version string.
  *
  * Override the public origin at build with KELLOS_SITE_URL or VITE_SITE_URL.
  */
 
-export const OS_PRODUCT = "KELL.OS 1.0";
+export const OS_PRODUCT = "Kelly.OS 1.0";
 export const OS_ERA_SUBTITLE = "ORIGIN era";
 export const OG_IMAGE_PATH = "/og.png";
 export const OG_IMAGE_ALT =
-  "KELL.OS 1.0 wordmark on Win95-style chrome. ORIGIN era. Not a project screenshot.";
+  "Kelly.OS 1.0 wordmark on Win95-style chrome. ORIGIN era. Not a project screenshot.";
 
 /** Default production origin until a custom domain is attached. */
 export const DEFAULT_SITE_ORIGIN = "https://kellos.vercel.app";
@@ -91,7 +91,7 @@ export const PAGE_HEADS: PageHead[] = [
   {
     path: "/timeline",
     title: `Timeline — ${OS_PRODUCT}`,
-    description: "2023 to present, grouped by version era. KELL.OS 1.0 is ORIGIN era.",
+    description: "2023 to present, grouped by version era. Kelly.OS 1.0 is ORIGIN era.",
   },
   {
     path: "/terminal",

@@ -12,7 +12,7 @@ export type LaunchTarget = {
   kind: AppManifestEntry["kind"];
 };
 
-/** Path the WM/router can actually open. Empty-route rows (KELL.AI, OS Update, Search overlay) return null. */
+/** Path the WM/router can actually open. Empty-route rows (Kelly.AI, OS Update, Search overlay) return null. */
 export function launchPathFor(app: AppManifestEntry): string | null {
   if (app.id === "reader") return app.readerRoute ?? "/read/about";
   if (app.id === "caseStudy") return `/project/${FEATURED_CASE_STUDY_SLUG}`;

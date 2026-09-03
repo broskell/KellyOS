@@ -49,7 +49,7 @@ function ReaderDocument({
     <div className="reader-shell h-full overflow-auto">
       <header className="border-b border-reader-rule px-4 py-3 font-ui text-sm text-reader-muted">
         <div className="mx-auto flex max-w-xl items-center justify-between">
-          <span>KELL.OS · Reader Mode</span>
+          <span>Kelly.OS · Reader Mode</span>
           <Link to={osPath} className="os-btn os-raised inline-block no-underline">
             Back to desktop
           </Link>

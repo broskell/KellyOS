@@ -45,7 +45,7 @@ export const nowSnapshot: NowSnapshot = {
       id: "now_building",
       category: "building",
       label: "Building",
-      text: "KELL.OS, this site. It's being built in phases with the architecture decisions written down as I go, which is the first time I've worked that way.",
+      text: "Kelly.OS, this site. It's being built in phases with the architecture decisions written down as I go, which is the first time I've worked that way.",
     },
     {
       id: "now_oss",

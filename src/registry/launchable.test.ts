@@ -5,11 +5,11 @@ import {
   isVisitorLaunchable,
 } from "./manifest";
 
-const stillEmpty = ["search", "kellai"] as const;
-const commandWindows = ["terminal", "settings", "osUpdate"] as const;
+const stillEmpty = ["search"] as const;
+const commandWindows = ["terminal", "settings", "osUpdate", "kellai"] as const;
 
 describe("honest visitor chrome", () => {
-  it("keeps KELL.AI and Search overlay off Start/desktop/mobile", () => {
+  it("keeps the Search overlay off Start/desktop/mobile", () => {
     for (const id of stillEmpty) {
       const app = APP_REGISTRY.find((a) => a.id === id);
       expect(app, id).toBeTruthy();
@@ -21,7 +21,7 @@ describe("honest visitor chrome", () => {
     }
   });
 
-  it("gives Terminal, Settings, and OS Update routes without listing them on Start/desktop/mobile", () => {
+  it("gives Terminal, Settings, OS Update, and Kelly.AI routes without listing them on Start/desktop/mobile", () => {
     for (const id of commandWindows) {
       const app = APP_REGISTRY.find((a) => a.id === id);
       expect(app, id).toBeTruthy();
@@ -47,7 +47,7 @@ describe("honest visitor chrome", () => {
     expect(startTitles).toContain("Reader Mode");
     expect(startTitles).toContain("Projects");
     expect(startTitles).not.toContain("Terminal");
-    expect(startTitles).not.toContain("KELL.AI");
+    expect(startTitles).not.toContain("Kelly.AI");
     expect(startTitles).not.toContain("Search");
     expect(startTitles).not.toContain("Settings");
     expect(startTitles).not.toContain("OS Update");
@@ -62,8 +62,8 @@ describe("registry window loaders", () => {
     expect(appWindowLoader("terminal")).toBeTruthy();
     expect(appWindowLoader("settings")).toBeTruthy();
     expect(appWindowLoader("osUpdate")).toBeTruthy();
+    expect(appWindowLoader("kellai")).toBeTruthy();
     expect(Object.keys(APP_WINDOW_LOADERS)).not.toContain("search");
-    expect(appWindowLoader("kellai")).toBeUndefined();
     expect(appWindowLoader("reader")).toBeUndefined();
   });
 });

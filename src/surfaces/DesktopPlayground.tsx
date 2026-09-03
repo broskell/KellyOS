@@ -63,7 +63,7 @@ export function DesktopPlayground({
                 </button>
               </div>
             }
-            status="KELL.OS 3.0  ·  new visitors boot latest"
+            status="Kelly.OS 3.0  ·  new visitors boot latest"
             className={compact ? "min-h-full" : "h-full max-w-3xl"}
           >
             <BlockRenderer blocks={aboutBlocks} gateExternalLinks={false} />

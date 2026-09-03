@@ -7,7 +7,7 @@ export function ReaderMode({ onBack }: { onBack: () => void }) {
     <div className="reader-shell min-h-full">
       <header className="border-b border-reader-rule px-4 py-3 font-ui text-sm text-reader-muted">
         <div className="mx-auto flex max-w-xl items-center justify-between">
-          <span>KELL.OS · Reader Mode</span>
+          <span>Kelly.OS · Reader Mode</span>
           <OsButton onClick={onBack}>Back to desktop</OsButton>
         </div>
       </header>

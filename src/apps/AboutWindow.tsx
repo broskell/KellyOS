@@ -11,7 +11,7 @@ export default function AboutWindow() {
     <WindowFrame
       title={title}
       menu={<ReaderMenu to="/read/about" extra={<Link to="/projects">Projects</Link>} />}
-      status="KELL.OS 3.0  ·  new visitors boot latest"
+      status="Kelly.OS 3.0  ·  new visitors boot latest"
       className="h-full min-h-0 w-full"
     >
       <BlockRenderer blocks={aboutBlocks} />

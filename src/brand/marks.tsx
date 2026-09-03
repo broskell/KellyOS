@@ -7,52 +7,28 @@ export function Wordmark({
   invert?: boolean;
   decorative?: boolean;
 }) {
-  const fg = invert ? "var(--kellos-title-text)" : "var(--kellos-title-active-from)";
+  const name = invert ? "var(--kellos-title-text)" : "var(--kellos-title-active-from)";
   const os = invert ? "var(--kellos-title-text)" : "var(--kellos-ink)";
   return (
-    <svg
-      width={size * 5.6}
-      height={size}
-      viewBox="0 0 90 16"
+    <span
       role={decorative ? undefined : "img"}
-      aria-label={decorative ? undefined : "KELL.OS"}
+      aria-label={decorative ? undefined : "Kelly.OS"}
       aria-hidden={decorative ? true : undefined}
-      style={{ imageRendering: "pixelated" }}
+      style={{
+        fontFamily: "var(--kellos-font-wordmark)",
+        fontWeight: 700,
+        fontSize: size,
+        lineHeight: 1,
+        letterSpacing: "-0.01em",
+        whiteSpace: "nowrap",
+        display: "inline-flex",
+        alignItems: "baseline",
+        userSelect: "none",
+      }}
     >
-      <rect width="90" height="16" fill="transparent" />
-      <g fill={fg}>
-        {/* K */}
-        <rect x="1" y="2" width="2" height="12" />
-        <rect x="3" y="7" width="2" height="2" />
-        <rect x="5" y="2" width="2" height="4" />
-        <rect x="5" y="10" width="2" height="4" />
-        {/* E */}
-        <rect x="9" y="2" width="2" height="12" />
-        <rect x="11" y="2" width="5" height="2" />
-        <rect x="11" y="7" width="4" height="2" />
-        <rect x="11" y="12" width="5" height="2" />
-        {/* L */}
-        <rect x="18" y="2" width="2" height="12" />
-        <rect x="20" y="12" width="5" height="2" />
-        {/* L */}
-        <rect x="27" y="2" width="2" height="12" />
-        <rect x="29" y="12" width="5" height="2" />
-      </g>
-      <g fill={os}>
-        <rect x="36" y="11" width="2" height="2" />
-        {/* O */}
-        <rect x="41" y="2" width="6" height="2" />
-        <rect x="41" y="12" width="6" height="2" />
-        <rect x="39" y="4" width="2" height="8" />
-        <rect x="47" y="4" width="2" height="8" />
-        {/* S */}
-        <rect x="51" y="2" width="7" height="2" />
-        <rect x="51" y="2" width="2" height="5" />
-        <rect x="51" y="6" width="7" height="2" />
-        <rect x="56" y="8" width="2" height="4" />
-        <rect x="51" y="12" width="7" height="2" />
-      </g>
-    </svg>
+      <span style={{ color: name }}>Kelly</span>
+      <span style={{ color: os }}>.OS</span>
+    </span>
   );
 }
 
@@ -63,7 +39,7 @@ export function BootMark({ size = 32, decorative = false }: { size?: number; dec
       height={size}
       viewBox="0 0 32 32"
       role={decorative ? undefined : "img"}
-      aria-label={decorative ? undefined : "KELL.OS"}
+      aria-label={decorative ? undefined : "Kelly.OS"}
       aria-hidden={decorative ? true : undefined}
     >
       <rect x="1" y="1" width="30" height="30" fill="var(--kellos-face)" />

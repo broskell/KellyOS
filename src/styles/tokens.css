@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
-  KELL.OS design tokens — frozen in Phase 1.
+  Kelly.OS design tokens — frozen in Phase 1.
   Components consume these names. Never ad-hoc hex in chrome or blocks.
   Chrome type is retro. Body/reading type is not.
 */
@@ -134,6 +134,7 @@
 
   /* Motion — named in design-system §10; GSAP must read these, not invent ms. */
   --kellos-duration-boot: 400ms;
+  --kellos-duration-boot-progress: 1800ms;
   --kellos-duration-window: 180ms;
   --kellos-duration-focus: 120ms;
   --kellos-duration-menu: 150ms;

@@ -2,7 +2,7 @@
  * App Registry — data shape only (Phase 2).
  * One manifest feeds desktop, Start, Ctrl+K, terminal `open`, mobile, static fallback.
  * Search overlay, Terminal, and Settings runtimes consume this data — they do not keep their own lists.
- * KELL.AI / OS Update remain empty-route rows.
+ * Kelly.AI / OS Update remain empty-route rows.
  */
 
 export type AppId =
@@ -55,7 +55,7 @@ export interface AppManifestEntry {
   icon: PixelIconName;
   /**
    * OS-chrome path. `:slug` is a pattern for documents.
-   * Empty string = reserved (Search overlay, KELL.AI, OS Update).
+   * Empty string = reserved (Search overlay, Kelly.AI, OS Update).
    */
   route: string;
   readerRoute: string | null;

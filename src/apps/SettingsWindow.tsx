@@ -28,7 +28,7 @@ export default function SettingsWindow() {
       <div className="space-y-4 p-4">
         <div className="flex items-center gap-3">
           <Wordmark size={14} />
-          <p className="font-chrome m-0">KELL.OS 3.0 — newest for new visitors. Always.</p>
+          <p className="font-chrome m-0">Kelly.OS 3.0 — newest for new visitors. Always.</p>
         </div>
         <p className="font-chrome m-0">
           Identity is the wordmark. There is no theme lab or wallpaper picker here. The version

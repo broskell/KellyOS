@@ -16,7 +16,7 @@ const ReaderProjectPage = lazy(() =>
 );
 
 function ShellFallback() {
-  return <div className="h-full min-h-0 font-chrome">KELL.OS</div>;
+  return <div className="h-full min-h-0 font-chrome">Kelly.OS</div>;
 }
 
 export function App() {
@@ -43,6 +43,7 @@ export function App() {
             <Route path="/terminal" />
             <Route path="/settings" />
             <Route path="/os-update" />
+            <Route path="/kell-ai" />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

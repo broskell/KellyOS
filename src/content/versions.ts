@@ -57,7 +57,7 @@ export const OS_VERSIONS: OSVersion[] = [
 export const VERSION_REPRESENTS: Record<VersionId, string> = {
   v1: "Before the work began. Sparsest data set — Fiverr, the intermediate years, the prep gap.",
   v2: "The learning volume. Coursework, LeapStart, the bulk of the project inventory.",
-  v3: "External verification. LangChain, GSoC, BigCode, KELL.OS. Newest visitors boot here.",
+  v3: "External verification. LangChain, GSoC, BigCode, Kelly.OS. Newest visitors boot here.",
 };
 
 /** Human span for an era, e.g. "2023 – August 2025". Never more precise than the narrative. */

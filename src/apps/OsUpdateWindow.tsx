@@ -18,14 +18,14 @@ export default function OsUpdateWindow() {
   return (
     <WindowFrame
       title="OS Update"
-      status={`Current: KELL.OS ${current.number}  ·  viewing ${osVersion(viewing).number}`}
+      status={`Current: Kelly.OS ${current.number}  ·  viewing ${osVersion(viewing).number}`}
       className="h-full min-h-0 w-full"
     >
       <div className="space-y-4 p-4">
         <div className="flex items-center gap-3">
           <Wordmark size={14} />
           <p className="font-chrome m-0">
-            KELL.OS {current.number}
+            Kelly.OS {current.number}
             {current.codename ? ` — ${current.codename}` : ""}. Newest for new visitors. Always.
           </p>
         </div>
@@ -46,7 +46,7 @@ export default function OsUpdateWindow() {
                 aria-pressed={viewing === v.id}
                 onClick={() => setViewing(v.id)}
               >
-                KELL.OS {v.number}
+                Kelly.OS {v.number}
               </button>
             ))}
           </div>
@@ -58,7 +58,7 @@ export default function OsUpdateWindow() {
             {OS_VERSIONS.map((v) => (
               <li key={v.id} className="os-sunken os-well p-3">
                 <p className="font-chrome m-0 text-[11px] font-bold">
-                  KELL.OS {v.number}
+                  Kelly.OS {v.number}
                   {v.codename ? ` — ${v.codename}` : ""}
                   {v.isLatest ? "  ·  current" : ""}
                 </p>

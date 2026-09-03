@@ -18,7 +18,7 @@ describe("registry command surfaces", () => {
     expect(ids).toContain("settings");
     expect(ids).toContain("caseStudy");
     expect(ids).toContain("osUpdate");
-    expect(ids).not.toContain("kellai");
+    expect(ids).toContain("kellai");
     expect(ids).not.toContain("search");
   });
 
@@ -36,7 +36,7 @@ describe("registry command surfaces", () => {
     expect(listed).toContain("about");
     expect(listed).toContain("settings");
     expect(listed).toContain("osUpdate");
-    expect(listed).not.toContain("kellai");
+    expect(listed).toContain("kellai");
     expect(listed).not.toContain("search");
   });
 
@@ -49,11 +49,18 @@ describe("registry command surfaces", () => {
     }
   });
 
-  it("does not invent launch paths for KELL.AI or the Search overlay", () => {
-    for (const id of ["kellai", "search"] as const) {
-      const app = APP_REGISTRY.find((a) => a.id === id)!;
-      expect(isCommandLaunchable(app)).toBe(false);
-      expect(launchPathFor(app)).toBeNull();
+  it("resolves Kelly.AI now that it has a runtime", () => {
+    const r = resolveOpenQuery("kell-ai", "search");
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.target.id).toBe("kellai");
+      expect(r.target.path).toBe("/kell-ai");
     }
+  });
+
+  it("does not invent a launch path for the Search overlay", () => {
+    const app = APP_REGISTRY.find((a) => a.id === "search")!;
+    expect(isCommandLaunchable(app)).toBe(false);
+    expect(launchPathFor(app)).toBeNull();
   });
 });

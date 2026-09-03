@@ -12,7 +12,7 @@ export default function TimelineWindow() {
   return (
     <WindowFrame
       title="Timeline"
-      status={`KELL.OS 1.0 ORIGIN era  ·  2.0  ·  3.0 current  ·  viewing ${viewingLabel}`}
+      status={`Kelly.OS 1.0 ORIGIN era  ·  2.0  ·  3.0 current  ·  viewing ${viewingLabel}`}
       menu={<ReaderMenu to="/read/timeline" />}
       className="h-full min-h-0 w-full"
     >

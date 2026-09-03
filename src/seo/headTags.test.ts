@@ -13,7 +13,7 @@ describe("injectHead", () => {
       description: "y",
     });
     expect(out.match(/<title>/g)?.length).toBe(1);
-    expect(out).toContain("KELL.OS 1.0 — Saathvik Kellampalli");
+    expect(out).toContain("Kelly.OS 1.0 — Saathvik Kellampalli");
     expect(out).toContain('rel="canonical"');
     expect(out).toContain("/og.png");
     expect(out).toContain("og:site_name");

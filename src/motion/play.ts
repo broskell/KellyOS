@@ -61,6 +61,27 @@ export function playMenuIn(el: HTMLElement | null): void {
   runOrSkip(el, "--kellos-duration-menu", 150, { opacity: 0 }, { opacity: 1 });
 }
 
+/**
+ * Boot progress fill: sweeps an element's width 0→100% over a fixed span, then
+ * resolves. Reduced motion (or no element) resolves immediately at full width.
+ * The overlay is skippable throughout — this only drives the auto-advance.
+ */
+export function playBootProgress(el: HTMLElement | null, onDone: () => void): void {
+  if (el) gsap.set(el, { width: "0%" });
+  if (!el || prefersReducedMotion()) {
+    if (el) gsap.set(el, { width: "100%" });
+    window.setTimeout(onDone, el ? 200 : 0);
+    return;
+  }
+  gsap.killTweensOf(el);
+  gsap.to(el, {
+    width: "100%",
+    duration: durationSeconds("--kellos-duration-boot-progress", 1800),
+    ease: "none",
+    onComplete: onDone,
+  });
+}
+
 /** Update ceremony enters like the boot overlay: a fade, never blocking the Skip button. */
 export function playCeremonyIn(el: HTMLElement | null): void {
   runOrSkip(el, "--kellos-duration-boot", 400, { opacity: 0 }, { opacity: 1 });

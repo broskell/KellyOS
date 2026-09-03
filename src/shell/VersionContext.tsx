@@ -36,6 +36,12 @@ interface VersionContextValue {
   ceremony: Ceremony | null;
   replayCeremony: (from: VersionId, to: VersionId) => void;
   dismissCeremony: () => void;
+  /** A returning visitor whose site grew since last visit — drives the update toast. */
+  pendingUpdate: { from: VersionId; to: VersionId } | null;
+  /** Toast "Install update": play the real ceremony. */
+  installUpdate: () => void;
+  /** Toast dismiss: acknowledge without watching. Marks latest seen. */
+  acknowledgeUpdate: () => void;
 }
 
 const VersionCtx = createContext<VersionContextValue | null>(null);
@@ -50,18 +56,20 @@ function initialVisit(): VisitClass {
 
 export function VersionProvider({ children }: { children: ReactNode }) {
   const [viewing, setViewingState] = useState<VersionId>(initialViewing);
+  const [ceremony, setCeremony] = useState<Ceremony | null>(null);
 
   // Classify the visit once, at load. A new or already-current visitor is
-  // marked as having seen latest immediately; a returning-updated visitor is
-  // marked only when they dismiss the ceremony.
-  const [ceremony, setCeremony] = useState<Ceremony | null>(() => {
-    const visit = initialVisit();
-    if (visit.kind === "returning-updated") {
-      return { from: visit.from, to: visit.to, real: true };
-    }
-    writeSeenVersion(LATEST_VERSION_ID);
-    return null;
-  });
+  // marked as having seen latest immediately (no ceremony, no toast). A
+  // returning-updated visitor gets a non-intrusive update toast (pendingUpdate);
+  // the full ceremony plays only if they click "Install update".
+  const [pendingUpdate, setPendingUpdate] = useState<{ from: VersionId; to: VersionId } | null>(
+    () => {
+      const visit = initialVisit();
+      if (visit.kind === "returning-updated") return { from: visit.from, to: visit.to };
+      writeSeenVersion(LATEST_VERSION_ID);
+      return null;
+    },
+  );
 
   const setViewing = useCallback((id: VersionId) => {
     setViewingState(id);
@@ -70,6 +78,18 @@ export function VersionProvider({ children }: { children: ReactNode }) {
 
   const replayCeremony = useCallback((from: VersionId, to: VersionId) => {
     setCeremony({ from, to, real: false });
+  }, []);
+
+  const installUpdate = useCallback(() => {
+    setPendingUpdate((p) => {
+      if (p) setCeremony({ from: p.from, to: p.to, real: true });
+      return null;
+    });
+  }, []);
+
+  const acknowledgeUpdate = useCallback(() => {
+    writeSeenVersion(LATEST_VERSION_ID);
+    setPendingUpdate(null);
   }, []);
 
   const dismissCeremony = useCallback(() => {
@@ -83,14 +103,17 @@ export function VersionProvider({ children }: { children: ReactNode }) {
     return {
       latest: LATEST_VERSION_ID,
       viewing,
-      viewingLabel: `KELL.OS ${osVersion(viewing).number}`,
+      viewingLabel: `Kelly.OS ${osVersion(viewing).number}`,
       setViewing,
       timelineEntries: visibleUpTo(timelineEntries, viewing),
       ceremony,
       replayCeremony,
       dismissCeremony,
+      pendingUpdate,
+      installUpdate,
+      acknowledgeUpdate,
     };
-  }, [viewing, setViewing, ceremony, replayCeremony, dismissCeremony]);
+  }, [viewing, setViewing, ceremony, replayCeremony, dismissCeremony, pendingUpdate, installUpdate, acknowledgeUpdate]);
 
   return <VersionCtx.Provider value={value}>{children}</VersionCtx.Provider>;
 }
@@ -102,12 +125,15 @@ export function useVersion(): VersionContextValue {
     return {
       latest: LATEST_VERSION_ID,
       viewing: LATEST_VERSION_ID,
-      viewingLabel: `KELL.OS ${osVersion(LATEST_VERSION_ID).number}`,
+      viewingLabel: `Kelly.OS ${osVersion(LATEST_VERSION_ID).number}`,
       setViewing: () => {},
       timelineEntries,
       ceremony: null,
       replayCeremony: () => {},
       dismissCeremony: () => {},
+      pendingUpdate: null,
+      installUpdate: () => {},
+      acknowledgeUpdate: () => {},
     };
   }
   return ctx;

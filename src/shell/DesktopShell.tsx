@@ -2,9 +2,12 @@ import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { BootOverlay } from "./BootOverlay";
 import { DesktopIcons } from "./DesktopIcons";
+import { DesktopTips } from "./DesktopTips";
+import { Screensaver } from "./Screensaver";
 import { SearchPalette } from "./SearchPalette";
 import { Taskbar } from "./Taskbar";
 import { UpdateCeremony } from "./UpdateCeremony";
+import { UpdateToast } from "./UpdateToast";
 import { VersionProvider, useVersion } from "./VersionContext";
 import { useCompact } from "./useCompact";
 import { useOsKeyboard } from "./useOsKeyboard";
@@ -104,9 +107,12 @@ function DesktopShellInner() {
           <DesktopIcons compact={compact} />
           <Workspace compact={compact} onDismissTip={dismissTip} />
           <SearchPalette open={searchOpen} onClose={() => setSearchOpen(false)} />
+          <DesktopTips enabled={!showTip && isHome && !compact && !searchOpen} />
         </div>
         <Taskbar startOpen={startOpen} setStartOpen={setStartOpen} />
       </div>
+      <UpdateToast />
+      <Screensaver enabled={!boot && !showCeremony && !searchOpen} />
     </div>
   );
 }

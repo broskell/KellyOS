@@ -6,6 +6,7 @@
   "rewrites": [
     { "source": "/terminal", "destination": "/index.html" },
     { "source": "/settings", "destination": "/index.html" },
-    { "source": "/os-update", "destination": "/index.html" }
+    { "source": "/os-update", "destination": "/index.html" },
+    { "source": "/kell-ai", "destination": "/index.html" }
   ]
 }

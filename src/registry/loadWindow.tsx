@@ -16,8 +16,9 @@ const timeline = lazy(() => import("../apps/TimelineWindow"));
 const terminal = lazy(() => import("../apps/TerminalWindow"));
 const settings = lazy(() => import("../apps/SettingsWindow"));
 const osUpdate = lazy(() => import("../apps/OsUpdateWindow"));
+const kellai = lazy(() => import("../apps/KellAiWindow"));
 
-/** Lazy window bodies keyed by registry id. KELL.AI has no runtime (Phase 15). */
+/** Lazy window bodies keyed by registry id. Search overlay has no window body. */
 export const APP_WINDOW_LOADERS: Partial<Record<AppId, LazyExoticComponent<AppBody>>> = {
   about,
   projects,
@@ -30,6 +31,7 @@ export const APP_WINDOW_LOADERS: Partial<Record<AppId, LazyExoticComponent<AppBo
   terminal,
   settings,
   osUpdate,
+  kellai,
 };
 
 export const CASE_STUDY_LOADER: LazyExoticComponent<CaseBody> = caseStudy;

@@ -24,9 +24,9 @@ export interface TimelineEntry {
 }
 
 export const TIMELINE_ERAS: { id: VersionId; heading: string; span: string }[] = [
-  { id: "v1", heading: "KELL.OS 1.0 — ORIGIN era", span: "2023 – August 2025" },
-  { id: "v2", heading: "KELL.OS 2.0", span: "September 2025 – May 2026" },
-  { id: "v3", heading: "KELL.OS 3.0", span: "June 2026 – present" },
+  { id: "v1", heading: "Kelly.OS 1.0 — ORIGIN era", span: "2023 – August 2025" },
+  { id: "v2", heading: "Kelly.OS 2.0", span: "September 2025 – May 2026" },
+  { id: "v3", heading: "Kelly.OS 3.0", span: "June 2026 – present" },
 ];
 
 /**
@@ -172,7 +172,7 @@ export const timelineEntries: TimelineEntry[] = [
     versionEra: "v3",
     startedAt: "2026-06",
     kind: "project",
-    title: "KELL.OS",
+    title: "Kelly.OS",
     body: "This site. Being built. Case study deferred until after Phase 18.",
     periodLabel: "June 2026 – present",
   },

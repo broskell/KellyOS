@@ -9,7 +9,7 @@ export function BootScreen({ onSkip }: { onSkip: () => void }) {
         <div className="mt-4 flex justify-center">
           <Wordmark size={18} />
         </div>
-        <p className="font-chrome mt-3">Starting KELL.OS 3.0…</p>
+        <p className="font-chrome mt-3">Starting Kelly.OS 3.0…</p>
         <p className="font-chrome text-muted mt-1">New visitors boot latest. Always.</p>
       </div>
       <button type="button" className="os-btn os-raised" onClick={onSkip}>
@@ -76,7 +76,7 @@ export function TokensLab() {
             product; the OS is the frame.
           </p>
           <p className="font-chrome mt-2">
-            KELL.OS 1.0 chrome label: <strong>KELL.OS 1.0</strong> — era subtitle ORIGIN. Project
+            Kelly.OS 1.0 chrome label: <strong>Kelly.OS 1.0</strong> — era subtitle ORIGIN. Project
             ORIGIN is always shown as a project, never as a version.
           </p>
         </div>

@@ -225,14 +225,14 @@ export const APP_REGISTRY: AppManifestEntry[] = [
   {
     id: "kellai",
     slug: "kell-ai",
-    title: "KELL.AI",
-    windowTitle: "KELL.AI",
+    title: "Kelly.AI",
+    windowTitle: "Kelly.AI",
     tier: 3,
     icon: "about",
-    route: "",
+    route: "/kell-ai",
     readerRoute: null,
     kind: "app",
-    surfaces: surfaces(["search"]),
+    surfaces: surfaces(["search", "terminalOpen"]),
   },
   {
     id: "settings",
