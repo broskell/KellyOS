@@ -42,6 +42,7 @@ export function App() {
             <Route path="/timeline" />
             <Route path="/terminal" />
             <Route path="/settings" />
+            <Route path="/os-update" />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

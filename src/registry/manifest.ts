@@ -253,10 +253,10 @@ export const APP_REGISTRY: AppManifestEntry[] = [
     windowTitle: "OS Update",
     tier: 3,
     icon: "about",
-    route: "",
+    route: "/os-update",
     readerRoute: null,
-    kind: "shell",
-    surfaces: surfaces(["osUpdate", "search"]),
+    kind: "app",
+    surfaces: surfaces(["osUpdate", "search", "terminalOpen"]),
   },
 ];
 

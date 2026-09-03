@@ -31,8 +31,12 @@ export default function SettingsWindow() {
           <p className="font-chrome m-0">KELL.OS 3.0 — newest for new visitors. Always.</p>
         </div>
         <p className="font-chrome m-0">
-          Identity is the wordmark. There is no theme lab, wallpaper picker, or version
-          switcher here. Those belong to later phases — not this window.
+          Identity is the wordmark. There is no theme lab or wallpaper picker here. The version
+          switcher and update ceremony live in{" "}
+          <Link to="/os-update" className="underline">
+            OS Update
+          </Link>
+          , not this window.
         </p>
         <section>
           <h2 className="font-chrome m-0 text-[11px] font-bold">Motion</h2>

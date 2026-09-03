@@ -17,8 +17,8 @@ describe("registry command surfaces", () => {
     expect(ids).toContain("terminal");
     expect(ids).toContain("settings");
     expect(ids).toContain("caseStudy");
+    expect(ids).toContain("osUpdate");
     expect(ids).not.toContain("kellai");
-    expect(ids).not.toContain("osUpdate");
     expect(ids).not.toContain("search");
   });
 
@@ -35,13 +35,22 @@ describe("registry command surfaces", () => {
     const listed = launchTargetsOn("terminalOpen").map((t) => t.id);
     expect(listed).toContain("about");
     expect(listed).toContain("settings");
+    expect(listed).toContain("osUpdate");
     expect(listed).not.toContain("kellai");
-    expect(listed).not.toContain("osUpdate");
     expect(listed).not.toContain("search");
   });
 
-  it("does not invent launch paths for KELL.AI or OS Update", () => {
-    for (const id of ["kellai", "osUpdate", "search"] as const) {
+  it("resolves Terminal open os-update to the OS Update runtime", () => {
+    const r = resolveOpenQuery("os-update", "terminalOpen");
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.target.id).toBe("osUpdate");
+      expect(r.target.path).toBe("/os-update");
+    }
+  });
+
+  it("does not invent launch paths for KELL.AI or the Search overlay", () => {
+    for (const id of ["kellai", "search"] as const) {
       const app = APP_REGISTRY.find((a) => a.id === id)!;
       expect(isCommandLaunchable(app)).toBe(false);
       expect(launchPathFor(app)).toBeNull();

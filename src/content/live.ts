@@ -191,5 +191,10 @@ export function timelineBlocks(): ContentBlock[] {
   return handTimelineBlocks(timelineEntries);
 }
 
+/** Build timeline blocks from an already version-filtered entry list (Phase 14). */
+export function timelineBlocksFor(entries: VisitorTimeline[]): ContentBlock[] {
+  return handTimelineBlocks(entries);
+}
+
 export const emittedAssetMap: Record<string, { url: string; width?: number; height?: number }> =
   bundle?.assets ?? {};

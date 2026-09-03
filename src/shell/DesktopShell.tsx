@@ -4,6 +4,8 @@ import { BootOverlay } from "./BootOverlay";
 import { DesktopIcons } from "./DesktopIcons";
 import { SearchPalette } from "./SearchPalette";
 import { Taskbar } from "./Taskbar";
+import { UpdateCeremony } from "./UpdateCeremony";
+import { VersionProvider, useVersion } from "./VersionContext";
 import { useCompact } from "./useCompact";
 import { useOsKeyboard } from "./useOsKeyboard";
 import { Workspace } from "../wm/Workspace";
@@ -14,6 +16,14 @@ const BOOT_KEY = "kellos-boot-skipped";
 const TIP_KEY = "kellos-first-run-dismissed";
 
 export function DesktopShell() {
+  return (
+    <VersionProvider>
+      <DesktopShellInner />
+    </VersionProvider>
+  );
+}
+
+function DesktopShellInner() {
   const compact = useCompact();
   const location = useLocation();
   const isHome = location.pathname === "/" || location.pathname === "/about";
@@ -26,6 +36,7 @@ export function DesktopShell() {
   const open = useWmStore((s) => s.open);
   const close = useWmStore((s) => s.close);
   const workspace = useWmStore((s) => s.workspace);
+  const { ceremony, dismissCeremony } = useVersion();
 
   useLayoutEffect(() => {
     const showBoot = isHome && sessionStorage.getItem(BOOT_KEY) !== "1";
@@ -73,12 +84,17 @@ export function DesktopShell() {
     return <Navigate to="/" replace />;
   }
 
+  const showCeremony = Boolean(ceremony) && !boot;
+
   return (
     <div className="os-desktop flex h-full min-h-0 flex-1 flex-col overflow-hidden">
       {boot ? <BootOverlay onSkip={skipBoot} /> : null}
+      {showCeremony && ceremony ? (
+        <UpdateCeremony ceremony={ceremony} onClose={dismissCeremony} />
+      ) : null}
       <div
         className="flex min-h-0 flex-1 flex-col overflow-hidden"
-        {...(boot ? { inert: true } : {})}
+        {...(boot || showCeremony ? { inert: true } : {})}
       >
         <div
           className={

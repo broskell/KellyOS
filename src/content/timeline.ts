@@ -202,6 +202,10 @@ export function timelineBlocks(entries: TimelineEntry[] = timelineEntries): Cont
     },
   ];
   for (const era of TIMELINE_ERAS) {
+    const eraEntries = entries.filter((e) => e.versionEra === era.id);
+    // Skip an era with no visible entries — when viewing an older version, later
+    // eras are not yet part of the OS, so they do not appear at all.
+    if (eraEntries.length === 0) continue;
     drafts.push({
       id: `tl_${era.id}_h`,
       type: "heading",
@@ -209,7 +213,7 @@ export function timelineBlocks(entries: TimelineEntry[] = timelineEntries): Cont
       text: `${era.heading} (${era.span})`,
       anchor: era.id,
     });
-    for (const entry of entries.filter((e) => e.versionEra === era.id)) {
+    for (const entry of eraEntries) {
       drafts.push({
         id: `${entry.id}_h`,
         type: "heading",
