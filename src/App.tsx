@@ -3,8 +3,11 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { DocumentHead } from "./seo/DocumentHead";
 import { TransitionOverlay } from "./shell/TransitionOverlay";
 
-const NextEdition = lazy(() =>
-  import("./apps/NextEdition").then((m) => ({ default: m.NextEdition })),
+const TwentySixHome = lazy(() =>
+  import("./twentysix/TwentySixHome").then((m) => ({ default: m.TwentySixHome })),
+);
+const TwentySixNotFound = lazy(() =>
+  import("./twentysix/TwentySixNotFound").then((m) => ({ default: m.TwentySixNotFound })),
 );
 
 const DesktopShell = lazy(() =>
@@ -32,7 +35,8 @@ export function App() {
       <div className="h-full min-h-0">
         <Suspense fallback={<ShellFallback />}>
           <Routes>
-            <Route path="/2026" element={<NextEdition />} />
+            <Route path="/2026" element={<TwentySixHome />} />
+            <Route path="/2026/*" element={<TwentySixNotFound />} />
             <Route path="/read" element={<ReaderIndex />} />
             <Route path="/read/project/:slug" element={<ReaderProjectPage />} />
             <Route path="/read/:app" element={<ReaderAppPage />} />

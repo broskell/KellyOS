@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 720" font-family="monospace">
+  <rect width="900" height="720" fill="#0b0b0b"/>
+  <text x="40" y="40" fill="#888" font-size="14">/2026 — single-page scroll map + routes</text>
+
+  <!-- scroll column -->
+  <g>
+    <rect x="60" y="64" width="440" height="70" rx="10" fill="#141414" stroke="#3a3a3a"/><text x="80" y="98" fill="#e6e6e6" font-size="15">HERO — portrait · particle text · socials · resume</text><text x="80" y="118" fill="#6a6a6a" font-size="11">#home · P1</text>
+    <rect x="60" y="150" width="440" height="60" rx="10" fill="#121212" stroke="#2c2c2c"/><text x="80" y="184" fill="#cfcfcf" font-size="14">01 · ABOUT — rotated cards, education + CGPA</text><text x="80" y="202" fill="#6a6a6a" font-size="11">#about · P2</text>
+    <rect x="60" y="226" width="440" height="60" rx="10" fill="#121212" stroke="#2c2c2c"/><text x="80" y="260" fill="#cfcfcf" font-size="14">02 · PROJECTS — expanding slats + modal</text><text x="80" y="278" fill="#6a6a6a" font-size="11">#projects · P3</text>
+    <rect x="60" y="302" width="440" height="60" rx="10" fill="#121212" stroke="#2c2c2c"/><text x="80" y="336" fill="#cfcfcf" font-size="14">03 · TECH STACK — globe · skill bars · graphs</text><text x="80" y="354" fill="#6a6a6a" font-size="11">#techstack · P4</text>
+    <rect x="60" y="378" width="440" height="60" rx="10" fill="#121212" stroke="#2c2c2c"/><text x="80" y="412" fill="#cfcfcf" font-size="14">04 · TIMELINE — curved GSAP journey</text><text x="80" y="430" fill="#6a6a6a" font-size="11">#timeline · P2</text>
+    <rect x="60" y="454" width="440" height="60" rx="10" fill="#121212" stroke="#2c2c2c"/><text x="80" y="488" fill="#cfcfcf" font-size="14">05 · CONTACT — centered CTA + field</text><text x="80" y="506" fill="#6a6a6a" font-size="11">#contact · P7</text>
+    <rect x="60" y="530" width="440" height="70" rx="10" fill="#141414" stroke="#3a3a3a"/><text x="80" y="564" fill="#e6e6e6" font-size="15">FOOTER — marquee · watermark · minimal name hover</text><text x="80" y="584" fill="#6a6a6a" font-size="11">#footer · P7</text>
+    <!-- scroll arrow -->
+    <path d="M40 74 L40 590" stroke="#333" marker-end="url(#d)"/>
+    <defs><marker id="d" markerWidth="9" markerHeight="9" refX="4" refY="7" orient="auto"><path d="M0 0 L8 0 L4 8 z" fill="#333"/></marker></defs>
+  </g>
+
+  <!-- fx accents -->
+  <text x="540" y="80" fill="#5a5a5a" font-size="11">FX (P7), placed between sections:</text>
+  <text x="540" y="104" fill="#7a7a7a" font-size="11">• line (10)  • flicker text (11)</text>
+  <text x="540" y="124" fill="#7a7a7a" font-size="11">• flip-on-hinge (12)  • ribbon (13)</text>
+  <text x="540" y="144" fill="#7a7a7a" font-size="11">• aether flow (14, hero bg)</text>
+
+  <!-- dock -->
+  <rect x="540" y="180" width="320" height="54" rx="16" fill="#161616" stroke="#3a3a3a"/>
+  <text x="700" y="212" fill="#888" font-size="12" text-anchor="middle">DOCK (fixed) — jumps to sections + routes</text>
+
+  <!-- routes -->
+  <text x="540" y="290" fill="#5a5a5a" font-size="11">Separate routes (open from dock):</text>
+  <rect x="540" y="304" width="320" height="46" rx="10" fill="#121212" stroke="#2c2c2c"/><text x="560" y="332" fill="#cfcfcf" font-size="13">/2026/terminal — P6</text>
+  <rect x="540" y="360" width="320" height="46" rx="10" fill="#121212" stroke="#2c2c2c"/><text x="560" y="388" fill="#cfcfcf" font-size="13">/2026/blog · /blog/:slug — P5 (CMS)</text>
+  <rect x="540" y="416" width="320" height="46" rx="10" fill="#121212" stroke="#2c2c2c"/><text x="560" y="444" fill="#cfcfcf" font-size="13">/2026/* — 404 (in-era)</text>
+</svg>

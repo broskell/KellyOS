@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" font-family="monospace">
+  <rect width="1200" height="760" fill="#0b0b0b"/>
+
+  <!-- contact -->
+  <rect x="8" y="8" width="1184" height="360" fill="none" stroke="#2a2a2a" stroke-dasharray="4 4"/>
+  <text x="24" y="30" fill="#5a5a5a" font-size="12">05 / CONTACT — centered composition over animated field (slot, ref 8)</text>
+  <g opacity="0.5" stroke="#333">
+    <line x1="100" y1="60" x2="260" y2="120"/><line x1="1100" y1="70" x2="940" y2="130"/>
+    <line x1="150" y1="300" x2="320" y2="240"/><line x1="1050" y1="300" x2="880" y2="250"/>
+  </g>
+  <text x="600" y="150" fill="#888" font-size="13" text-anchor="middle">GET IN TOUCH (eyebrow)</text>
+  <text x="600" y="215" fill="#f2f2f2" font-size="52" font-family="Georgia, serif" text-anchor="middle">Let’s build something</text>
+  <rect x="500" y="250" width="200" height="52" rx="26" fill="#f2f2f2"/><text x="600" y="283" fill="#0b0b0b" font-size="15" text-anchor="middle">Email me ↗</text>
+  <text x="600" y="330" fill="#6a6a6a" font-size="12" text-anchor="middle">email · socials · optional form (no credentials collected)</text>
+
+  <!-- footer -->
+  <rect x="8" y="384" width="1184" height="368" fill="none" stroke="#2a2a2a" stroke-dasharray="4 4"/>
+  <text x="24" y="410" fill="#5a5a5a" font-size="12">06 / FOOTER (slot, ref 9) + minimal name hover (ref 15)</text>
+  <!-- top marquee -->
+  <line x1="24" y1="430" x2="1176" y2="430" stroke="#222"/>
+  <text x="60" y="452" fill="#6a6a6a" font-size="12">TRANSPARENT ✦ EDITORIAL ✦ MINIMAL ✦ (marquee)</text>
+  <!-- big faint watermark -->
+  <text x="600" y="640" fill="#161616" font-size="180" font-family="Georgia, serif" text-anchor="middle" font-weight="700">KELLY</text>
+  <!-- minimal-hover name -->
+  <text x="600" y="560" fill="#3a3a3a" font-size="40" font-family="Georgia, serif" text-anchor="middle">Saathvik Kellampalli</text>
+  <text x="600" y="588" fill="#6a6a6a" font-size="11" text-anchor="middle">↑ faint, resolves to --c-ink on hover (Bugatti-style)</text>
+  <!-- links row -->
+  <text x="60" y="720" fill="#8a8a8a" font-size="12">© 2026 Saathvik Kellampalli</text>
+  <text x="1140" y="720" fill="#8a8a8a" font-size="12" text-anchor="end">GitHub · LinkedIn · Email · ↑ Top</text>
+</svg>

@@ -10,6 +10,7 @@
     { "source": "/kell-ai", "destination": "/index.html" },
     { "source": "/paint", "destination": "/index.html" },
     { "source": "/wallpaper", "destination": "/index.html" },
-    { "source": "/2026", "destination": "/index.html" }
+    { "source": "/2026", "destination": "/index.html" },
+    { "source": "/2026/(.*)", "destination": "/index.html" }
   ]
 }

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" font-family="monospace">
+  <rect width="1200" height="660" fill="#0b0b0b"/>
+  <text x="80" y="56" fill="#888" font-size="13">02 / WORK ————————————————————————</text>
+  <text x="80" y="96" fill="#e6e6e6" font-size="30" font-family="Georgia, serif">Selected projects</text>
+
+  <!-- expanding slats -->
+  <g>
+    <rect x="80" y="140" width="90" height="420" rx="12" fill="#101010" stroke="#2c2c2c"/>
+    <text x="125" y="420" fill="#777" font-size="12" transform="rotate(-90 125 420)">PROJECT A</text>
+    <rect x="184" y="140" width="90" height="420" rx="12" fill="#101010" stroke="#2c2c2c"/>
+    <text x="229" y="420" fill="#777" font-size="12" transform="rotate(-90 229 420)">PROJECT B</text>
+
+    <!-- active/expanded -->
+    <rect x="288" y="140" width="520" height="420" rx="14" fill="#151515" stroke="#3a3a3a"/>
+    <rect x="308" y="160" width="480" height="240" rx="8" fill="#1c1c1c" stroke="#333"/>
+    <text x="548" y="286" fill="#777" font-size="14" text-anchor="middle">COVER (grayscale)</text>
+    <rect x="308" y="416" width="70" height="24" rx="12" fill="#222" stroke="#3a3a3a"/><text x="343" y="432" fill="#aaa" font-size="11" text-anchor="middle">TAG</text>
+    <text x="308" y="478" fill="#e6e6e6" font-size="30" font-family="Georgia, serif">ACTIVE TITLE</text>
+    <text x="308" y="512" fill="#8a8a8a" font-size="13">Click → modal: stack · live ↗ · repo ↗ · description</text>
+
+    <rect x="822" y="140" width="90" height="420" rx="12" fill="#101010" stroke="#2c2c2c"/>
+    <text x="867" y="420" fill="#777" font-size="12" transform="rotate(-90 867 420)">PROJECT D</text>
+    <rect x="926" y="140" width="90" height="420" rx="12" fill="#101010" stroke="#2c2c2c"/>
+    <text x="971" y="420" fill="#777" font-size="12" transform="rotate(-90 971 420)">PROJECT E</text>
+    <rect x="1030" y="140" width="90" height="420" rx="12" fill="#101010" stroke="#2c2c2c"/>
+    <text x="1075" y="420" fill="#777" font-size="12" transform="rotate(-90 1075 420)">PROJECT F</text>
+  </g>
+
+  <text x="600" y="600" fill="#6a6a6a" font-size="12" text-anchor="middle">SLOT: expanding slats (ref 6). Data ← src/content/projects.ts · unverified links not shown live</text>
+  <text x="600" y="622" fill="#6a6a6a" font-size="12" text-anchor="middle">MODAL (ours): stack chips · Live ↗ · GitHub ↗ · description blocks (BlockRenderer)</text>
+</svg>

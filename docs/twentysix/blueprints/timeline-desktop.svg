@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" font-family="monospace">
+  <rect width="1200" height="760" fill="#0b0b0b"/>
+  <text x="80" y="56" fill="#888" font-size="13">04 / JOURNEY ————————————————————————</text>
+  <text x="80" y="96" fill="#e6e6e6" font-size="30" font-family="Georgia, serif">Timeline</text>
+
+  <!-- curved path -->
+  <path d="M180 150 C 320 260, 60 360, 220 470 C 340 560, 120 640, 240 720"
+        fill="none" stroke="#3a3a3a" stroke-width="3"/>
+  <path d="M180 150 C 320 260, 60 360, 220 470"
+        fill="none" stroke="#e6e6e6" stroke-width="3" stroke-dasharray="600" stroke-dashoffset="180"/>
+  <text x="300" y="150" fill="#5a5a5a" font-size="11">← path draws on scroll (ScrollTrigger scrub)</text>
+
+  <!-- nodes -->
+  <g>
+    <circle cx="180" cy="150" r="16" fill="#141414" stroke="#cfcfcf" stroke-width="2"/>
+    <text x="70" y="140" fill="#8a8a8a" font-size="16" text-anchor="end">2023</text>
+    <text x="220" y="146" fill="#cfcfcf" font-size="14">Completed 11th — strong %</text>
+
+    <circle cx="150" cy="330" r="16" fill="#141414" stroke="#8a8a8a" stroke-width="2"/>
+    <text x="60" y="326" fill="#8a8a8a" font-size="16" text-anchor="end">2023</text>
+    <text x="200" y="322" fill="#b4b4b4" font-size="14">The great Indian college race</text>
+
+    <circle cx="220" cy="470" r="16" fill="#141414" stroke="#8a8a8a" stroke-width="2"/>
+    <text x="120" y="466" fill="#8a8a8a" font-size="16" text-anchor="end">2024</text>
+    <text x="270" y="462" fill="#b4b4b4" font-size="14">Dropped a year, chased the seat</text>
+
+    <circle cx="240" cy="640" r="16" fill="#141414" stroke="#8a8a8a" stroke-width="2"/>
+    <text x="140" y="636" fill="#8a8a8a" font-size="16" text-anchor="end">2024</text>
+    <text x="290" y="632" fill="#b4b4b4" font-size="14">Multiple exams → IIT Jodhpur</text>
+  </g>
+
+  <!-- captioned photos (parallax) -->
+  <g>
+    <rect x="760" y="360" width="180" height="120" rx="8" fill="#161616" stroke="#333" transform="rotate(4 850 420)"/>
+    <text x="850" y="424" fill="#777" font-size="11" text-anchor="middle" transform="rotate(4 850 420)">photo (parallax)</text>
+    <rect x="900" y="520" width="230" height="150" rx="8" fill="#161616" stroke="#333" transform="rotate(-3 1015 595)"/>
+    <text x="1015" y="600" fill="#777" font-size="11" text-anchor="middle" transform="rotate(-3 1015 595)">photo (parallax)</text>
+  </g>
+
+  <text x="600" y="740" fill="#6a6a6a" font-size="12" text-anchor="middle">OURS — GSAP curved path + node reveals. Data ← src/content/timeline.ts · ref 7 · mobile → straight vertical line</text>
+</svg>

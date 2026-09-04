@@ -1,9 +1,10 @@
 import { useEffect } from "react";
+import { CrtBackground } from "./crt/CrtBackground";
 
 /**
- * Power screen — Restart replays the boot sequence; Shut Down shows the classic
- * "It's now safe to turn off your computer" splash with a way back on (it's a
- * website). Full-screen overlay, not part of the WM core.
+ * Power screen — Restart replays the boot sequence; Shut Down shows the CRT
+ * blue-screen (a Kelly.OS "session ended" fault screen) with a way back on
+ * (it's a website). Full-screen overlay, not part of the WM core.
  */
 const BOOT_KEY = "kellos-boot-skipped";
 
@@ -19,9 +20,14 @@ function replayBoot() {
 
 export function PowerScreen({ mode }: { mode: "restarting" | "shutdown" }) {
   useEffect(() => {
-    if (mode !== "restarting") return;
-    const t = window.setTimeout(replayBoot, 1700);
-    return () => window.clearTimeout(t);
+    if (mode === "restarting") {
+      const t = window.setTimeout(replayBoot, 1700);
+      return () => window.clearTimeout(t);
+    }
+    // Shut down: "press any key to power back on".
+    const onKey = () => replayBoot();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [mode]);
 
   if (mode === "restarting") {
@@ -50,22 +56,16 @@ export function PowerScreen({ mode }: { mode: "restarting" | "shutdown" }) {
 
   return (
     <div
-      className="fixed inset-0 z-[12000] flex flex-col items-center justify-center gap-8"
-      style={{ background: "#000" }}
+      className="fixed inset-0 z-[12000] overflow-hidden"
+      style={{ background: "#050a24" }}
       role="alertdialog"
-      aria-label="It is now safe to turn off your computer"
+      aria-label="Kelly.OS has shut down"
+      data-os-shutdown=""
     >
-      <p
-        className="text-center font-mono"
-        style={{ color: "#ffb000", fontSize: "clamp(18px, 4vw, 30px)", lineHeight: 1.5, letterSpacing: "0.04em" }}
-      >
-        It&rsquo;s now safe to turn off
-        <br />
-        your computer.
-      </p>
+      <CrtBackground variant="blue-screen" className="pointer-events-none absolute inset-0" />
       <button
         type="button"
-        className="os-btn os-raised"
+        className="os-btn os-raised absolute bottom-10 left-1/2 z-[12010] -translate-x-1/2"
         onClick={replayBoot}
         style={{ fontSize: 13 }}
       >

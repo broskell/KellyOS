@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" font-family="monospace">
+  <rect width="1000" height="620" fill="#0b0b0b"/>
+  <text x="40" y="44" fill="#888" font-size="13">/2026/terminal — monochrome terminal (nav + easter eggs)</text>
+
+  <rect x="40" y="64" width="920" height="516" rx="12" fill="#0f0f0f" stroke="#333"/>
+  <!-- title bar -->
+  <rect x="40" y="64" width="920" height="36" rx="12" fill="#151515" stroke="#2c2c2c"/>
+  <circle cx="66" cy="82" r="5" fill="#444"/><circle cx="84" cy="82" r="5" fill="#444"/><circle cx="102" cy="82" r="5" fill="#444"/>
+  <text x="500" y="86" fill="#777" font-size="12" text-anchor="middle">saathvik@kelly.os — /2026</text>
+
+  <!-- body -->
+  <text x="64" y="140" fill="#8a8a8a" font-size="13">$ help</text>
+  <text x="64" y="166" fill="#b4b4b4" font-size="13">about  projects  techstack  timeline  contact  blog  resume  clear</text>
+  <text x="64" y="192" fill="#6a6a6a" font-size="13">easter eggs: whoami · neofetch · sudo · secret</text>
+
+  <text x="64" y="236" fill="#8a8a8a" font-size="13">$ neofetch</text>
+  <rect x="64" y="252" width="180" height="120" rx="8" fill="#141414" stroke="#2c2c2c"/>
+  <text x="154" y="316" fill="#666" font-size="11" text-anchor="middle">ASCII mark</text>
+  <text x="264" y="278" fill="#cfcfcf" font-size="12">saathvik — IIT Jodhpur</text>
+  <text x="264" y="300" fill="#9a9a9a" font-size="12">stack: React · TS · Python</text>
+  <text x="264" y="322" fill="#9a9a9a" font-size="12">uptime: since 2023</text>
+
+  <text x="64" y="416" fill="#8a8a8a" font-size="13">$ projects</text>
+  <text x="64" y="442" fill="#b4b4b4" font-size="13">→ navigating to #projects …  (smoothScrollTo, or route back to /2026)</text>
+
+  <!-- prompt -->
+  <text x="64" y="540" fill="#cfcfcf" font-size="14">$ <tspan fill="#cfcfcf">▍</tspan></text>
+  <text x="40" y="606" fill="#6a6a6a" font-size="11">command parser is self-contained · commands map to sections/routes · history + autocomplete</text>
+</svg>

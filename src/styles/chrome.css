@@ -464,3 +464,21 @@ textarea,
 [contenteditable="true"] {
   cursor: text;
 }
+
+/* CRT boot loader (threeui WebGL CRT) — host fills its parent, canvas fills the host. */
+.threeui-background {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.threeui-background > canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}

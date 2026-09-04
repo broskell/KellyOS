@@ -1,0 +1,347 @@
+/*
+  Kelly.OS 2026 — the "26'" edition design system.
+  Monochrome, editorial, minimalist. NOT the retro OS.
+
+  Everything is scoped under [data-era26] so it never collides with the
+  retro os-* tokens/chrome that live at :root in styles/tokens.css.
+
+  Rule: 26' components consume these tokens. No ad-hoc hex in 26' components.
+  "Black & white" here means a full grayscale SYSTEM — subtle surfaces,
+  hairline borders, muted greys — carried by type, space, and motion.
+*/
+
+[data-era26] {
+  /* —— Grayscale ramp (near-black canvas → off-white ink) —— */
+  --c-bg: #070707; /* page canvas */
+  --c-bg-2: #0d0d0d; /* raised canvas / alt sections */
+  --c-surface: #121212; /* cards */
+  --c-surface-2: #171717; /* nested / hover surface */
+  --c-surface-3: #1e1e1e;
+  --c-line: #242424; /* hairline border */
+  --c-line-2: #333333; /* stronger border */
+  --c-muted-2: #6b6b6b; /* dimmest text (captions) */
+  --c-muted: #8a8a8a; /* secondary text */
+  --c-text-2: #b4b4b4; /* body-dim */
+  --c-text: #d6d6d6; /* body */
+  --c-ink: #f2f2f2; /* headings / high-contrast ink */
+  --c-ink-pure: #ffffff; /* reserved max contrast */
+
+  /* One restrained accent — a single cool hairline, used sparingly. */
+  --c-accent: #e6e6e6;
+  --c-accent-dim: #9a9a9a;
+
+  /* Overlays / scrims */
+  --c-scrim: rgba(0, 0, 0, 0.72);
+  --c-glass: rgba(22, 22, 22, 0.66);
+  --c-glass-line: rgba(255, 255, 255, 0.08);
+
+  /* —— Type families (already loaded in index.html) —— */
+  --f-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-ui: "Source Sans 3", system-ui, -apple-system, Segoe UI, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* —— Modular type scale (fluid, clamp-based) —— */
+  --fs-display: clamp(3rem, 9vw, 8.5rem); /* hero display */
+  --fs-h1: clamp(2.25rem, 6vw, 4.5rem);
+  --fs-h2: clamp(1.6rem, 3.5vw, 2.75rem);
+  --fs-h3: clamp(1.25rem, 2.2vw, 1.75rem);
+  --fs-lead: clamp(1.05rem, 1.6vw, 1.375rem);
+  --fs-body: clamp(0.975rem, 1.1vw, 1.0625rem);
+  --fs-caption: 0.8125rem;
+  --fs-mono: 0.75rem;
+
+  --lh-tight: 1.02;
+  --lh-snug: 1.15;
+  --lh-body: 1.6;
+  --tracking-wide: 0.32em;
+  --tracking-caps: 0.18em;
+
+  /* —— Spacing (8px scale) —— */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-24: 6rem;
+  --sp-32: 8rem;
+  --sp-40: 10rem;
+
+  --container: 1200px;
+  --container-wide: 1440px;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+
+  /* —— Radii —— */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-pill: 999px;
+
+  /* —— Motion (GSAP reads these via durationSeconds) —— */
+  --t26-dur-fast: 0.28s;
+  --t26-dur: 0.6s;
+  --t26-dur-slow: 1.05s;
+  --t26-stagger: 0.08s;
+  --t26-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* —— z-index scale (kept below retro overlays) —— */
+  --z-dock: 6000;
+  --z-modal: 6500;
+  --z-scrim: 6400;
+
+  color: var(--c-text);
+  background: var(--c-bg);
+  font-family: var(--f-ui);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+  The retro OS is a fixed-viewport app (html/body/#root are height:100%;
+  overflow:hidden). The 26' site needs normal document scrolling, so while a 26'
+  route is mounted we release those constraints. Toggled via data-era26-active on
+  <html> by the 26' route root; removed on unmount so the retro desktop is intact.
+  These rules are intentionally NOT scoped under [data-era26] — they target the
+  document shell itself.
+*/
+html[data-era26-active],
+html[data-era26-active] body,
+html[data-era26-active] #root,
+html[data-era26-active] #root > * {
+  height: auto !important;
+  min-height: 100% !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+html[data-era26-active],
+html[data-era26-active] body {
+  overflow-x: hidden !important;
+}
+
+/* Full-bleed era canvas covering the retro base reset on 26' routes. */
+.t26-root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--c-bg);
+  color: var(--c-text);
+  position: relative;
+  overflow-x: clip;
+}
+
+/* —— Base element styling (scoped) —— */
+[data-era26] ::selection {
+  background: var(--c-ink);
+  color: var(--c-bg);
+}
+[data-era26] h1,
+[data-era26] h2,
+[data-era26] h3 {
+  color: var(--c-ink);
+  font-family: var(--f-display);
+  font-weight: 600;
+  margin: 0;
+}
+[data-era26] a {
+  color: inherit;
+  text-decoration: none;
+}
+[data-era26] img {
+  display: block;
+  max-width: 100%;
+}
+
+/* —— Layout primitives —— */
+.t26-section {
+  position: relative;
+  padding-block: clamp(4rem, 10vw, 9rem);
+  padding-inline: var(--gutter);
+}
+.t26-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+}
+.t26-container-wide {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+}
+
+/* —— Type primitives —— */
+.t26-display {
+  font-family: var(--f-display);
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+}
+.t26-h1 {
+  font-family: var(--f-display);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.015em;
+  color: var(--c-ink);
+}
+.t26-h2 {
+  font-family: var(--f-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+}
+.t26-lead {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--c-text-2);
+}
+.t26-eyebrow {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.t26-muted {
+  color: var(--c-muted);
+}
+.t26-caption {
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  color: var(--c-muted-2);
+}
+
+/* —— Hairlines & surfaces —— */
+.t26-hairline {
+  height: 1px;
+  width: 100%;
+  background: var(--c-line);
+  border: 0;
+}
+.t26-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+}
+
+/* —— Buttons —— */
+.t26-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0.7rem 1.2rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--c-line-2);
+  background: transparent;
+  color: var(--c-ink);
+  font-family: var(--f-ui);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--t26-dur-fast) var(--t26-ease),
+    color var(--t26-dur-fast) var(--t26-ease),
+    border-color var(--t26-dur-fast) var(--t26-ease),
+    transform var(--t26-dur-fast) var(--t26-ease);
+}
+.t26-btn:hover {
+  background: var(--c-ink);
+  color: var(--c-bg);
+  border-color: var(--c-ink);
+}
+.t26-btn:active {
+  transform: translateY(1px);
+}
+.t26-btn--solid {
+  background: var(--c-ink);
+  color: var(--c-bg);
+  border-color: var(--c-ink);
+}
+.t26-btn--solid:hover {
+  background: transparent;
+  color: var(--c-ink);
+}
+.t26-btn[disabled],
+.t26-btn[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* —— Image treatment: grayscale by default, subtle recovery on hover —— */
+.t26-img {
+  filter: grayscale(1) contrast(1.02);
+  transition: filter var(--t26-dur) var(--t26-ease);
+  background: var(--c-surface-2);
+}
+.t26-img--recover:hover {
+  filter: grayscale(0.15) contrast(1);
+}
+
+/* —— Reveal: initial hidden state; GSAP animates to visible. —— */
+.t26-reveal {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* —— Skeleton shimmer —— */
+.t26-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--c-surface);
+  border-radius: var(--r-sm);
+}
+.t26-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  animation: t26-shimmer 1.4s infinite;
+}
+@keyframes t26-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* —— Focus visibility (accessibility) —— */
+[data-era26] :focus-visible {
+  outline: 2px solid var(--c-ink);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+/* —— Reduced motion: no shimmer, reveals shown, no transforms —— */
+@media (prefers-reduced-motion: reduce) {
+  .t26-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .t26-skeleton::after {
+    animation: none;
+  }
+  [data-era26] * {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* —— Breakpoints (mobile-first helpers) —— */
+@media (max-width: 900px) {
+  .t26-section {
+    padding-block: clamp(3rem, 12vw, 5rem);
+  }
+}
+@media (max-width: 640px) {
+  [data-era26] {
+    --fs-display: clamp(2.75rem, 15vw, 4rem);
+  }
+}

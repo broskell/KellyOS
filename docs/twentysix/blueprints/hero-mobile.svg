@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 760" font-family="monospace">
+  <rect width="375" height="760" fill="#0b0b0b"/>
+  <rect x="6" y="6" width="363" height="748" fill="none" stroke="#2a2a2a" stroke-dasharray="4 4"/>
+  <text x="18" y="28" fill="#5a5a5a" font-size="11">HERO — mobile (375) · stacked</text>
+
+  <text x="18" y="60" fill="#888" font-size="10">KELLY.OS · 2026 EDITION</text>
+
+  <!-- particle/headline slot (static fallback on mobile) -->
+  <rect x="18" y="72" width="339" height="92" fill="none" stroke="#3a3a3a" stroke-dasharray="5 4"/>
+  <text x="26" y="112" fill="#c9c9c9" font-size="30" font-family="Georgia, serif">Saathvik</text>
+  <text x="26" y="150" fill="#c9c9c9" font-size="30" font-family="Georgia, serif">Kellampalli</text>
+
+  <rect x="18" y="176" width="339" height="40" fill="none" stroke="#222"/>
+  <text x="26" y="200" fill="#9a9a9a" font-size="11">Lead paragraph (wraps)</text>
+
+  <!-- portrait below -->
+  <rect x="18" y="232" width="339" height="330" rx="12" fill="#141414" stroke="#333"/>
+  <line x1="18" y1="232" x2="357" y2="562" stroke="#242424"/>
+  <line x1="357" y1="232" x2="18" y2="562" stroke="#242424"/>
+  <text x="187" y="400" fill="#777" font-size="12" text-anchor="middle">PORTRAIT (stacks under text)</text>
+
+  <!-- socials + resume -->
+  <circle cx="44" cy="600" r="18" fill="#141414" stroke="#333"/>
+  <circle cx="90" cy="600" r="18" fill="#141414" stroke="#333"/>
+  <circle cx="136" cy="600" r="18" fill="#141414" stroke="#333"/>
+  <rect x="176" y="582" width="120" height="36" rx="18" fill="#f2f2f2"/><text x="236" y="605" fill="#0b0b0b" font-size="12" text-anchor="middle">Resume ↗</text>
+
+  <!-- mobile dock -->
+  <rect x="18" y="690" width="339" height="56" rx="16" fill="#161616" stroke="#3a3a3a" stroke-dasharray="5 4"/>
+  <g fill="#222" stroke="#3a3a3a">
+    <rect x="34" y="704" width="30" height="30" rx="8"/><rect x="74" y="704" width="30" height="30" rx="8"/>
+    <rect x="114" y="704" width="30" height="30" rx="8"/><rect x="154" y="704" width="30" height="30" rx="8"/>
+    <rect x="194" y="704" width="30" height="30" rx="8"/>
+  </g>
+  <text x="330" y="722" fill="#6a6a6a" font-size="16" text-anchor="middle">⋯</text>
+  <text x="187" y="682" fill="#6a6a6a" font-size="10" text-anchor="middle">DOCK → compact bottom bar, safe-area inset</text>
+</svg>

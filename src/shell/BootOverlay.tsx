@@ -1,17 +1,24 @@
-import { useEffect, useRef } from "react";
-import { LATEST_VERSION } from "../content/versions";
-import { playBootOut, playBootProgress } from "../motion/play";
+import { useEffect, useRef, useState } from "react";
+import { prefersReducedMotion } from "../motion/duration";
+import { playBootOut } from "../motion/play";
+import { CrtBackground } from "./crt/CrtBackground";
+import type { CrtVariant } from "./crt/crtScreens";
 
 /**
- * Full-screen boot — a dramatic, authentic OS start splash on black. Skippable
- * on the first frame, auto-advances when the progress bar fills, and reduced
- * motion resolves it immediately. Not part of the WM core.
+ * Kelly.OS '96 boot loader — a real WebGL CRT. It opens on the cinematic film
+ * leader (countdown), switches to the terminal boot log while the OS "loads its
+ * components", then hands off to the desktop. Skippable on the first frame
+ * (Skip / Esc / Enter); reduced motion goes straight through. Not the WM core.
  */
+const BOOT_SPEED = 2;
+const COUNTDOWN_MS = 2100;
+const TERMINAL_MS = 2300;
+
 export function BootOverlay({ onSkip }: { onSkip: () => void }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const fillRef = useRef<HTMLDivElement>(null);
   const skipRef = useRef<HTMLButtonElement>(null);
   const leaving = useRef(false);
+  const [variant, setVariant] = useState<CrtVariant>("cinematic");
 
   const leave = () => {
     if (leaving.current) return;
@@ -21,77 +28,54 @@ export function BootOverlay({ onSkip }: { onSkip: () => void }) {
 
   useEffect(() => {
     skipRef.current?.focus();
-    playBootProgress(fillRef.current, leave);
+    if (prefersReducedMotion()) {
+      const t = window.setTimeout(leave, 500);
+      return () => window.clearTimeout(t);
+    }
+    const toTerminal = window.setTimeout(() => setVariant("terminal"), COUNTDOWN_MS);
+    const toDesktop = window.setTimeout(leave, COUNTDOWN_MS + TERMINAL_MS);
     return () => {
-      leaving.current = true;
+      window.clearTimeout(toTerminal);
+      window.clearTimeout(toDesktop);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" || e.key === "Enter") leave();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div
       ref={rootRef}
-      className="fixed inset-0 z-[10000] flex flex-col items-center justify-center gap-10"
+      className="fixed inset-0 z-[10000] overflow-hidden"
       style={{ background: "#000" }}
       role="dialog"
       aria-modal="true"
       aria-label="Starting Kelly.OS"
       data-os-boot=""
     >
-      <div className="flex flex-col items-center text-center">
-        <div
-          style={{
-            fontFamily: "var(--kellos-font-wordmark)",
-            fontWeight: 700,
-            fontSize: "clamp(44px, 9vw, 88px)",
-            lineHeight: 1,
-            letterSpacing: "-0.02em",
-            userSelect: "none",
-          }}
-        >
-          <span style={{ color: "#ffffff" }}>Kelly</span>
-          <span style={{ color: "var(--kellos-title-active-to)" }}>.OS</span>
-        </div>
-        <p
-          className="font-mono mt-5 mb-0"
-          style={{ color: "var(--kellos-title-active-to)", fontSize: "clamp(11px, 2.4vw, 15px)" }}
-        >
-          A developer portfolio, rebuilt as an operating system · v{LATEST_VERSION.number}
-        </p>
-      </div>
-
-      <div className="w-[min(420px,80vw)]">
-        <div
-          className="h-5 w-full overflow-hidden p-[3px]"
-          role="progressbar"
-          aria-label="Starting"
-          style={{ border: "2px solid #d4d0c8", background: "#000" }}
-        >
-          <div
-            ref={fillRef}
-            className="h-full"
-            style={{
-              width: "0%",
-              background:
-                "repeating-linear-gradient(90deg, var(--kellos-title-active-to) 0 12px, #000 12px 15px)",
-            }}
-          />
-        </div>
-        <p
-          className="font-mono mt-3 mb-0 text-center"
-          style={{ color: "rgba(255,255,255,0.65)", fontSize: "12px" }}
-        >
-          Starting Kelly.OS {LATEST_VERSION.number}…  New visitors boot latest. Always.
-        </p>
-      </div>
-
+      <CrtBackground variant={variant} speed={BOOT_SPEED} typeSpeed={BOOT_SPEED} className="absolute inset-0" />
       <button
         ref={skipRef}
         type="button"
-        className="os-btn os-raised z-[10010]"
         onClick={leave}
+        className="absolute bottom-6 right-6 z-[10010] px-3 py-1 text-[12px]"
+        style={{
+          color: "rgba(255,255,255,0.85)",
+          fontFamily: "var(--kellos-font-mono, monospace)",
+          background: "rgba(0,0,0,0.35)",
+          border: "1px solid rgba(255,255,255,0.5)",
+          backdropFilter: "blur(2px)",
+          cursor: "pointer",
+        }}
       >
-        Skip
+        Skip &rsaquo;
       </button>
     </div>
   );
