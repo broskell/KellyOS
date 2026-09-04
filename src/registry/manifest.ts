@@ -258,6 +258,30 @@ export const APP_REGISTRY: AppManifestEntry[] = [
     kind: "app",
     surfaces: surfaces(["startMenu", "osUpdate", "search", "terminalOpen"]),
   },
+  {
+    id: "paint",
+    slug: "paint",
+    title: "Paint",
+    windowTitle: "Paint",
+    tier: 3,
+    icon: "paint",
+    route: "/paint",
+    readerRoute: null,
+    kind: "app",
+    surfaces: surfaces(["desktopIcon", "startMenu", "mobileGrid", "search", "terminalOpen"]),
+  },
+  {
+    id: "wallpaper",
+    slug: "wallpaper",
+    title: "Wallpaper",
+    windowTitle: "Display Properties",
+    tier: 3,
+    icon: "wallpaper",
+    route: "/wallpaper",
+    readerRoute: null,
+    kind: "app",
+    surfaces: surfaces(["desktopIcon", "startMenu", "mobileGrid", "search", "terminalOpen"]),
+  },
 ];
 
 export function appsOn(surface: RegistrySurface): AppManifestEntry[] {

@@ -9,9 +9,28 @@ const IDLE_MS = 60_000;
  * (60s idle) and never blocks content behind it beyond a keypress. Reduced
  * motion shows a still frame instead of animating. Not part of the WM core.
  */
-export function Screensaver({ enabled }: { enabled: boolean }) {
+export function Screensaver({
+  enabled,
+  forceActive = false,
+  onDeactivate,
+}: {
+  enabled: boolean;
+  /** Sleep: activate immediately regardless of idle time. */
+  forceActive?: boolean;
+  /** Called when the screensaver turns off (used to clear a forced sleep). */
+  onDeactivate?: () => void;
+}) {
   const [active, setActive] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const activeRef = useRef(false);
+  const onDeactivateRef = useRef(onDeactivate);
+  onDeactivateRef.current = onDeactivate;
+  activeRef.current = active;
+
+  // Sleep now: forced activation from the Start menu.
+  useEffect(() => {
+    if (forceActive) setActive(true);
+  }, [forceActive]);
 
   // Idle timer: reset on any input; fire when quiet for IDLE_MS.
   useEffect(() => {
@@ -22,7 +41,10 @@ export function Screensaver({ enabled }: { enabled: boolean }) {
     let timer = window.setTimeout(() => setActive(true), IDLE_MS);
     const reset = () => {
       window.clearTimeout(timer);
-      setActive((a) => (a ? false : a));
+      if (activeRef.current) {
+        setActive(false);
+        onDeactivateRef.current?.();
+      }
       timer = window.setTimeout(() => setActive(true), IDLE_MS);
     };
     const opts = { passive: true } as const;

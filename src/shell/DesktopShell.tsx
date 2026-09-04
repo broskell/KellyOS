@@ -3,16 +3,20 @@ import { Navigate, useLocation } from "react-router-dom";
 import { BootOverlay } from "./BootOverlay";
 import { DesktopIcons } from "./DesktopIcons";
 import { DesktopTips } from "./DesktopTips";
+import { EditionUpdateToast } from "./EditionUpdateToast";
+import { GuideMascot } from "./GuideMascot";
+import { PowerScreen } from "./PowerScreen";
 import { Screensaver } from "./Screensaver";
 import { SearchPalette } from "./SearchPalette";
-import { Taskbar } from "./Taskbar";
+import { Taskbar, type PowerAction } from "./Taskbar";
 import { UpdateCeremony } from "./UpdateCeremony";
 import { UpdateToast } from "./UpdateToast";
 import { VersionProvider, useVersion } from "./VersionContext";
+import { useWallpaper, wallpaperBackground } from "./wallpaperStore";
 import { useCompact } from "./useCompact";
 import { useOsKeyboard } from "./useOsKeyboard";
 import { Workspace } from "../wm/Workspace";
-import { TIP_ID, knownDesktopPath, tipSpec } from "../wm/specs";
+import { TIP_ID, knownDesktopPath } from "../wm/specs";
 import { useWmStore } from "../wm/store";
 
 const BOOT_KEY = "kellos-boot-skipped";
@@ -34,12 +38,21 @@ function DesktopShellInner() {
   const [tip, setTip] = useState(false);
   const [startOpen, setStartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [power, setPower] = useState<null | "restarting" | "shutdown">(null);
+  const [sleeping, setSleeping] = useState(false);
   const ensuredPath = useRef<string | null>(null);
   const ensureRoute = useWmStore((s) => s.ensureRoute);
-  const open = useWmStore((s) => s.open);
   const close = useWmStore((s) => s.close);
   const workspace = useWmStore((s) => s.workspace);
   const { ceremony, dismissCeremony, viewing } = useVersion();
+  const wallpaper = useWallpaper((s) => s.wallpaper);
+  const desktopBg = wallpaperBackground(wallpaper);
+
+  const onPower = useCallback((action: PowerAction) => {
+    if (action === "sleep") setSleeping(true);
+    else if (action === "restart") setPower("restarting");
+    else setPower("shutdown");
+  }, []);
 
   useLayoutEffect(() => {
     const showBoot = isHome && sessionStorage.getItem(BOOT_KEY) !== "1";
@@ -77,11 +90,10 @@ function DesktopShellInner() {
     }
   }, [location.pathname, workspace.w, workspace.h, ensureRoute]);
 
+  // The first-run guide is now the mascot overlay (below), not a WM window.
   useLayoutEffect(() => {
-    if (workspace.w < 2 || workspace.h < 2) return;
-    if (showTip) open(tipSpec(location.pathname), { focus: false });
-    else close(TIP_ID);
-  }, [showTip, location.pathname, workspace.w, workspace.h, open, close]);
+    close(TIP_ID);
+  }, [close]);
 
   if (!knownDesktopPath(location.pathname)) {
     return <Navigate to="/" replace />;
@@ -90,7 +102,12 @@ function DesktopShellInner() {
   const showCeremony = Boolean(ceremony) && !boot;
 
   return (
-    <div className="os-desktop flex h-full min-h-0 flex-1 flex-col overflow-hidden" data-os-era={viewing}>
+    <div
+      className="os-desktop flex h-full min-h-0 flex-1 flex-col overflow-hidden"
+      data-os-era={viewing}
+      style={desktopBg ? { background: desktopBg } : undefined}
+    >
+      {power ? <PowerScreen mode={power} /> : null}
       {boot ? <BootOverlay onSkip={skipBoot} /> : null}
       {showCeremony && ceremony ? (
         <UpdateCeremony ceremony={ceremony} onClose={dismissCeremony} />
@@ -109,10 +126,16 @@ function DesktopShellInner() {
           <SearchPalette open={searchOpen} onClose={() => setSearchOpen(false)} />
           <DesktopTips enabled={!showTip && isHome && !compact && !searchOpen} />
         </div>
-        <Taskbar startOpen={startOpen} setStartOpen={setStartOpen} />
+        <Taskbar startOpen={startOpen} setStartOpen={setStartOpen} onPower={onPower} />
       </div>
+      {showTip ? <GuideMascot onDismiss={dismissTip} /> : null}
       <UpdateToast />
-      <Screensaver enabled={!boot && !showCeremony && !searchOpen} />
+      <EditionUpdateToast enabled={!boot && !showCeremony} />
+      <Screensaver
+        enabled={!boot && !showCeremony && !searchOpen}
+        forceActive={sleeping}
+        onDeactivate={() => setSleeping(false)}
+      />
     </div>
   );
 }

@@ -10,12 +10,16 @@ import { specForPath } from "../wm/specs";
 import { useWmStore } from "../wm/store";
 import { useVersion } from "./VersionContext";
 
+export type PowerAction = "shutdown" | "restart" | "sleep";
+
 export function Taskbar({
   startOpen,
   setStartOpen,
+  onPower,
 }: {
   startOpen: boolean;
   setStartOpen: Dispatch<SetStateAction<boolean>>;
+  onPower: (action: PowerAction) => void;
 }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,7 +40,7 @@ export function Taskbar({
 
   return (
     <footer className="os-taskbar os-raised relative shrink-0">
-      <StartMenu open={startOpen} setOpen={setStartOpen} />
+      <StartMenu open={startOpen} setOpen={setStartOpen} onPower={onPower} />
       <div className="os-task-strip">
         {chips.map((win) => (
           <button
@@ -57,7 +61,7 @@ export function Taskbar({
       <div className="os-tray os-sunken font-chrome">
         <button
           type="button"
-          className="os-btn os-raised inline-flex items-center gap-1"
+          className="os-tray-version os-btn os-raised inline-flex items-center gap-1"
           aria-label={pendingUpdate ? "Install update" : `Kelly.OS ${latest.replace("v", "")}.0 — OS Update`}
           onClick={() => {
             if (pendingUpdate) {
@@ -90,9 +94,11 @@ export function Taskbar({
 function StartMenu({
   open,
   setOpen,
+  onPower,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  onPower: (action: PowerAction) => void;
 }) {
   useEffect(() => {
     if (!open) return;
@@ -120,15 +126,26 @@ function StartMenu({
           <span>Start</span>
         </span>
       </OsButton>
-      {open ? <StartMenuPanel onNavigate={() => setOpen(false)} /> : null}
+      {open ? <StartMenuPanel onNavigate={() => setOpen(false)} onPower={onPower} /> : null}
     </div>
   );
 }
 
-function StartMenuPanel({ onNavigate }: { onNavigate: () => void }) {
+function StartMenuPanel({
+  onNavigate,
+  onPower,
+}: {
+  onNavigate: () => void;
+  onPower: (action: PowerAction) => void;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const startApps = appsLaunchableOn("startMenu");
   const openWin = useWmStore((s) => s.open);
+  const POWER: { action: PowerAction; label: string; glyph: string }[] = [
+    { action: "sleep", label: "Sleep", glyph: "🌙" },
+    { action: "restart", label: "Restart", glyph: "🔄" },
+    { action: "shutdown", label: "Shut Down…", glyph: "⏻" },
+  ];
 
   useLayoutEffect(() => {
     playMenuIn(ref.current);
@@ -183,6 +200,24 @@ function StartMenuPanel({ onNavigate }: { onNavigate: () => void }) {
           </NavLink>
         );
       })}
+      <div className="my-1 h-px" style={{ background: "var(--kellos-bevel-shadow)" }} aria-hidden="true" />
+      {POWER.map((item) => (
+        <button
+          key={item.action}
+          type="button"
+          role="menuitem"
+          className="flex items-center gap-2 border-0 bg-transparent text-left"
+          onClick={() => {
+            onNavigate();
+            onPower(item.action);
+          }}
+        >
+          <span aria-hidden="true" className="w-4 text-center">
+            {item.glyph}
+          </span>
+          {item.label}
+        </button>
+      ))}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { WindowFrame } from "../chrome/WindowFrame";
 import { OS_VERSIONS, VERSION_REPRESENTS, VERSION_SPANS, osVersion } from "../content/versions";
 import type { VersionId } from "../content/types";
 import { useVersion } from "../shell/VersionContext";
+import { useTransition } from "../shell/transitionStore";
 
 /**
  * OS Update — the home of the version system (Phase 14). Gives the previously
@@ -13,6 +14,7 @@ import { useVersion } from "../shell/VersionContext";
  */
 export default function OsUpdateWindow() {
   const { latest, viewing, setViewing, replayCeremony } = useVersion();
+  const startTransition = useTransition((s) => s.start);
   const current = osVersion(latest);
 
   return (
@@ -29,6 +31,13 @@ export default function OsUpdateWindow() {
             {current.codename ? ` — ${current.codename}` : ""}. Newest for new visitors. Always.
           </p>
         </div>
+
+        <p className="font-chrome m-0">
+          <strong>Kelly.OS 2026 Edition</strong> is available.{" "}
+          <button type="button" className="os-btn os-raised" onClick={startTransition}>
+            Install update ↻
+          </button>
+        </p>
 
         <section>
           <h2 className="font-chrome m-0 text-[11px] font-bold">View an era</h2>

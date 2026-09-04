@@ -59,6 +59,7 @@ export function knownDesktopPath(pathname: string): boolean {
   if (pathname === "/now" || pathname === "/timeline") return true;
   if (pathname === "/terminal" || pathname === "/settings") return true;
   if (pathname === "/os-update" || pathname === "/kell-ai") return true;
+  if (pathname === "/paint" || pathname === "/wallpaper") return true;
   if (pathname.startsWith("/project/")) return true;
   return false;
 }

@@ -20,7 +20,9 @@ export type AppId =
   | "terminal"
   | "kellai"
   | "settings"
-  | "osUpdate";
+  | "osUpdate"
+  | "paint"
+  | "wallpaper";
 
 export type AppTier = 1 | 2 | 3;
 
@@ -38,7 +40,9 @@ export type PixelIconName =
   | "settings"
   | "kellai"
   | "osUpdate"
-  | "search";
+  | "search"
+  | "paint"
+  | "wallpaper";
 
 /** Surfaces that consume the same row. A new app is a registry entry, not six edits. */
 export type RegistrySurface =

@@ -267,8 +267,9 @@
   flex-shrink: 0;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--kellos-space-3);
-  padding: var(--kellos-space-3) var(--kellos-space-3) 0;
-  max-height: calc(var(--kellos-icon-hit) * 2 + var(--kellos-space-3) + var(--kellos-space-4));
+  padding: var(--kellos-space-3) var(--kellos-space-3) var(--kellos-space-3);
+  /* Fit several rows including their labels; scroll only if it overflows. */
+  max-height: 46vh;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -427,9 +428,39 @@
     min-height: var(--kellos-touch);
   }
 
+  /* Keep the tray compact and aligned on narrow screens: one row, centred,
+     no oversized touch targets throwing the baseline off. */
+  .os-tray {
+    gap: 4px;
+    padding: 0 4px;
+    min-width: 0;
+  }
+  .os-tray .os-btn {
+    min-height: 0;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
   .os-window {
     min-width: 0;
     width: 100%;
     box-shadow: none;
   }
+}
+
+/*
+ * Classic big desktop cursor — a Win95-style black arrow with a white border,
+ * applied OS-wide for the retro feel. Text fields keep the I-beam so typing
+ * still reads correctly. The WM's own resize-edge cursors are more specific and
+ * still win.
+ */
+body {
+  cursor: url("/cursor-arrow.svg") 2 2, auto;
+}
+input,
+textarea,
+[contenteditable="true"] {
+  cursor: text;
 }

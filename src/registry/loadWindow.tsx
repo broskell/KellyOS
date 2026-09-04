@@ -17,6 +17,8 @@ const terminal = lazy(() => import("../apps/TerminalWindow"));
 const settings = lazy(() => import("../apps/SettingsWindow"));
 const osUpdate = lazy(() => import("../apps/OsUpdateWindow"));
 const kellai = lazy(() => import("../apps/KellAiWindow"));
+const paint = lazy(() => import("../apps/PaintWindow"));
+const wallpaper = lazy(() => import("../apps/WallpaperWindow"));
 
 /** Lazy window bodies keyed by registry id. Search overlay has no window body. */
 export const APP_WINDOW_LOADERS: Partial<Record<AppId, LazyExoticComponent<AppBody>>> = {
@@ -32,6 +34,8 @@ export const APP_WINDOW_LOADERS: Partial<Record<AppId, LazyExoticComponent<AppBo
   settings,
   osUpdate,
   kellai,
+  paint,
+  wallpaper,
 };
 
 export const CASE_STUDY_LOADER: LazyExoticComponent<CaseBody> = caseStudy;

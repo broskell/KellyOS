@@ -7,6 +7,9 @@
     { "source": "/terminal", "destination": "/index.html" },
     { "source": "/settings", "destination": "/index.html" },
     { "source": "/os-update", "destination": "/index.html" },
-    { "source": "/kell-ai", "destination": "/index.html" }
+    { "source": "/kell-ai", "destination": "/index.html" },
+    { "source": "/paint", "destination": "/index.html" },
+    { "source": "/wallpaper", "destination": "/index.html" },
+    { "source": "/2026", "destination": "/index.html" }
   ]
 }

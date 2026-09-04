@@ -211,6 +211,31 @@ export function PixelIcon({ name }: { name: string }) {
           <line x1="19.5" y1="19.5" x2="27" y2="27" stroke={OUTLINE} strokeWidth="3" strokeLinecap="round" />
         </svg>
       );
+    case "paint":
+      return (
+        <svg {...p} aria-hidden>
+          <path
+            d="M16 5c-6.5 0-11 4-11 9 0 3.4 2.6 5.4 5.6 5.4 1.7 0 2.6.9 2.6 2.1 0 .9-.5 1.4-.5 2.3 0 1.4 1.2 2.2 3 2.2 6 0 11-4.4 11-10C27 9 22.5 5 16 5z"
+            fill="#e9c07a"
+            stroke={OUTLINE}
+            strokeWidth="1.3"
+          />
+          <circle cx="10.5" cy="12" r="1.7" fill="#c0392b" />
+          <circle cx="15.5" cy="9.5" r="1.7" fill="#2f8f4e" />
+          <circle cx="20.5" cy="11" r="1.7" fill="#2f6fb0" />
+          <circle cx="21.5" cy="16" r="1.7" fill="#f6c744" />
+          <circle cx="12" cy="21" r="2.3" fill="#ffffff" stroke={OUTLINE} strokeWidth="0.8" />
+        </svg>
+      );
+    case "wallpaper":
+      return (
+        <svg {...p} aria-hidden>
+          <rect x="4" y="6" width="24" height="20" rx="1" fill="#8a6a3a" stroke={OUTLINE} strokeWidth="1.3" />
+          <rect x="7" y="9" width="18" height="14" fill="#8ecbff" stroke={OUTLINE} strokeWidth="0.8" />
+          <circle cx="11" cy="13" r="2" fill="#ffe08a" />
+          <path d="M7 23l5-7 4 4 3-3 6 6z" fill="#3f8f5a" stroke={OUTLINE} strokeWidth="0.6" />
+        </svg>
+      );
     default:
       return (
         <svg {...p} aria-hidden>
