@@ -1,13 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { prefersReducedMotion } from "../motion/duration";
+import { ElementsBackground, type ElementVariant } from "../shaders/elements/ElementsBackground";
 
 const IDLE_MS = 60_000;
 
+/** The screensaver picks one of these at random each time it activates. */
+type Mode = "mystify" | ElementVariant;
+const MODES: Mode[] = ["mystify", "water", "lightning", "fire"];
+
 /**
- * Idle screensaver — pure Tier-3 atmosphere. A classic "Mystify" neon polyline
- * bounce on black, woken by any pointer/key. Never interrupts a working visitor
- * (60s idle) and never blocks content behind it beyond a keypress. Reduced
- * motion shows a still frame instead of animating. Not part of the WM core.
+ * Idle screensaver — pure Tier-3 atmosphere. Each activation randomly plays
+ * either the classic "Mystify" neon-polyline bounce or one of the WebGL
+ * elemental marks (water / lightning / fire), all branded Kelly.OS. Cursor
+ * movement never wakes it — only a key press does — so a passing mouse can't
+ * dismiss the sleep. Never interrupts a working visitor (60s idle). Reduced
+ * motion always shows the still Mystify frame. Not part of the WM core.
  */
 export function Screensaver({
   enabled,
@@ -21,6 +28,7 @@ export function Screensaver({
   onDeactivate?: () => void;
 }) {
   const [active, setActive] = useState(false);
+  const [mode, setMode] = useState<Mode>("mystify");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const activeRef = useRef(false);
   const onDeactivateRef = useRef(onDeactivate);
@@ -32,38 +40,54 @@ export function Screensaver({
     if (forceActive) setActive(true);
   }, [forceActive]);
 
-  // Idle timer: reset on any input; fire when quiet for IDLE_MS.
+  // Choose a fresh visual each time it wakes into sleep. Reduced motion sticks
+  // to Mystify, which renders a single static frame.
+  useEffect(() => {
+    if (!active) return;
+    setMode(prefersReducedMotion() ? "mystify" : MODES[Math.floor(Math.random() * MODES.length)]);
+  }, [active]);
+
+  // Idle timer + wake handling. Pointer/wheel activity only *resets* the idle
+  // timer while awake; once asleep it is ignored. A key press is the only thing
+  // that wakes it.
   useEffect(() => {
     if (!enabled) {
       setActive(false);
       return;
     }
     let timer = window.setTimeout(() => setActive(true), IDLE_MS);
-    const reset = () => {
+    const rearm = () => {
       window.clearTimeout(timer);
+      timer = window.setTimeout(() => setActive(true), IDLE_MS);
+    };
+    const onActivity = () => {
+      if (activeRef.current) return; // asleep: mouse/wheel must not wake it
+      rearm();
+    };
+    const onKey = () => {
       if (activeRef.current) {
         setActive(false);
         onDeactivateRef.current?.();
       }
-      timer = window.setTimeout(() => setActive(true), IDLE_MS);
+      rearm();
     };
     const opts = { passive: true } as const;
-    window.addEventListener("pointermove", reset, opts);
-    window.addEventListener("pointerdown", reset, opts);
-    window.addEventListener("keydown", reset);
-    window.addEventListener("wheel", reset, opts);
+    window.addEventListener("pointermove", onActivity, opts);
+    window.addEventListener("pointerdown", onActivity, opts);
+    window.addEventListener("wheel", onActivity, opts);
+    window.addEventListener("keydown", onKey);
     return () => {
       window.clearTimeout(timer);
-      window.removeEventListener("pointermove", reset);
-      window.removeEventListener("pointerdown", reset);
-      window.removeEventListener("keydown", reset);
-      window.removeEventListener("wheel", reset);
+      window.removeEventListener("pointermove", onActivity);
+      window.removeEventListener("pointerdown", onActivity);
+      window.removeEventListener("wheel", onActivity);
+      window.removeEventListener("keydown", onKey);
     };
   }, [enabled]);
 
-  // Mystify animation while active.
+  // Mystify animation while active (only when that mode is chosen).
   useEffect(() => {
-    if (!active) return;
+    if (!active || mode !== "mystify") return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -151,23 +175,29 @@ export function Screensaver({
       window.cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };
-  }, [active]);
+  }, [active, mode]);
 
   if (!active) return null;
 
   return (
     <div
-      className="fixed inset-0 z-[11000] bg-black"
+      className="fixed inset-0 z-[11000] overflow-hidden"
+      style={{ background: "#000" }}
       data-os-screensaver=""
       aria-hidden="true"
-      onPointerDown={() => setActive(false)}
     >
-      <canvas ref={canvasRef} className="block h-full w-full" />
+      {mode === "mystify" ? (
+        <canvas ref={canvasRef} className="block h-full w-full" />
+      ) : (
+        // pointerEvents:none keeps the sandboxed iframe from taking focus, so
+        // the parent window still receives the wake keypress.
+        <ElementsBackground variant={mode} className="absolute inset-0" style={{ pointerEvents: "none" }} />
+      )}
       <p
         className="font-mono absolute inset-x-0 bottom-8 text-center text-[13px]"
         style={{ color: "rgba(255,255,255,0.55)" }}
       >
-        Move the mouse or press a key to wake…
+        Press any key to wake…
       </p>
     </div>
   );
