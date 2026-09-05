@@ -11,6 +11,11 @@ interface ImageWithFallbackProps {
   style?: CSSProperties;
   /** Apply grayscale-with-hover-recovery treatment. */
   recover?: boolean;
+  /** Monochrome (26' default). Set false to render the image in full color. */
+  grayscale?: boolean;
+  /** Wrap in the standard card frame (border + surface + radius). Set false for
+   *  a full-bleed, frameless image that blends into the canvas. */
+  frame?: boolean;
   eager?: boolean;
 }
 
@@ -28,6 +33,8 @@ export function ImageWithFallback({
   imgClassName,
   style,
   recover = true,
+  grayscale = true,
+  frame = true,
   eager = false,
 }: ImageWithFallbackProps) {
   const [failed, setFailed] = useState(false);
@@ -45,9 +52,9 @@ export function ImageWithFallback({
         position: "relative",
         aspectRatio: ratio,
         overflow: "hidden",
-        borderRadius: "var(--r-md)",
-        background: "var(--c-surface-2)",
-        border: "1px solid var(--c-line)",
+        borderRadius: frame ? "var(--r-md)" : 0,
+        background: frame ? "var(--c-surface-2)" : "transparent",
+        border: frame ? "1px solid var(--c-line)" : "none",
         ...style,
       }}
     >
@@ -58,10 +65,19 @@ export function ImageWithFallback({
           loading={eager ? "eager" : "lazy"}
           decoding="async"
           onError={() => setFailed(true)}
-          className={["t26-img", recover ? "t26-img--recover" : "", imgClassName]
+          className={[
+            grayscale ? "t26-img" : "",
+            grayscale && recover ? "t26-img--recover" : "",
+            imgClassName,
+          ]
             .filter(Boolean)
             .join(" ")}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            ...(grayscale ? null : { filter: "none", background: "transparent" }),
+          }}
         />
       ) : (
         <div

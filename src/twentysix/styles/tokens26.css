@@ -30,6 +30,14 @@
   --c-accent: #e6e6e6;
   --c-accent-dim: #9a9a9a;
 
+  /* —— Chromatic accents (from the portfolio card art) — used sparingly on an
+     otherwise grayscale system: section indices, markers, links, one surface. */
+  --c-blue: #3b5bdb; /* royal blue block */
+  --c-blue-ink: #8098ec; /* lighter tint — legible as text on the dark canvas */
+  --c-blue-scrim: rgba(59, 91, 219, 0.14);
+  --c-tan: #cabfa8; /* warm paper — pull-quote / rare surface */
+  --c-tan-ink: #1a1712; /* ink on the tan surface */
+
   /* Overlays / scrims */
   --c-scrim: rgba(0, 0, 0, 0.72);
   --c-glass: rgba(22, 22, 22, 0.66);

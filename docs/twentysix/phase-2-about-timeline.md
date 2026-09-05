@@ -1,8 +1,21 @@
 # Phase 2 — About & Timeline
 
-**Status:** ◻ Specified · **Depends on:** P0 · **Sections:** About (`#about`) · Timeline (`#timeline`)
+**Status:** ◧ About built · Timeline pending · **Depends on:** P0 · **Sections:** About (`#about`) · Timeline (`#timeline`)
 
 Both are **hand-coded (no 21st component)** — this is where our own GSAP work lives.
+
+## Build status (2026-09-05)
+
+- ✅ **About & Education — DONE** (`components/About.tsx`, `data/about.ts`, `styles/about.css`).
+  Monochrome editorial with a restrained blue accent + one tan pull-quote surface (from the
+  portfolio card art — tokens `--c-blue*` / `--c-tan*` added to `tokens26.css`). Bio + in-page
+  jump links on the left; **education rendered as terminal-style panels that slide UP and IN
+  FROM THE RIGHT on scroll** (diagonal GSAP + ScrollTrigger tween, reduced-motion gated).
+  Then interests chips, 4 core-value cards, the tan pull-quote, and achievements — each
+  revealing on scroll via `revealStagger`. Motion is GSAP (framer-motion was **not** added —
+  GSAP is the centralized 26' motion system). Content organised from the resume.
+- ◻ **Timeline — TODO** (unchanged spec below): curved GSAP path with year nodes, from
+  `src/content/timeline.ts`.
 
 ## Goal
 

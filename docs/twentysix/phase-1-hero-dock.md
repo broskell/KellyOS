@@ -1,6 +1,34 @@
 # Phase 1 — Hero & Dock
 
-**Status:** ◻ Specified · **Depends on:** P0 · **Section:** Landing (`#home`) + persistent dock
+**Status:** ◧ Partially built · **Depends on:** P0 · **Section:** Landing (`#home`) + persistent dock
+
+## Build status (2026-09-05)
+
+- ✅ **Dock — DONE.** Persistent liquid-glass bottom nav (`components/Dock.tsx`,
+  `styles/dock.css`, `components/icons.tsx`, `data/dock.ts`). Ported a 21st.dev macOS
+  glass dock into the monochrome system (grayscale line icons, neutral glass — the
+  chromatic filter primitives were dropped + backdrop `saturate(0)` so it never picks up
+  a hue). IntersectionObserver scroll-spy (active dot), `smoothScrollTo` nav, resume link,
+  mobile-compact, reduced-motion safe.
+- ✅ **Portrait — DONE.** Full-bleed, full-colour, full-body portrait on the left
+  (`components/primitives/ImageWithFallback.tsx` gained `grayscale`/`frame` toggles;
+  `styles/hero.css`). `object-fit: contain` (never cropped), left inset, and a
+  `mask-image` bottom vignette so it dissolves into the black canvas. Served from
+  `public/content-assets/portrait.jpg`.
+- ✅ **Name typography — DONE via `WarpText`** (`components/WarpText.tsx`) — canvas warp of
+  the name (travelling sine + pointer bulge + ripple + subtle chromatic split), built to a
+  21st/React-Bits `WarpText` API the user sent usage-only; fits font to width, static under
+  reduced motion. Renders the hero `<h1>` "Saathvik Kellampalli".
+- ✅ **Ambient background — DONE via `LightRays`** (`components/LightRays.tsx`) — raw-WebGL
+  fragment-shader god-rays (origin/color/speed/spread/length/mouse-follow/noise/distortion),
+  transparent canvas behind the hero content (`.t26-hero__rays`, opacity ~0.7). Cyan `#00ffff`
+  as the user specified (⚠ off the monochrome palette — easy to swap to white/blue).
+- ✅ **Socials + description — DONE.** `components/Socials.tsx` + `data/socials.ts` +
+  `styles/socials.css` — monochrome icon row (GitHub broskell · LinkedIn kellampalli-saathvik ·
+  LeetCode kellysolves · Instagram saathvikkellampalli · Email saathvik.kp@gmail.com), hover→blue,
+  tooltips. Real hero description copy in. Eyebrow "KELLY.OS · 2026 EDITION" removed. Name enlarged
+  (two-line, fills the full body column; WarpText fit factors raised to 0.96/0.94).
+- **Hero Phase 1 is now feature-complete.**
 
 ## Goal
 

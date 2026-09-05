@@ -1,0 +1,201 @@
+/*
+  26' liquid-glass dock — the persistent bottom nav bar.
+
+  Ports the layered "liquid glass" technique (SVG turbulence + displacement
+  refraction, specular inset highlights, backdrop blur) to the 26' monochrome
+  system. Colorful macOS glyphs are replaced by grayscale line icons; the glass
+  is tuned for the near-black canvas rather than a bright wallpaper.
+
+  Scoped under [data-era26] so it never touches the retro OS chrome.
+*/
+
+[data-era26] .t26-dock-wrap {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(0.75rem, 2vw, 1.5rem));
+  transform: translateX(-50%);
+  z-index: var(--z-dock);
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* only the dock itself is interactive */
+}
+
+/* The glass shell — three stacked layers + content, per the technique. */
+[data-era26] .t26-dock {
+  position: relative;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(0, 0, 0, 0.25);
+  transition: padding var(--t26-dur) var(--t26-ease);
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 2.2);
+}
+
+/* Layer 1 — refraction: blur the canvas behind and warp it with the filter. */
+[data-era26] .t26-dock__refract {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  /* Desaturate whatever shows through so the glass never picks up a colour hue. */
+  backdrop-filter: blur(7px) saturate(0);
+  -webkit-backdrop-filter: blur(7px) saturate(0);
+  filter: url(#t26-glass-distortion);
+  isolation: isolate;
+}
+
+/* Layer 2 — tint: a faint light film so the glass reads on the black canvas. */
+[data-era26] .t26-dock__tint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  border: 1px solid var(--c-glass-line);
+}
+
+/* Layer 3 — specular: the crisp inner highlight that sells the "glass" edge. */
+[data-era26] .t26-dock__spec {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  box-shadow:
+    inset 1.5px 1.5px 1px 0 rgba(255, 255, 255, 0.22),
+    inset -1px -1px 1px 1px rgba(255, 255, 255, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+[data-era26] .t26-dock__items {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+/* Divider before trailing actions (resume). */
+[data-era26] .t26-dock__sep {
+  width: 1px;
+  align-self: stretch;
+  margin: 0.35rem 0.35rem;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+[data-era26] .t26-dock__item {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 0;
+  background: transparent;
+  color: var(--c-text-2);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition:
+    transform var(--t26-dur-fast) cubic-bezier(0.175, 0.885, 0.32, 2.2),
+    color var(--t26-dur-fast) var(--t26-ease),
+    background var(--t26-dur-fast) var(--t26-ease);
+}
+[data-era26] .t26-dock__item svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform var(--t26-dur-fast) cubic-bezier(0.175, 0.885, 0.32, 2.2);
+}
+[data-era26] .t26-dock__item:hover {
+  color: var(--c-ink);
+  transform: translateY(-6px) scale(1.12);
+}
+[data-era26] .t26-dock__item:hover svg {
+  transform: scale(1.04);
+}
+[data-era26] .t26-dock__item[aria-current="true"] {
+  color: var(--c-ink);
+}
+/* Active-section dot. */
+[data-era26] .t26-dock__item[aria-current="true"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0.2rem;
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--c-ink);
+}
+
+/* Tooltip label on hover / focus. */
+[data-era26] .t26-dock__tip {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--r-sm);
+  background: var(--c-surface-3);
+  border: 1px solid var(--c-line);
+  color: var(--c-ink);
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--t26-dur-fast) var(--t26-ease),
+    transform var(--t26-dur-fast) var(--t26-ease);
+}
+[data-era26] .t26-dock__item:hover .t26-dock__tip,
+[data-era26] .t26-dock__item:focus-visible .t26-dock__tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Hidden SVG filter host. */
+[data-era26] .t26-dock-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* —— Mobile: compact bar, tighter targets, still ≥44px —— */
+@media (max-width: 640px) {
+  [data-era26] .t26-dock {
+    padding: 0.35rem;
+  }
+  [data-era26] .t26-dock__item {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+  [data-era26] .t26-dock__item svg {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+  /* Touch has no hover; disable the lift so the bar stays stable. */
+  [data-era26] .t26-dock__item:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-era26] .t26-dock,
+  [data-era26] .t26-dock__item,
+  [data-era26] .t26-dock__item svg {
+    transition: none;
+  }
+  [data-era26] .t26-dock__item:hover {
+    transform: none;
+  }
+}

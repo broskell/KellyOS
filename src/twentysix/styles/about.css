@@ -1,0 +1,317 @@
+/*
+  26' About & Education section. Monochrome editorial + one restrained blue
+  accent (and a single tan paper surface for the pull-quote), echoing the
+  portfolio card art. Scoped under [data-era26].
+*/
+
+/* —— Header —— */
+[data-era26] .t26-about__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+[data-era26] .t26-about__head .t26-hairline {
+  flex: 1;
+}
+[data-era26] .t26-eyebrow--accent {
+  color: var(--c-blue-ink);
+}
+[data-era26] .t26-about__title {
+  margin-top: var(--sp-6);
+}
+[data-era26] .t26-about__role {
+  margin-top: var(--sp-3);
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.04em;
+  color: var(--c-text-2);
+}
+
+/* —— Bio + Education grid —— */
+[data-era26] .t26-about__grid {
+  margin-top: var(--sp-12);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+[data-era26] .t26-about__prose .t26-about__p {
+  margin-top: var(--sp-4);
+  color: var(--c-text-2);
+}
+[data-era26] .t26-about__prose .t26-lead {
+  color: var(--c-text);
+}
+
+[data-era26] .t26-about__links {
+  margin-top: var(--sp-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+[data-era26] .t26-jumplink {
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.03em;
+  color: var(--c-text-2);
+  background: transparent;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition:
+    color var(--t26-dur-fast) var(--t26-ease),
+    border-color var(--t26-dur-fast) var(--t26-ease),
+    background var(--t26-dur-fast) var(--t26-ease);
+}
+[data-era26] .t26-jumplink:hover {
+  color: var(--c-blue-ink);
+  border-color: var(--c-blue);
+  background: var(--c-blue-scrim);
+}
+[data-era26] .t26-jumplink span {
+  color: var(--c-blue-ink);
+}
+
+/* —— Education terminal panels —— */
+[data-era26] .t26-about__edu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+}
+[data-era26] .t26-edu {
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-left: 2px solid var(--c-blue);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+[data-era26] .t26-edu__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--c-surface-2);
+  border-bottom: 1px solid var(--c-line);
+}
+[data-era26] .t26-edu__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--c-line-2);
+}
+[data-era26] .t26-edu__prompt {
+  margin-left: 0.5rem;
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  color: var(--c-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-era26] .t26-edu__body {
+  padding: var(--sp-6);
+}
+[data-era26] .t26-edu__inst {
+  font-family: var(--f-display);
+  font-size: var(--fs-h3);
+  color: var(--c-ink);
+  line-height: 1.2;
+}
+[data-era26] .t26-edu__prog {
+  margin-top: var(--sp-2);
+  color: var(--c-text-2);
+}
+[data-era26] .t26-edu__dur {
+  margin-top: var(--sp-1);
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  color: var(--c-muted);
+}
+[data-era26] .t26-edu__row {
+  margin-top: var(--sp-3);
+  display: flex;
+  gap: var(--sp-3);
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  border-top: 1px dashed var(--c-line);
+  padding-top: var(--sp-3);
+}
+[data-era26] .t26-edu__k {
+  min-width: 5.5rem;
+  color: var(--c-blue-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+[data-era26] .t26-edu__v {
+  color: var(--c-text);
+}
+
+/* —— Section sub-blocks spacing —— */
+[data-era26] .t26-about__block {
+  margin-top: var(--sp-16);
+}
+
+/* —— Interests: looping wave ribbon — full-bleed edge-to-edge —— */
+[data-era26] .t26-interests-loop {
+  margin-top: var(--sp-8);
+  /* break out of the centered section container to span the full viewport.
+     (t26-root has overflow-x: clip, so 100vw adds no horizontal scroll.) */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* —— (legacy) interest chips — kept for reuse —— */
+[data-era26] .t26-interests {
+  margin-top: var(--sp-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  list-style: none;
+  padding: 0;
+}
+[data-era26] .t26-chip {
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.05em;
+  color: var(--c-text);
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  padding: 0.5rem 1.1rem;
+  transition:
+    border-color var(--t26-dur-fast) var(--t26-ease),
+    color var(--t26-dur-fast) var(--t26-ease);
+}
+[data-era26] .t26-chip:hover {
+  border-color: var(--c-blue);
+  color: var(--c-blue-ink);
+}
+
+/* —— Core values —— */
+[data-era26] .t26-values {
+  margin-top: var(--sp-6);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-4);
+}
+[data-era26] .t26-value {
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  padding: var(--sp-6);
+  transition:
+    border-color var(--t26-dur) var(--t26-ease),
+    transform var(--t26-dur) var(--t26-ease);
+}
+[data-era26] .t26-value:hover {
+  border-color: var(--c-line-2);
+  transform: translateY(-3px);
+}
+[data-era26] .t26-value__n {
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  color: var(--c-blue-ink);
+  letter-spacing: 0.1em;
+}
+[data-era26] .t26-value__t {
+  margin-top: var(--sp-3);
+  font-family: var(--f-display);
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  color: var(--c-ink);
+}
+[data-era26] .t26-value__b {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-body);
+  color: var(--c-text-2);
+}
+
+/* —— Pull-quote on tan paper (the one warm surface) —— */
+[data-era26] .t26-quote {
+  margin: 0;
+  background: var(--c-tan);
+  color: var(--c-tan-ink);
+  border-radius: var(--r-lg);
+  padding: clamp(2rem, 5vw, 3.5rem);
+  font-family: var(--f-display);
+  font-size: var(--fs-h3);
+  line-height: 1.4;
+  font-style: italic;
+  position: relative;
+}
+[data-era26] .t26-quote::before {
+  content: "\201C";
+  position: absolute;
+  top: -0.2em;
+  left: 0.3em;
+  font-size: 4em;
+  line-height: 1;
+  color: rgba(26, 23, 18, 0.18);
+  font-family: var(--f-display);
+}
+
+/* —— Achievements —— */
+[data-era26] .t26-achievements {
+  margin-top: var(--sp-6);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+}
+[data-era26] .t26-ach {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-6);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  background: var(--c-bg-2);
+}
+[data-era26] .t26-ach__h {
+  font-family: var(--f-display);
+  font-size: var(--fs-h2);
+  color: var(--c-ink);
+  line-height: 1;
+}
+[data-era26] .t26-ach__d {
+  font-size: var(--fs-body);
+  color: var(--c-text-2);
+}
+
+/* —— Pre-hide JS-animated children (mirrors .t26-reveal) —— */
+[data-era26] .t26-values .t26-value,
+[data-era26] .t26-achievements > article,
+[data-era26] .t26-edu {
+  opacity: 0;
+}
+
+/* —— Responsive —— */
+@media (max-width: 900px) {
+  [data-era26] .t26-about__grid {
+    grid-template-columns: 1fr;
+  }
+  [data-era26] .t26-values {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  [data-era26] .t26-achievements {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  [data-era26] .t26-values {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* —— Reduced motion: reveal everything —— */
+@media (prefers-reduced-motion: reduce) {
+  [data-era26] .t26-values .t26-value,
+  [data-era26] .t26-achievements > article,
+  [data-era26] .t26-edu {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

@@ -1,0 +1,14 @@
+/* WarpText — container hosts an absolutely-positioned WebGL canvas.
+   Height is supplied by the consumer (inline style / parent). */
+.warp-text {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.warp-text canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}

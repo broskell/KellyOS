@@ -1,0 +1,39 @@
+/* 26' social icon row — pure monochrome. Grey → ink on hover, no box, no colour.
+   The row's negative margin cancels the link padding so the first glyph aligns
+   flush with the text above it. Scoped under [data-era26]. */
+[data-era26] .t26-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0 0 0 -0.5rem;
+  padding: 0;
+}
+[data-era26] .t26-socials li {
+  display: flex;
+}
+
+[data-era26] .t26-social {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem;
+  color: var(--c-muted);
+  transition: color var(--t26-dur-fast) var(--t26-ease);
+}
+[data-era26] .t26-social svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+[data-era26] .t26-social:hover,
+[data-era26] .t26-social:focus-visible {
+  color: var(--c-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-era26] .t26-social {
+    transition: none;
+  }
+}
