@@ -11,17 +11,17 @@ import { projects, type Project26 } from "../data/projects26";
  * Projects (#projects). Selected work as expanding image slats (AccordionGallery);
  * clicking a slat raises the ProjectModal with the stack, description, and links.
  *
- * Orientation is responsive: horizontal slats on desktop, a vertical stack on
- * narrow screens (hover-expand is unavailable on touch, so vertical reads better).
+ * The accordion is vertical (stacked slats that expand in height); only the
+ * sizing changes between mobile and desktop.
  */
 export function Projects() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [vertical, setVertical] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const rowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 760px)");
-    const sync = () => setVertical(mq.matches);
+    const sync = () => setIsMobile(mq.matches);
     sync();
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
@@ -55,9 +55,9 @@ export function Projects() {
             items={items}
             defaultIndex={0}
             onOpen={(i) => setOpenIndex(i)}
-            orientation={vertical ? "vertical" : "horizontal"}
-            height={vertical ? 300 : 480}
-            expandRatio={vertical ? 0.62 : 0.5}
+            orientation="vertical"
+            height={isMobile ? 300 : 520}
+            expandRatio={isMobile ? 0.62 : 0.52}
             gap={12}
             radius={16}
           />

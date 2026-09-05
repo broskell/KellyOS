@@ -111,23 +111,42 @@ const AccordionGallery = ({
         tl.to(panel, { flexGrow: isActive ? grow : 1, ...rotProp, duration: dur, ease }, 0);
 
         if (media) {
-          const drift = Math.max(-1.5, Math.min(1.5, active - i));
-          const shift = drift * parallax * mediaSize * 0.06;
           const gray = grayscale ? (isActive ? 0 : 1) : 0;
-          tl.to(
-            media,
-            {
-              xPercent: -50,
-              yPercent: -50,
-              x: vertical ? 0 : isActive ? 0 : shift,
-              y: vertical ? (isActive ? 0 : shift) : 0,
-              "--ag-gray": gray,
-              "--ag-dim": isActive ? 0 : 0.4,
-              duration: dur,
-              ease,
-            },
-            0,
-          );
+          if (vertical) {
+            // Vertical slats are wide banners → the cover fills the slat directly
+            // (no centered-square parallax, which cropped the banner's sides).
+            tl.to(
+              media,
+              {
+                xPercent: 0,
+                yPercent: 0,
+                x: 0,
+                y: 0,
+                "--ag-gray": gray,
+                "--ag-dim": isActive ? 0 : 0.4,
+                duration: dur,
+                ease,
+              },
+              0,
+            );
+          } else {
+            const drift = Math.max(-1.5, Math.min(1.5, active - i));
+            const shift = drift * parallax * mediaSize * 0.06;
+            tl.to(
+              media,
+              {
+                xPercent: -50,
+                yPercent: -50,
+                x: isActive ? 0 : shift,
+                y: 0,
+                "--ag-gray": gray,
+                "--ag-dim": isActive ? 0 : 0.4,
+                duration: dur,
+                ease,
+              },
+              0,
+            );
+          }
         }
 
         if (bar && text) {

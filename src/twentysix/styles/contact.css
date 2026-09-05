@@ -1,0 +1,347 @@
+/* —— Contact (#contact) — closing CTA over the ambient Beams backdrop —— */
+
+.t26-contact {
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Full-bleed stage: beams + veil behind, content centred on top. */
+.t26-contact__stage {
+  position: relative;
+  min-height: 80vh;
+  min-height: 80dvh;
+  display: flex;
+  align-items: center;
+  padding-block: clamp(5rem, 12vw, 9rem);
+  padding-inline: var(--gutter);
+}
+
+/* Beams canvas layer. Also carries the reduced-motion / pre-mount fallback:
+   a soft top glow over the page canvas so the section never looks empty. */
+.t26-contact__beams {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(255, 255, 255, 0.06), transparent 55%),
+    var(--c-bg);
+}
+/* The R3F Canvas fills the layer. */
+.t26-contact__beams .beams-container {
+  position: absolute;
+  inset: 0;
+}
+
+/* Legibility veil: an even scrim over the beams (content now spans both columns)
+   that feathers top/bottom into the page canvas so the section blends with its
+   neighbours. */
+.t26-contact__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      100deg,
+      rgba(7, 7, 7, 0.82) 0%,
+      rgba(7, 7, 7, 0.62) 45%,
+      rgba(7, 7, 7, 0.72) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      var(--c-bg) 0%,
+      rgba(7, 7, 7, 0.35) 20%,
+      rgba(7, 7, 7, 0.35) 78%,
+      var(--c-bg) 100%
+    );
+}
+
+.t26-contact__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.t26-contact__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+.t26-contact__head .t26-hairline {
+  flex: 1;
+}
+
+/* Two-column layout: pitch left, form right. */
+.t26-contact__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.t26-contact__pitch {
+  min-width: 0;
+}
+
+.t26-contact__title {
+  font-family: var(--f-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+  margin: 0 0 var(--sp-6);
+  text-wrap: balance;
+}
+
+.t26-contact__lead {
+  max-width: 42ch;
+  margin: 0 0 var(--sp-8);
+}
+
+.t26-contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+/* Socials sit inline with the email button on wider screens. */
+.t26-contact__socials {
+  margin: 0;
+}
+
+/* —— Contact form (right column) — editorial underline fields —— */
+.t26-contact__formwrap {
+  min-width: 0;
+}
+
+.t26-cform {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.4rem, 2.6vw, 1.9rem);
+  padding: clamp(1.75rem, 3vw, 2.75rem);
+  background: linear-gradient(
+    180deg,
+    rgba(20, 20, 20, 0.72),
+    rgba(11, 11, 11, 0.66)
+  );
+  border: 1px solid var(--c-glass-line);
+  border-radius: var(--r-lg);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.05) inset,
+    0 30px 60px -30px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(14px) saturate(0);
+  -webkit-backdrop-filter: blur(14px) saturate(0);
+}
+
+/* Form heading */
+.t26-cform__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.t26-cform__title {
+  font-family: var(--f-display);
+  font-size: clamp(1.35rem, 2vw, 1.6rem);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+  margin: 0;
+}
+.t26-cform__hint {
+  margin: 0;
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.04em;
+  color: var(--c-muted-2);
+}
+
+/* Fields: label above a borderless input with an animated underline. */
+.t26-cform__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding-bottom: 2px;
+}
+.t26-cform__field::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--c-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--t26-ease);
+}
+.t26-cform__field:focus-within::after {
+  transform: scaleX(1);
+}
+
+.t26-cform__label {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--c-muted);
+  transition: color var(--t26-dur-fast) var(--t26-ease);
+}
+.t26-cform__field:focus-within .t26-cform__label {
+  color: var(--c-ink);
+}
+
+.t26-cform__input {
+  width: 100%;
+  padding: 0.55rem 0.15rem;
+  font-family: var(--f-ui);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--c-ink);
+  caret-color: var(--c-ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--c-line-2);
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    border-color 0.35s var(--t26-ease),
+    color 0.35s var(--t26-ease);
+}
+.t26-cform__input::placeholder {
+  color: var(--c-muted-2);
+  transition: color var(--t26-dur-fast) var(--t26-ease);
+}
+.t26-cform__input:hover {
+  border-bottom-color: var(--c-muted-2);
+}
+.t26-cform__input:focus {
+  outline: none;
+  border-bottom-color: transparent; /* the field ::after underline takes over */
+}
+.t26-cform__input:focus::placeholder {
+  color: var(--c-line-2);
+}
+
+/* Neutralise the browser autofill box so fields keep the transparent underline
+   look. The 9999s background transition defeats Chrome/Safari's autofill fill
+   (it animates the background in, so an effectively-infinite delay keeps it
+   transparent), and text-fill-color keeps the typed value in ink. */
+.t26-cform__input:-webkit-autofill,
+.t26-cform__input:-webkit-autofill:hover,
+.t26-cform__input:-webkit-autofill:focus,
+.t26-cform__input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--c-ink);
+  caret-color: var(--c-ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition:
+    background-color 9999s ease-out 0s,
+    border-color 0.35s var(--t26-ease);
+}
+
+.t26-cform__textarea {
+  resize: vertical;
+  min-height: 6.5rem;
+  line-height: var(--lh-body);
+}
+
+/* Foot: button + status */
+.t26-cform__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+.t26-cform__submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.5rem;
+  font-family: var(--f-ui);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--c-bg);
+  background: var(--c-ink);
+  border: 1px solid var(--c-ink);
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition:
+    background var(--t26-dur-fast) var(--t26-ease),
+    color var(--t26-dur-fast) var(--t26-ease),
+    transform var(--t26-dur-fast) var(--t26-ease);
+}
+.t26-cform__submit:hover {
+  background: transparent;
+  color: var(--c-ink);
+}
+.t26-cform__submit:active {
+  transform: translateY(1px);
+}
+.t26-cform__submit:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+.t26-cform__arrow {
+  transition: transform var(--t26-dur-fast) var(--t26-ease);
+}
+.t26-cform__submit:hover .t26-cform__arrow {
+  transform: translateX(4px);
+}
+
+.t26-cform__status {
+  margin: 0;
+  flex: 1;
+  min-width: 12ch;
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  line-height: 1.4;
+  color: var(--c-muted);
+}
+.t26-cform__status[data-state="error"] {
+  color: var(--c-text);
+}
+.t26-cform__status[data-state="sent"] {
+  color: var(--c-ink);
+}
+
+@media (max-width: 900px) {
+  .t26-contact__grid {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 8vw, 3rem);
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  .t26-contact__stage {
+    min-height: auto;
+    align-items: stretch;
+  }
+  .t26-contact__head {
+    gap: var(--sp-4);
+  }
+  .t26-contact__actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--sp-6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t26-contact__title {
+    text-wrap: initial;
+  }
+  .t26-cform {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--c-surface);
+  }
+}

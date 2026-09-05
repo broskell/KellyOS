@@ -9,6 +9,8 @@ import { ImageWithFallback } from "./components/primitives/ImageWithFallback";
 import { Dock } from "./components/Dock";
 import { About } from "./components/About";
 import { Projects } from "./components/Projects";
+import { TechStack } from "./components/TechStack";
+import { Contact } from "./components/Contact";
 import WarpText from "./components/WarpText";
 import LightRays from "./components/LightRays";
 import { Socials } from "./components/Socials";
@@ -107,13 +109,7 @@ export function TwentySixHome() {
 
       <About />
       <Projects />
-      <SectionPlaceholder
-        id="techstack"
-        index="03 / Stack"
-        title="Tech stack"
-        note="Rotating globe → skill bars · GitHub + LeetCode graphs (Chunk 4)"
-        minH={360}
-      />
+      <TechStack />
       <SectionPlaceholder
         id="timeline"
         index="04 / Journey"
@@ -121,12 +117,7 @@ export function TwentySixHome() {
         note="Curved GSAP path with year nodes (Chunk 2)"
         minH={420}
       />
-      <SectionPlaceholder
-        id="contact"
-        index="05 / Contact"
-        title="Get in touch"
-        note="Contact component (Chunk 7)"
-      />
+      <Contact />
 
       {/* Footer (Chunk 7) — extra bottom space so the fixed dock never overlaps */}
       <Section as="footer" id="footer" label="Footer">

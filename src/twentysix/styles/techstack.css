@@ -1,0 +1,401 @@
+/*
+  Tech Stack (#techstack) — section shell + logo sphere + skill-rate bar + live
+  GitHub / LeetCode graphs. Monochrome; consumes tokens26. The sphere's own
+  interaction/layout lives in src/components/ui/img-sphere.tsx.
+*/
+
+.t26-techstack__head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.t26-techstack__head .t26-hairline {
+  flex: 1;
+}
+.t26-techstack__intro {
+  margin-top: 1.1rem;
+  max-width: 58ch;
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--c-text-2);
+}
+
+/* ————————————————————————————————— Layout ————————————————————————————————— */
+.t26-techstack__grid {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: stretch;
+}
+.t26-techstack__left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  align-items: center;
+  justify-content: center; /* centre the globe + toggle against the taller graphs column */
+}
+.t26-techstack__right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  min-width: 0;
+}
+
+/* ————————————————————————————————— Sphere ————————————————————————————————— */
+.t26-techsphere-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.t26-techsphere {
+  position: relative;
+  touch-action: none; /* let the sphere own drag gestures */
+}
+/* Each sphere sprite is a colourful brand logo on a light chip. */
+.t26-techsphere img {
+  background: radial-gradient(circle at 50% 32%, #ffffff, #e4e4e4);
+  padding: 19%;
+}
+
+/* Globe / Grid toggle (segmented control under the sphere). */
+.t26-techview {
+  display: inline-flex;
+  padding: 4px;
+  gap: 4px;
+  border: 1px solid var(--c-line);
+  border-radius: 999px;
+  background: var(--c-surface);
+}
+.t26-techview__btn {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-muted);
+  padding: 0.4rem 1.1rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    color var(--t26-dur-fast) var(--t26-ease),
+    background var(--t26-dur-fast) var(--t26-ease);
+}
+.t26-techview__btn:hover {
+  color: var(--c-text);
+}
+.t26-techview__btn.is-active {
+  color: var(--c-bg);
+  background: var(--c-ink);
+}
+
+/* Static icon-grid fallback (touch / reduced-motion / "Grid" view). */
+.t26-techgrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+.t26-techgrid__chip {
+  width: 100%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 18%;
+  border: 1px solid var(--c-line);
+  border-radius: 14px;
+  background: radial-gradient(circle at 50% 32%, #1c1c1c, #0b0b0b);
+  cursor: pointer;
+  transition:
+    border-color var(--t26-dur-fast) var(--t26-ease),
+    transform var(--t26-dur-fast) var(--t26-ease),
+    box-shadow var(--t26-dur-fast) var(--t26-ease);
+}
+.t26-techgrid__chip img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.t26-techgrid__chip:hover {
+  border-color: var(--c-line-2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.7);
+}
+.t26-techgrid__chip.is-active {
+  border-color: var(--c-ink);
+  box-shadow: 0 0 0 2px var(--c-ink);
+}
+
+/* ——————————————————————————————— Skill detail ——————————————————————————————— */
+.t26-skill {
+  width: 100%;
+  max-width: 460px;
+  border: 1px solid var(--c-line);
+  border-radius: 16px;
+  background: var(--c-surface);
+  padding: clamp(1.1rem, 2.5vw, 1.5rem);
+}
+.t26-skill__head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.t26-skill__logo {
+  width: 46px;
+  height: 46px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid var(--c-line);
+  background: radial-gradient(circle at 50% 32%, #ffffff, #e4e4e4);
+  padding: 9px;
+}
+.t26-skill__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.t26-skill__name {
+  font-family: var(--f-display);
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  margin: 0;
+  color: var(--c-ink);
+}
+.t26-skill__cat {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-muted);
+}
+
+.t26-skill__bar {
+  display: flex;
+  gap: 8px;
+  margin-top: 1.25rem;
+}
+.t26-skill__seg {
+  flex: 1;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-line);
+  transform-origin: left center;
+}
+.t26-skill__seg.is-on {
+  background: linear-gradient(90deg, var(--c-text-2), var(--c-ink));
+  border-color: transparent;
+  box-shadow: 0 0 12px rgba(242, 242, 242, 0.18);
+  /* Fill in on mount — the popup renders fresh each time it opens. */
+  animation: t26-seg-fill var(--t26-dur) var(--t26-ease) both;
+}
+@keyframes t26-seg-fill {
+  from {
+    transform: scaleX(0.35);
+    opacity: 0.25;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.t26-skill__meta {
+  margin-top: 0.9rem;
+}
+.t26-skill__tier {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-ink);
+}
+.t26-skill__blurb {
+  margin: 0.3rem 0 0;
+  font-size: var(--fs-caption);
+  color: var(--c-muted);
+}
+.t26-skill__evidence {
+  margin: 1rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--c-line);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: var(--c-text-2);
+}
+
+/* ——————————————————————————————— Skill popup ——————————————————————————————— */
+.t26-sm {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 5vw, 3rem);
+}
+.t26-sm__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--c-scrim);
+  backdrop-filter: blur(3px);
+}
+.t26-sm__panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  border: 1px solid var(--c-line-2);
+  border-radius: 18px;
+  background: var(--c-surface);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+  padding: clamp(1.3rem, 3vw, 1.75rem);
+}
+.t26-sm__panel:focus {
+  outline: none;
+}
+.t26-sm__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--c-line);
+  background: var(--c-surface-2);
+  color: var(--c-text);
+  cursor: pointer;
+  transition:
+    border-color var(--t26-dur-fast) var(--t26-ease),
+    color var(--t26-dur-fast) var(--t26-ease),
+    background var(--t26-dur-fast) var(--t26-ease);
+}
+.t26-sm__close:hover {
+  border-color: var(--c-ink);
+  color: var(--c-ink);
+  background: var(--c-surface-3);
+}
+/* Inside the popup the panel is the card, so the skill block is chrome-free. */
+.t26-sm .t26-skill {
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-width: none;
+}
+
+/* ————————————————————————————————— Graphs ————————————————————————————————— */
+.t26-graph {
+  border: 1px solid var(--c-line);
+  border-radius: 16px;
+  background: var(--c-surface);
+  padding: 1.1rem 1.2rem 1.25rem;
+  min-width: 0;
+}
+.t26-graph__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+.t26-graph__label {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-ink);
+}
+.t26-graph__link {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  color: var(--c-muted);
+  text-decoration: none;
+  transition: color var(--t26-dur-fast) var(--t26-ease);
+}
+.t26-graph__link:hover {
+  color: var(--c-ink);
+}
+.t26-graph__body {
+  position: relative;
+  min-height: 132px;
+}
+.t26-graph__scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.t26-graph__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Graphs keep their native green so activity levels read at a glance. */
+  transition: opacity var(--t26-dur) var(--t26-ease);
+}
+.t26-graph__img--lc {
+  max-width: 500px;
+  margin-inline: auto;
+}
+.t26-graph__skeleton {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: linear-gradient(
+    100deg,
+    var(--c-surface-2) 30%,
+    var(--c-surface-3) 50%,
+    var(--c-surface-2) 70%
+  );
+  background-size: 200% 100%;
+  animation: t26-graph-shimmer 1.3s ease-in-out infinite;
+}
+@keyframes t26-graph-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+.t26-graph__fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.5rem 0;
+  color: var(--c-muted);
+}
+.t26-btn--ghost {
+  background: transparent;
+  border: 1px solid var(--c-line-2);
+  color: var(--c-text);
+}
+.t26-btn--ghost:hover {
+  border-color: var(--c-ink);
+  color: var(--c-ink);
+}
+
+/* ————————————————————————————————— Mobile ————————————————————————————————— */
+@media (max-width: 860px) {
+  .t26-techstack__grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  /* GitHub heatmap is wide → keep it legible by scrolling horizontally. */
+  .t26-graph--gh .t26-graph__img {
+    width: auto;
+    min-width: 560px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t26-graph__skeleton {
+    animation: none;
+  }
+  .t26-skill__seg.is-on {
+    animation: none;
+  }
+}
