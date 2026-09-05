@@ -30,13 +30,31 @@
   --c-accent: #e6e6e6;
   --c-accent-dim: #9a9a9a;
 
-  /* —— Chromatic accents (from the portfolio card art) — used sparingly on an
-     otherwise grayscale system: section indices, markers, links, one surface. */
-  --c-blue: #3b5bdb; /* royal blue block */
-  --c-blue-ink: #8098ec; /* lighter tint — legible as text on the dark canvas */
-  --c-blue-scrim: rgba(59, 91, 219, 0.14);
-  --c-tan: #cabfa8; /* warm paper — pull-quote / rare surface */
-  --c-tan-ink: #1a1712; /* ink on the tan surface */
+  /* —— Neutral accents — the 26' site is strictly black / white / grey. These
+     names are kept (many components consume them) but resolve to grayscale:
+     section indices, markers, links, and the "paper" surfaces. */
+  --c-blue: #4d4d4d; /* neutral grey — borders / hover accents */
+  --c-blue-ink: #cfcfcf; /* light-grey accent text on the dark canvas */
+  --c-blue-scrim: rgba(255, 255, 255, 0.06);
+
+  /* Rotated-card surfaces — graded (not flat) for depth. */
+  --c-paper-hi: #f6f6f4; /* paper top highlight */
+  --c-paper-lo: #cececa; /* paper bottom shade */
+  --c-paper-ink: #14140f; /* ink on paper */
+  --c-paper-key: #46443c; /* muted key/label ink on paper */
+  --c-label-hi: #262626; /* dark label block, top */
+  --c-label-lo: #050505; /* dark label block, bottom */
+  --c-label-ink: #f7f7f5; /* text on the dark label block */
+  --c-label-edge: rgba(255, 255, 255, 0.16); /* crisp edge vs the black page */
+
+  /* Cream answer-card surface (warm paper). */
+  --c-cream-hi: #f5ecd6; /* cream top highlight */
+  --c-cream-lo: #e6d7b6; /* cream bottom shade */
+  --c-cream-ink: #221c10; /* warm ink on cream */
+  --c-cream-key: #5f5236; /* muted warm key ink on cream */
+
+  --c-tan: #ededeb; /* legacy name → light paper (pull-quote surface) */
+  --c-tan-ink: #14140f; /* ink on the paper surface */
 
   /* Overlays / scrims */
   --c-scrim: rgba(0, 0, 0, 0.72);

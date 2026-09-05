@@ -1,12 +1,14 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/about.css";
 import { Section } from "./primitives/Section";
 import { Reveal } from "./primitives/Reveal";
 import TextLoop from "./TextLoop";
+import { RotatedCard } from "./about/RotatedCard";
 import { revealStagger } from "../motion/reveal";
 import { registerScroll } from "../motion/scroll";
-import { durationSeconds, prefersReducedMotion } from "../../motion/duration";
+import { prefersReducedMotion } from "../../motion/duration";
 import { smoothScrollTo } from "../motion/scroll";
 import {
   role,
@@ -20,13 +22,16 @@ import {
 } from "../data/about";
 
 /**
- * About & Education (#about). Monochrome editorial with a restrained blue accent
- * (from the portfolio card art). Bio on the left; the education panels slide up
- * from the right on scroll (GSAP + ScrollTrigger). Interests, core values, a
- * pull-quote, and achievements follow, each revealing on scroll.
+ * About & Education (#about). Strictly monochrome (black / white / grey).
+ *
+ * The bio + education render as rotated cards inside a pinned "stage": on scroll
+ * the "Who I Am" card enters, then each successive card slides in from the right
+ * while the previous one fades off to the left (a GSAP pinned + scrubbed
+ * timeline). On mobile / reduced motion the cards fall back to a stacked reveal.
+ * Interests, core values, a pull-quote, and achievements follow.
  */
 export function About() {
-  const eduRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
   const valuesRef = useRef<HTMLDivElement>(null);
   const achieveRef = useRef<HTMLDivElement>(null);
 
@@ -37,28 +42,104 @@ export function About() {
     registerScroll();
     const cleanups: Array<() => void> = [];
 
-    // Education: slide UP and IN FROM THE RIGHT, staggered.
-    const eduItems = eduRef.current?.querySelectorAll<HTMLElement>(".t26-edu");
-    if (eduItems && eduItems.length) {
+    // Rotated cards (About + Education).
+    const stage = cardsRef.current;
+    const cardList = stage
+      ? Array.from(stage.querySelectorAll<HTMLElement>(".t26-rcard"))
+      : [];
+    const isMobile =
+      typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+
+    if (stage && cardList.length) {
       if (prefersReducedMotion()) {
-        gsap.set(eduItems, { opacity: 1, x: 0, y: 0 });
+        // Everything visible in normal flow — no motion.
+        gsap.set(cardList, { opacity: 1, x: 0, y: 0, rotate: 0 });
+      } else if (isMobile) {
+        // Simple stacked reveal from the right (pinning is jittery on touch).
+        cardList.forEach((card) => {
+          const tw = gsap.fromTo(
+            card,
+            { opacity: 0, x: 60, y: 24, rotate: 3 },
+            {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              rotate: 0,
+              duration: 0.9,
+              ease: "power3.out",
+              scrollTrigger: { trigger: card, start: "top 85%", once: true },
+            },
+          );
+          cleanups.push(() => {
+            tw.scrollTrigger?.kill();
+            tw.kill();
+          });
+        });
       } else {
-        const tw = gsap.fromTo(
-          eduItems,
-          { opacity: 0, x: 90, y: 56 },
-          {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            duration: durationSeconds("--t26-dur-slow", 1050),
-            ease: "power3.out",
-            stagger: 0.14,
-            scrollTrigger: { trigger: eduRef.current, start: "top 78%", once: true },
+        // Desktop: a pinned stage where cards swap. "Who I Am" enters, then each
+        // next card slides in from the right as the previous fades off left.
+        const maxH = Math.max(...cardList.map((c) => c.offsetHeight));
+        stage.style.height = `${maxH}px`;
+        stage.classList.add("t26-rcards--stage");
+
+        // Pre-stage every card off to the right, hidden.
+        gsap.set(cardList, { opacity: 0, xPercent: 55, yPercent: 5, rotate: 3.5 });
+
+        const tl = gsap.timeline({
+          defaults: { ease: "power2.inOut" },
+          scrollTrigger: {
+            trigger: stage,
+            start: "center 55%",
+            end: `+=${cardList.length * 105}%`,
+            pin: true,
+            pinSpacing: true,
+            scrub: 1.4,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
           },
-        );
+        });
+
+        // First card in.
+        tl.to(cardList[0], {
+          opacity: 1,
+          xPercent: 0,
+          yPercent: 0,
+          rotate: 0,
+          duration: 1,
+          ease: "power2.out",
+        });
+        tl.to({}, { duration: 0.7 }); // hold
+
+        for (let i = 1; i < cardList.length; i++) {
+          // Previous card fades off to the left; next enters from the right.
+          // They overlap (cross-fade) so the swap reads as one smooth motion.
+          tl.to(cardList[i - 1], {
+            opacity: 0,
+            xPercent: -55,
+            yPercent: -4,
+            rotate: -3.5,
+            duration: 1,
+          });
+          tl.to(
+            cardList[i],
+            { opacity: 1, xPercent: 0, yPercent: 0, rotate: 0, duration: 1, ease: "power2.out" },
+            "<0.35",
+          );
+          tl.to({}, { duration: 0.7 }); // hold
+        }
+
+        ScrollTrigger.refresh();
+        // Re-measure once fonts settle (card heights can shift).
+        const onLoad = () => ScrollTrigger.refresh();
+        window.addEventListener("load", onLoad);
+
         cleanups.push(() => {
-          tw.scrollTrigger?.kill();
-          tw.kill();
+          window.removeEventListener("load", onLoad);
+          tl.scrollTrigger?.kill();
+          tl.kill();
+          stage.classList.remove("t26-rcards--stage");
+          stage.style.height = "";
+          gsap.set(cardList, { clearProps: "all" });
         });
       }
     }
@@ -89,63 +170,60 @@ export function About() {
           <span className="t26-eyebrow t26-eyebrow--accent">01 / About</span>
           <hr className="t26-hairline" />
         </div>
-        <h2 className="t26-h1 t26-about__title">About Me</h2>
         <p className="t26-about__role">
           <span className="t26-muted">Who I Am —</span> {role}
         </p>
       </Reveal>
 
-      {/* Bio + Education */}
-      <div className="t26-about__grid">
-        <Reveal className="t26-about__prose" delay={0.05}>
+      {/* Bio + Education — stacked rotated blue-label / tan-paper cards */}
+      <div className="t26-rcards" ref={cardsRef} aria-label="About and education">
+        {/* About Me */}
+        <RotatedCard side="left" tag="Introduction" label="Who I Am">
           {bio.map((p, i) => (
-            <p key={i} className={i === 0 ? "t26-lead" : "t26-about__p"}>
+            <p key={i} className="t26-rcard__p">
               {p}
             </p>
           ))}
-          <nav className="t26-about__links" aria-label="Jump to section">
-            {jumpLinks.map((l) => (
-              <button
-                key={l.to}
-                type="button"
-                className="t26-jumplink"
-                onClick={() => {
-                  const el = document.getElementById(l.to);
-                  if (el) smoothScrollTo(el);
-                }}
-              >
-                <span aria-hidden="true">▹</span> {l.label}
-              </button>
-            ))}
-          </nav>
-        </Reveal>
+        </RotatedCard>
 
-        <div className="t26-about__edu" ref={eduRef} aria-label="Education">
-          {education.map((e, i) => (
-            <article key={i} className="t26-edu">
-              <header className="t26-edu__bar">
-                <span className="t26-edu__dot" />
-                <span className="t26-edu__dot" />
-                <span className="t26-edu__dot" />
-                <span className="t26-edu__prompt">
-                  saathvik@portfolio:~$ cat education/{i === 0 ? "iitj" : "lst"}.txt
-                </span>
-              </header>
-              <div className="t26-edu__body">
-                <h3 className="t26-edu__inst">{e.institution}</h3>
-                <p className="t26-edu__prog">{e.program}</p>
-                <p className="t26-edu__dur">{e.duration}</p>
-                {e.rows?.map((r) => (
-                  <p key={r.label} className="t26-edu__row">
-                    <span className="t26-edu__k">{r.label}</span>
-                    <span className="t26-edu__v">{r.value}</span>
-                  </p>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
+        {/* Education */}
+        {education.map((e, i) => (
+          <RotatedCard
+            key={e.institution}
+            side={i % 2 === 0 ? "right" : "left"}
+            tag="Education"
+            label={e.institution}
+          >
+            <p className="t26-rcard__prog">{e.program}</p>
+            <p className="t26-rcard__dur">{e.duration}</p>
+            {e.rows?.map((r) => (
+              <p key={r.label} className="t26-rcard__row">
+                <span className="t26-rcard__k">{r.label}</span>
+                <span className="t26-rcard__v">{r.value}</span>
+              </p>
+            ))}
+          </RotatedCard>
+        ))}
       </div>
+
+      {/* Jump links */}
+      <Reveal className="t26-about__block">
+        <nav className="t26-about__links" aria-label="Jump to section">
+          {jumpLinks.map((l) => (
+            <button
+              key={l.to}
+              type="button"
+              className="t26-jumplink"
+              onClick={() => {
+                const el = document.getElementById(l.to);
+                if (el) smoothScrollTo(el);
+              }}
+            >
+              <span aria-hidden="true">▹</span> {l.label}
+            </button>
+          ))}
+        </nav>
+      </Reveal>
 
       {/* Interests — looping wave ribbon */}
       <Reveal className="t26-about__block">

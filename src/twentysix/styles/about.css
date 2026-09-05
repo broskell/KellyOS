@@ -1,7 +1,8 @@
 /*
-  26' About & Education section. Monochrome editorial + one restrained blue
-  accent (and a single tan paper surface for the pull-quote), echoing the
-  portfolio card art. Scoped under [data-era26].
+  26' About & Education section. Strictly monochrome (black / white / grey).
+  The bio + education render as "rotated cards" (an off-white label block over a
+  grey paper card) that swap on scroll via a pinned GSAP timeline. Scoped under
+  [data-era26].
 */
 
 /* —— Header —— */
@@ -16,31 +17,12 @@
 [data-era26] .t26-eyebrow--accent {
   color: var(--c-blue-ink);
 }
-[data-era26] .t26-about__title {
-  margin-top: var(--sp-6);
-}
 [data-era26] .t26-about__role {
   margin-top: var(--sp-3);
   font-family: var(--f-mono);
   font-size: var(--fs-caption);
   letter-spacing: 0.04em;
   color: var(--c-text-2);
-}
-
-/* —— Bio + Education grid —— */
-[data-era26] .t26-about__grid {
-  margin-top: var(--sp-12);
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: start;
-}
-[data-era26] .t26-about__prose .t26-about__p {
-  margin-top: var(--sp-4);
-  color: var(--c-text-2);
-}
-[data-era26] .t26-about__prose .t26-lead {
-  color: var(--c-text);
 }
 
 [data-era26] .t26-about__links {
@@ -71,82 +53,6 @@
 }
 [data-era26] .t26-jumplink span {
   color: var(--c-blue-ink);
-}
-
-/* —— Education terminal panels —— */
-[data-era26] .t26-about__edu {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-6);
-}
-[data-era26] .t26-edu {
-  background: var(--c-surface);
-  border: 1px solid var(--c-line);
-  border-left: 2px solid var(--c-blue);
-  border-radius: var(--r-md);
-  overflow: hidden;
-  will-change: transform, opacity;
-}
-[data-era26] .t26-edu__bar {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 0.9rem;
-  background: var(--c-surface-2);
-  border-bottom: 1px solid var(--c-line);
-}
-[data-era26] .t26-edu__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--c-line-2);
-}
-[data-era26] .t26-edu__prompt {
-  margin-left: 0.5rem;
-  font-family: var(--f-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.02em;
-  color: var(--c-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-[data-era26] .t26-edu__body {
-  padding: var(--sp-6);
-}
-[data-era26] .t26-edu__inst {
-  font-family: var(--f-display);
-  font-size: var(--fs-h3);
-  color: var(--c-ink);
-  line-height: 1.2;
-}
-[data-era26] .t26-edu__prog {
-  margin-top: var(--sp-2);
-  color: var(--c-text-2);
-}
-[data-era26] .t26-edu__dur {
-  margin-top: var(--sp-1);
-  font-family: var(--f-mono);
-  font-size: var(--fs-caption);
-  color: var(--c-muted);
-}
-[data-era26] .t26-edu__row {
-  margin-top: var(--sp-3);
-  display: flex;
-  gap: var(--sp-3);
-  font-family: var(--f-mono);
-  font-size: var(--fs-caption);
-  border-top: 1px dashed var(--c-line);
-  padding-top: var(--sp-3);
-}
-[data-era26] .t26-edu__k {
-  min-width: 5.5rem;
-  color: var(--c-blue-ink);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-[data-era26] .t26-edu__v {
-  color: var(--c-text);
 }
 
 /* —— Section sub-blocks spacing —— */
@@ -230,7 +136,144 @@
   color: var(--c-text-2);
 }
 
-/* —— Pull-quote on tan paper (the one warm surface) —— */
+/* —— Rotated cards: off-white label block overlapping a grey paper card ——
+   (echoes the composition of reference 03-challenges-rotated-cards, in mono). */
+[data-era26] .t26-rcards {
+  position: relative;
+  margin-top: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  max-width: 920px;
+  margin-inline: auto;
+}
+/* Pinned-swap mode: cards stack in the same space (height set inline by JS). */
+[data-era26] .t26-rcards--stage {
+  display: block;
+}
+[data-era26] .t26-rcards--stage > .t26-rcard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+[data-era26] .t26-rcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  will-change: transform, opacity;
+}
+[data-era26] .t26-rcard--right {
+  align-items: flex-end;
+}
+
+/* Label block — dark graphite gradient with a crisp edge, tilted, tucked over
+   the top of the cream answer card. Pops against the black page and the cream. */
+[data-era26] .t26-rcard__label {
+  position: relative;
+  z-index: 2;
+  max-width: min(78%, 640px);
+  padding: clamp(1rem, 2.4vw, 1.6rem) clamp(1.4rem, 3vw, 2.2rem);
+  background: linear-gradient(145deg, var(--c-label-hi), var(--c-label-lo));
+  color: var(--c-label-ink);
+  border: 1px solid var(--c-label-edge);
+  border-radius: var(--r-sm);
+  box-shadow:
+    0 24px 50px -24px rgba(0, 0, 0, 1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: rotate(-2.4deg);
+  margin-bottom: clamp(-1.6rem, -2.6vw, -2.4rem);
+  margin-left: clamp(0.5rem, 2vw, 2rem);
+}
+[data-era26] .t26-rcard--right .t26-rcard__label {
+  transform: rotate(2.4deg);
+  margin-left: 0;
+  margin-right: clamp(0.5rem, 2vw, 2rem);
+}
+[data-era26] .t26-rcard__tag {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: var(--sp-1);
+}
+[data-era26] .t26-rcard__title {
+  font-family: var(--f-display);
+  font-size: var(--fs-h3);
+  line-height: 1.18;
+  color: var(--c-label-ink);
+}
+
+/* Answer card — cream gradient with a top sheen, tilted the other way. */
+[data-era26] .t26-rcard__body {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: clamp(1.8rem, 3.6vw, 2.8rem) clamp(1.6rem, 3.4vw, 2.6rem)
+    clamp(1.6rem, 3.4vw, 2.4rem);
+  background: linear-gradient(158deg, var(--c-cream-hi), var(--c-cream-lo));
+  color: var(--c-cream-ink);
+  border-radius: var(--r-sm);
+  box-shadow:
+    0 34px 70px -32px rgba(0, 0, 0, 1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transform: rotate(1.1deg);
+}
+[data-era26] .t26-rcard--right .t26-rcard__body {
+  transform: rotate(-1.1deg);
+}
+[data-era26] .t26-rcard__p {
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--c-cream-ink);
+}
+[data-era26] .t26-rcard__p + .t26-rcard__p {
+  margin-top: var(--sp-4);
+}
+[data-era26] .t26-rcard__lead {
+  font-weight: 700;
+}
+
+/* Education content on the cream answer card */
+[data-era26] .t26-rcard__prog {
+  font-size: var(--fs-lead);
+  color: var(--c-cream-ink);
+}
+[data-era26] .t26-rcard__dur {
+  margin-top: var(--sp-1);
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  color: var(--c-cream-key);
+}
+[data-era26] .t26-rcard__row {
+  margin-top: var(--sp-3);
+  display: flex;
+  gap: var(--sp-3);
+  font-family: var(--f-mono);
+  font-size: var(--fs-caption);
+  border-top: 1px dashed rgba(34, 28, 16, 0.24);
+  padding-top: var(--sp-3);
+}
+[data-era26] .t26-rcard__k {
+  min-width: 6rem;
+  color: var(--c-cream-key);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+[data-era26] .t26-rcard__v {
+  color: var(--c-cream-ink);
+}
+
+/* Pre-hide for the JS scroll-in tween (mirrors .t26-reveal). */
+[data-era26] .t26-rcard {
+  opacity: 0;
+}
+
+/* —— Pull-quote on the grey paper surface —— */
 [data-era26] .t26-quote {
   margin: 0;
   background: var(--c-tan);
@@ -250,7 +293,7 @@
   left: 0.3em;
   font-size: 4em;
   line-height: 1;
-  color: rgba(26, 23, 18, 0.18);
+  color: rgba(21, 21, 21, 0.18);
   font-family: var(--f-display);
 }
 
@@ -283,9 +326,27 @@
 
 /* —— Pre-hide JS-animated children (mirrors .t26-reveal) —— */
 [data-era26] .t26-values .t26-value,
-[data-era26] .t26-achievements > article,
-[data-era26] .t26-edu {
+[data-era26] .t26-achievements > article {
   opacity: 0;
+}
+
+/* On small screens straighten the cards so nothing clips off-canvas. */
+@media (max-width: 640px) {
+  [data-era26] .t26-rcard,
+  [data-era26] .t26-rcard--right {
+    align-items: stretch;
+  }
+  [data-era26] .t26-rcard__label,
+  [data-era26] .t26-rcard--right .t26-rcard__label {
+    max-width: 90%;
+    margin-left: clamp(0.25rem, 3vw, 1rem);
+    margin-right: 0;
+    transform: rotate(-1.4deg);
+  }
+  [data-era26] .t26-rcard__body,
+  [data-era26] .t26-rcard--right .t26-rcard__body {
+    transform: rotate(0.6deg);
+  }
 }
 
 /* —— Responsive —— */
@@ -309,9 +370,12 @@
 /* —— Reduced motion: reveal everything —— */
 @media (prefers-reduced-motion: reduce) {
   [data-era26] .t26-values .t26-value,
-  [data-era26] .t26-achievements > article,
-  [data-era26] .t26-edu {
+  [data-era26] .t26-achievements > article {
     opacity: 1 !important;
     transform: none !important;
+  }
+  /* Cards visible; keep their static paper tilt (only the entrance is disabled). */
+  [data-era26] .t26-rcard {
+    opacity: 1 !important;
   }
 }
