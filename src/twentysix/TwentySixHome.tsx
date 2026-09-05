@@ -8,6 +8,7 @@ import { Reveal } from "./components/primitives/Reveal";
 import { ImageWithFallback } from "./components/primitives/ImageWithFallback";
 import { Dock } from "./components/Dock";
 import { About } from "./components/About";
+import { Projects } from "./components/Projects";
 import WarpText from "./components/WarpText";
 import LightRays from "./components/LightRays";
 import { Socials } from "./components/Socials";
@@ -105,13 +106,7 @@ export function TwentySixHome() {
       </Section>
 
       <About />
-      <SectionPlaceholder
-        id="projects"
-        index="02 / Work"
-        title="Selected projects"
-        note="Expanding slats → modal with stack, live, repo, description (Chunk 3)"
-        minH={360}
-      />
+      <Projects />
       <SectionPlaceholder
         id="techstack"
         index="03 / Stack"

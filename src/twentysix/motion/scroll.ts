@@ -21,6 +21,20 @@ export function registerScroll(): void {
 
 let lenis: Lenis | null = null;
 
+/**
+ * Pause / resume Lenis smooth-scroll. Used to fully lock the page behind a modal:
+ * `body { overflow: hidden }` alone doesn't stop Lenis (it smooths the wheel on
+ * window itself), so overlays must pause it while open. Safe to call when Lenis
+ * isn't running (reduced motion / touch) — it's a no-op then. Pair with
+ * `data-lenis-prevent` on the overlay's own scroll container so that scrolls
+ * natively while the rest of the page is frozen.
+ */
+export function setSmoothScrollPaused(paused: boolean): void {
+  if (!lenis) return;
+  if (paused) lenis.stop();
+  else lenis.start();
+}
+
 /** Programmatic scroll used by the dock / terminal nav. Falls back to native. */
 export function smoothScrollTo(
   target: string | HTMLElement | number,

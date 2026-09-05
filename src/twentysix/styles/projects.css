@@ -1,0 +1,251 @@
+/*
+  Projects (#projects) — section shell + project-detail modal. Monochrome; consumes
+  tokens26. The accordion's own look lives in components/projects/AccordionGallery.css.
+*/
+
+.t26-projects__head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.t26-projects__head .t26-hairline {
+  flex: 1;
+}
+.t26-eyebrow--accent {
+  color: var(--c-blue-ink);
+}
+.t26-projects__intro {
+  margin-top: 1.1rem;
+  max-width: 56ch;
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--c-text-2);
+}
+.t26-projects__row {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+/* —————————————————————————————————— Modal —————————————————————————————————— */
+.t26-pm {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 3rem);
+}
+.t26-pm__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--c-scrim);
+  backdrop-filter: blur(6px) saturate(0);
+  -webkit-backdrop-filter: blur(6px) saturate(0);
+}
+.t26-pm__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(880px, 100%);
+  max-height: min(88vh, 900px);
+  overflow: hidden; /* the inner .t26-pm__scroll scrolls, so Silk stays pinned */
+  background: var(--c-bg-2);
+  border: 1px solid var(--c-line-2);
+  border-radius: var(--r-lg);
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+}
+.t26-pm__panel:focus {
+  outline: none;
+}
+
+/* Animated silk backdrop — pinned behind the (separately scrolling) content. */
+.t26-pm__silk {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.t26-pm__silk canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* The scroll container: takes the wheel natively (data-lenis-prevent) while the
+   page behind is frozen; sits above the silk layer. */
+.t26-pm__scroll {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-line-2) transparent;
+}
+.t26-pm__scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.t26-pm__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.t26-pm__scroll::-webkit-scrollbar-thumb {
+  background: var(--c-line-2);
+  border-radius: var(--r-pill);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.t26-pm__scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--c-muted);
+  background-clip: content-box;
+}
+
+.t26-pm__close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--c-glass-line);
+  background: var(--c-glass);
+  color: var(--c-ink);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    background var(--t26-dur-fast) var(--t26-ease),
+    transform var(--t26-dur-fast) var(--t26-ease);
+}
+.t26-pm__close:hover {
+  background: var(--c-ink);
+  color: var(--c-bg);
+}
+.t26-pm__close:active {
+  transform: scale(0.94);
+}
+
+.t26-pm__cover {
+  width: 100%;
+}
+.t26-pm__cover .t26-imgwrap {
+  border-radius: var(--r-lg) var(--r-lg) 0 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--c-line) !important;
+}
+
+.t26-pm__body {
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  /* Translucent veil so the silk reads as a subtle moving texture behind the
+     copy while keeping text fully legible. */
+  background: linear-gradient(180deg, rgba(9, 9, 9, 0.5) 0%, rgba(9, 9, 9, 0.72) 100%);
+}
+.t26-pm__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.t26-pm__title {
+  font-family: var(--f-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  color: var(--c-ink);
+}
+.t26-pm__tagline {
+  font-size: var(--fs-lead);
+  color: var(--c-text-2);
+  line-height: 1.45;
+}
+
+.t26-pm__stack {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.t26-pm__chip {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-text);
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--c-line-2);
+  border-radius: var(--r-pill);
+  background: var(--c-surface-2);
+}
+
+.t26-pm__desc {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.t26-pm__desc p {
+  margin: 0;
+  color: var(--c-text);
+  line-height: var(--lh-body);
+}
+
+.t26-pm__highlights {
+  margin: 1.35rem 0 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--c-text-2);
+}
+.t26-pm__highlights li {
+  line-height: 1.5;
+}
+.t26-pm__highlights li::marker {
+  color: var(--c-muted);
+}
+
+.t26-pm__actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.t26-pm__status {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  padding: 0.5rem 0.9rem;
+  border: 1px dashed var(--c-line-2);
+  border-radius: var(--r-pill);
+}
+
+@media (max-width: 760px) {
+  .t26-pm {
+    padding: 0;
+    place-items: end stretch;
+  }
+  .t26-pm__panel {
+    width: 100%;
+    max-height: 92vh;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    border-bottom: 0;
+  }
+  .t26-pm__cover .t26-imgwrap {
+    border-radius: var(--r-lg) var(--r-lg) 0 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t26-pm__close {
+    transition: none;
+  }
+}

@@ -148,6 +148,60 @@ html[data-era26-active] body {
   overflow-x: hidden !important;
 }
 
+/*
+  Scrollbars — monochrome, scoped to the 26' era so the retro OS keeps its own.
+  Covers the document scrollbar (while a 26' route is active) plus any scrollable
+  region inside the era root. NOTE: the --c-* tokens live on [data-era26] (the
+  .t26-root div), so they DON'T resolve on <html> (an ancestor) — the document
+  scrollbar rules use literal hex; the descendant rules inside the era can use the
+  tokens. Firefox: scrollbar-width/-color; WebKit/Blink: ::-webkit-scrollbar.
+*/
+html[data-era26-active] {
+  scrollbar-width: thin;
+  scrollbar-color: #333333 transparent;
+}
+html[data-era26-active]::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+html[data-era26-active]::-webkit-scrollbar-track,
+html[data-era26-active]::-webkit-scrollbar-corner {
+  background: #070707;
+}
+html[data-era26-active]::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 999px;
+  border: 3px solid #070707;
+  background-clip: content-box;
+}
+html[data-era26-active]::-webkit-scrollbar-thumb:hover {
+  background: #8a8a8a;
+  background-clip: content-box;
+}
+
+[data-era26] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-line-2) transparent;
+}
+[data-era26] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+[data-era26] ::-webkit-scrollbar-track,
+[data-era26] ::-webkit-scrollbar-corner {
+  background: var(--c-bg);
+}
+[data-era26] ::-webkit-scrollbar-thumb {
+  background: var(--c-line-2);
+  border-radius: var(--r-pill);
+  border: 3px solid var(--c-bg);
+  background-clip: content-box;
+}
+[data-era26] ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-muted);
+  background-clip: content-box;
+}
+
 /* Full-bleed era canvas covering the retro base reset on 26' routes. */
 .t26-root {
   min-height: 100vh;
