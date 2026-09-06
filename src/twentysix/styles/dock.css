@@ -183,6 +183,13 @@
 }
 
 /* —— Mobile: compact bar, tighter targets, still ≥44px —— */
+@media (max-width: 768px) {
+  [data-era26] .t26-dock__item--desktop-only,
+  [data-era26] .t26-dock__li--desktop-only {
+    display: none !important;
+  }
+}
+
 @media (max-width: 640px) {
   [data-era26] .t26-dock {
     padding: 0.35rem;

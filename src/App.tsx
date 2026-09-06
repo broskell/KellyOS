@@ -6,6 +6,9 @@ import { TransitionOverlay } from "./shell/TransitionOverlay";
 const TwentySixHome = lazy(() =>
   import("./twentysix/TwentySixHome").then((m) => ({ default: m.TwentySixHome })),
 );
+const TwentySixTerminal = lazy(() =>
+  import("./twentysix/components/TwentySixTerminal").then((m) => ({ default: m.TwentySixTerminal })),
+);
 const TwentySixNotFound = lazy(() =>
   import("./twentysix/TwentySixNotFound").then((m) => ({ default: m.TwentySixNotFound })),
 );
@@ -36,6 +39,7 @@ export function App() {
         <Suspense fallback={<ShellFallback />}>
           <Routes>
             <Route path="/2026" element={<TwentySixHome />} />
+            <Route path="/2026/terminal" element={<TwentySixTerminal />} />
             <Route path="/2026/*" element={<TwentySixNotFound />} />
             <Route path="/read" element={<ReaderIndex />} />
             <Route path="/read/project/:slug" element={<ReaderProjectPage />} />

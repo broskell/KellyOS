@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/dock.css";
 import { dockItems } from "../data/dock";
 import { smoothScrollTo } from "../motion/scroll";
@@ -91,27 +92,43 @@ export function Dock() {
         <ul className="t26-dock__items">
           {dockItems.map((item, idx) => {
             const isLink = item.kind === "link";
+            const isExternal = item.to.startsWith("http") || item.to.endsWith(".pdf");
             const prevIsSection = idx > 0 && dockItems[idx - 1].kind !== "link";
             const showSep = isLink && prevIsSection;
 
             return (
-              <li key={item.id} style={{ display: "contents" }}>
+              <li
+                key={item.id}
+                className={item.desktopOnly ? "t26-dock__li--desktop-only" : undefined}
+                style={{ display: item.desktopOnly ? undefined : "contents" }}
+              >
                 {showSep && <span className="t26-dock__sep" aria-hidden="true" />}
                 {isLink ? (
-                  <a
-                    className="t26-dock__item"
-                    href={item.to}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={item.label}
-                  >
-                    {item.icon}
-                    <span className="t26-dock__tip">{item.label}</span>
-                  </a>
+                  isExternal ? (
+                    <a
+                      className={`t26-dock__item ${item.desktopOnly ? "t26-dock__item--desktop-only" : ""}`}
+                      href={item.to}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={item.label}
+                    >
+                      {item.icon}
+                      <span className="t26-dock__tip">{item.label}</span>
+                    </a>
+                  ) : (
+                    <Link
+                      className={`t26-dock__item ${item.desktopOnly ? "t26-dock__item--desktop-only" : ""}`}
+                      to={item.to}
+                      aria-label={item.label}
+                    >
+                      {item.icon}
+                      <span className="t26-dock__tip">{item.label}</span>
+                    </Link>
+                  )
                 ) : (
                   <button
                     type="button"
-                    className="t26-dock__item"
+                    className={`t26-dock__item ${item.desktopOnly ? "t26-dock__item--desktop-only" : ""}`}
                     aria-label={item.label}
                     aria-current={active === item.to ? "true" : undefined}
                     onClick={() => scrollToSection(item.to)}

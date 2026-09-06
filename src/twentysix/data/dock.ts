@@ -7,6 +7,7 @@ import {
   IconTimeline,
   IconMail,
   IconResume,
+  IconTerminal,
 } from "../components/icons";
 
 /**
@@ -20,6 +21,7 @@ export interface DockItem {
   /** section id (default) or href (kind: "link"). */
   to: string;
   kind?: "section" | "link";
+  desktopOnly?: boolean;
 }
 
 /**
@@ -39,5 +41,13 @@ export const dockItems: DockItem[] = [
     icon: IconResume({}),
     to: "/Saathvik_Kellampalli_Resume.pdf",
     kind: "link",
+  },
+  {
+    id: "terminal",
+    label: "Terminal",
+    icon: IconTerminal({}),
+    to: "/2026/terminal",
+    kind: "link",
+    desktopOnly: true,
   },
 ];

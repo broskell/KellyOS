@@ -311,9 +311,19 @@ export const GlowCursor = ({
       lastInputTime = performance.now();
 
       const el = event.target as HTMLElement | null;
-      isHoveringInteractive = Boolean(
-        el?.closest('a, button, [role="button"], [href], input, textarea, select, .t26-btn, .t26-dock-item')
-      );
+      let isPointer = false;
+      if (el) {
+        try {
+          const computedCursor = window.getComputedStyle(el).cursor;
+          isPointer = computedCursor === 'pointer';
+        } catch {}
+        if (!isPointer) {
+          isPointer = Boolean(
+            el.closest('a, button, [role="button"], [href], input, textarea, select, .t26-btn, .t26-dock-item, svg')
+          );
+        }
+      }
+      isHoveringInteractive = isPointer;
     };
 
     const onPointerLeave = () => {
@@ -349,20 +359,17 @@ export const GlowCursor = ({
       }
 
       const idleFor = now - lastInputTime;
-      const shouldFade = config.idleFade && (!pointerInside || idleFor > config.idleTimeout);
+      const shouldFade = (config.idleFade && (!pointerInside || idleFor > config.idleTimeout)) || isHoveringInteractive;
       const fadeStep = (16.667 * delta) / Math.max(config.fadeDuration, 16);
       const fadeTarget = initialized && config.enabled && !shouldFade ? 1 : 0;
-      fade += (fadeTarget - fade) * Math.min(1, fadeStep * 7);
-
-      const widthMultiplier = isHoveringInteractive ? 1.6 : 1.0;
-      const glowMultiplier = isHoveringInteractive ? 1.4 : 1.0;
+      fade += (fadeTarget - fade) * Math.min(1, fadeStep * (isHoveringInteractive ? 14 : 7));
 
       program.uniforms.uPointCount.value = clamp(Math.round(config.trailLength), 2, MAX_POINTS);
       program.uniforms.uColor.value = hexToRgb(config.color);
       program.uniforms.uSecondaryColor.value = hexToRgb(config.secondaryColor);
-      program.uniforms.uTrailWidth.value = Math.max(config.trailWidth * widthMultiplier, 0.1);
+      program.uniforms.uTrailWidth.value = Math.max(config.trailWidth, 0.1);
       program.uniforms.uTaper.value = clamp(config.trailTaper, 0, 1);
-      program.uniforms.uGlowIntensity.value = Math.max(config.glowIntensity * glowMultiplier, 0);
+      program.uniforms.uGlowIntensity.value = Math.max(config.glowIntensity, 0);
       program.uniforms.uGlowSpread.value = Math.max(config.glowSpread, 0);
       program.uniforms.uHotspot.value = clamp(config.hotspot, 0, 1);
       program.uniforms.uBrightness.value = Math.max(config.brightness, 0);

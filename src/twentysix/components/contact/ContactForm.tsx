@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
+import { LiquidMetalButton } from "../../../shaders/liquid-metal-button/LiquidMetalButton";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -24,6 +25,7 @@ async function submitMessage(_payload: {
 }
 
 export function ContactForm() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [name, setName] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [message, setMessage] = useState("");
@@ -67,7 +69,7 @@ export function ContactForm() {
         : "";
 
   return (
-    <form className="t26-cform" onSubmit={handleSubmit} noValidate>
+    <form ref={formRef} className="t26-cform" onSubmit={handleSubmit} noValidate>
       <div className="t26-cform__intro">
         <h3 className="t26-cform__title">Send a message</h3>
         <p className="t26-cform__hint">I usually reply within a day.</p>
@@ -124,27 +126,15 @@ export function ContactForm() {
       </div>
 
       <div className="t26-cform__foot">
-        <button
-          type="submit"
-          className="t26-cform__submit"
-          disabled={status === "sending"}
-        >
-          <span>{status === "sending" ? "Sending…" : "Send message"}</span>
-          <svg
-            className="t26-cform__arrow"
-            viewBox="0 0 24 24"
-            width="18"
-            height="18"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </button>
+        <div className="t26-cform__submit-wrap">
+          <LiquidMetalButton
+            variant="pill"
+            text={status === "sending" ? "Sending…" : "Send message"}
+            embedded={true}
+            height={40}
+            onClick={() => formRef.current?.requestSubmit()}
+          />
+        </div>
         <p
           className="t26-cform__status"
           role="status"

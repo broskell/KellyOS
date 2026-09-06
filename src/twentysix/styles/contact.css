@@ -259,6 +259,21 @@
   flex-wrap: wrap;
   margin-top: 0.25rem;
 }
+.t26-cform__submit-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.t26-cform__submit-wrap .liquid-metal-button,
+.t26-cform__submit-wrap .liquid-metal-button__frame {
+  background: transparent !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+}
+
 .t26-cform__submit {
   display: inline-flex;
   align-items: center;
