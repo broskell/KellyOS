@@ -15,7 +15,6 @@ import {
   bio,
   jumpLinks,
   interests,
-  coreValues,
   quote,
   achievements,
   education,
@@ -32,7 +31,6 @@ import {
  */
 export function About() {
   const cardsRef = useRef<HTMLDivElement>(null);
-  const valuesRef = useRef<HTMLDivElement>(null);
   const achieveRef = useRef<HTMLDivElement>(null);
 
   // Interests → the looping wave ribbon.
@@ -146,13 +144,6 @@ export function About() {
 
     cleanups.push(
       revealStagger(
-        valuesRef.current,
-        valuesRef.current?.querySelectorAll(".t26-value") ?? [],
-        { direction: "up", stagger: 0.1 },
-      ),
-    );
-    cleanups.push(
-      revealStagger(
         achieveRef.current,
         achieveRef.current?.querySelectorAll(".t26-ach") ?? [],
         { direction: "up", stagger: 0.1 },
@@ -249,20 +240,6 @@ export function About() {
           ariaLabel={`Interests: ${interestsText}`}
         />
       </Reveal>
-
-      {/* Core Values */}
-      <Reveal className="t26-about__block">
-        <p className="t26-eyebrow">Core Values</p>
-      </Reveal>
-      <div className="t26-values" ref={valuesRef}>
-        {coreValues.map((v) => (
-          <article key={v.n} className="t26-value">
-            <span className="t26-value__n">{v.n}</span>
-            <h3 className="t26-value__t">{v.title}</h3>
-            <p className="t26-value__b">{v.body}</p>
-          </article>
-        ))}
-      </div>
 
       {/* Quote */}
       <Reveal className="t26-about__block">

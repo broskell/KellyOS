@@ -134,6 +134,35 @@
   These rules are intentionally NOT scoped under [data-era26] — they target the
   document shell itself.
 */
+/* 26' Era Cursors: default cursor is visible, glowing trail illuminates behind it */
+html[data-era26-active] a,
+html[data-era26-active] a *,
+html[data-era26-active] button,
+html[data-era26-active] button *,
+html[data-era26-active] [href],
+html[data-era26-active] [href] *,
+html[data-era26-active] [role="button"],
+html[data-era26-active] [role="button"] *,
+html[data-era26-active] input,
+html[data-era26-active] textarea,
+html[data-era26-active] select,
+html[data-era26-active] .t26-btn,
+html[data-era26-active] .t26-btn *,
+[data-era26] a,
+[data-era26] a *,
+[data-era26] button,
+[data-era26] button *,
+[data-era26] [href],
+[data-era26] [href] *,
+[data-era26] [role="button"],
+[data-era26] [role="button"] *,
+[data-era26] input,
+[data-era26] textarea,
+[data-era26] select,
+[data-era26] .t26-btn,
+[data-era26] .t26-btn * {
+  cursor: pointer !important;
+}
 html[data-era26-active],
 html[data-era26-active] body,
 html[data-era26-active] #root,
@@ -143,9 +172,16 @@ html[data-era26-active] #root > * {
   max-height: none !important;
   overflow: visible !important;
 }
-html[data-era26-active],
-html[data-era26-active] body {
+html[data-era26-active] {
   overflow-x: hidden !important;
+}
+/* Body must NOT be its own scroll container — the page scrolls on <html>. With
+   overflow-x:hidden + overflow:visible, overflow-y computes to `auto` per spec,
+   which gave the body a second scrollbar whenever any child (e.g. a decorative
+   SVG that overshoots its box) overflowed. `clip` clips both axes without ever
+   creating a scrollbar. */
+html[data-era26-active] body {
+  overflow: clip !important;
 }
 
 /*

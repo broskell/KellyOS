@@ -1,0 +1,339 @@
+/*
+  Timeline (#timeline) — "The Story So Far".
+  An alternating vertical timeline (story 1 left, dot on center line, story 2 right, story 3 left, ...).
+  Each phase is topped by the interactive WavePath line (straight at rest, drag to flex) over date / title / points.
+  Monochrome, editorial; scoped under [data-era26] via the .t26-tl* names.
+*/
+
+.t26-tl {
+  overflow: hidden; /* contain wave line + drag overshoot */
+}
+
+.t26-tl__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-4);
+}
+.t26-tl__head .t26-hairline {
+  flex: 1;
+}
+.t26-tl__title {
+  font-family: var(--f-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+  margin: 0;
+}
+.t26-tl__sub {
+  margin-top: var(--sp-3);
+  max-width: 52ch;
+}
+
+/* —— The timeline container & central axis line —— */
+.t26-tl__timeline {
+  position: relative;
+  max-width: var(--container, 1200px);
+  margin-inline: auto;
+  margin-top: clamp(2.5rem, 7vw, 5rem);
+  padding-block: var(--sp-4);
+}
+
+/* Central vertical stem line (the "|" in the requested diagram) */
+.t26-tl-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--c-line-2) 4%,
+    var(--c-line-2) 96%,
+    transparent 100%
+  );
+  z-index: 1;
+}
+
+/* —— Timeline Phase Item —— */
+.t26-tl-phase {
+  position: relative;
+  width: 100%;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  display: flex;
+  align-items: flex-start;
+  will-change: transform, opacity;
+}
+
+.t26-tl-phase:last-child {
+  margin-bottom: 0;
+}
+
+/* Left story phase (story1.) */
+.t26-tl-phase--left {
+  justify-content: flex-start;
+}
+
+/* Right story phase (. story2) */
+.t26-tl-phase--right {
+  justify-content: flex-end;
+}
+
+/* Central node dot wrapper (the "." in the requested diagram) */
+.t26-tl-node-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 2rem;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.t26-tl-node {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--c-bg);
+  border: 2px solid var(--c-ink);
+  transition: transform var(--t26-dur-fast) var(--t26-ease), background var(--t26-dur-fast) var(--t26-ease), border-color var(--t26-dur-fast) var(--t26-ease);
+}
+
+.t26-tl-phase:hover .t26-tl-node {
+  transform: scale(1.35);
+  background: var(--c-ink);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.t26-tl-node--ongoing {
+  background: var(--c-ink);
+  border-color: var(--c-ink);
+}
+
+.t26-tl-node__pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid var(--c-ink);
+  animation: t26-tl-pulse 2s ease-out infinite;
+}
+
+@keyframes t26-tl-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(242, 242, 242, 0.45);
+    opacity: 1;
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(242, 242, 242, 0);
+    opacity: 0;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(242, 242, 242, 0);
+    opacity: 0;
+  }
+}
+
+/* —— Story Card —— */
+.t26-tl-phase__card {
+  width: calc(50% - 2.5rem);
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  position: relative;
+  transition: border-color var(--t26-dur-fast) var(--t26-ease), transform var(--t26-dur-fast) var(--t26-ease);
+}
+
+.t26-tl-phase__card:hover {
+  border-color: var(--c-line-2);
+  transform: translateY(-2px);
+}
+
+/* Connector line between central node and story card */
+.t26-tl-phase--left .t26-tl-phase__card::after {
+  content: "";
+  position: absolute;
+  right: -1.5rem;
+  top: 2rem;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--c-line-2);
+}
+
+.t26-tl-phase--right .t26-tl-phase__card::after {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 2rem;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--c-line-2);
+}
+
+/* Interactive wave line topping each card */
+.t26-tl-phase__wave {
+  height: 20px;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  color: var(--c-muted);
+  width: 100%;
+}
+.t26-tl-phase__line {
+  transition: color var(--t26-dur) var(--t26-ease);
+}
+
+/* —— Phase content inside card —— */
+.t26-tl-phase__head {
+  max-width: 100%;
+}
+.t26-tl-phase__date {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.t26-tl-phase__pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--c-ink);
+  animation: t26-tl-pulse 2s ease-out infinite;
+}
+.t26-tl-phase__title {
+  font-family: var(--f-display);
+  font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--c-ink);
+  margin: var(--sp-2) 0 0;
+}
+.t26-tl-phase__subtitle {
+  margin: var(--sp-2) 0 0;
+  color: var(--c-text-2);
+  font-size: clamp(0.875rem, 1vw, 1rem);
+}
+.t26-tl-phase__meta {
+  margin: var(--sp-2) 0 0;
+  color: var(--c-muted);
+  font-size: 0.8125rem;
+}
+
+/* —— Point groups —— */
+.t26-tl-phase__groups {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+.t26-tl-group-block {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+.t26-tl-group__heading {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--c-ink);
+  margin: 0 0 var(--sp-3);
+  padding-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--c-line);
+}
+.t26-tl-group__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.t26-tl-group__item {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: baseline;
+  color: var(--c-text);
+  font-size: clamp(0.85rem, 0.95vw, 0.95rem);
+  line-height: 1.5;
+}
+.t26-tl-group__mark {
+  color: var(--c-muted);
+  flex: none;
+  font-size: 0.8em;
+}
+
+/* —— Stat pills —— */
+.t26-tl-phase__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-1);
+}
+.t26-tl-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--c-line-2);
+  border-radius: var(--r-pill);
+  background: var(--c-surface-2);
+}
+.t26-tl-stat__label {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.t26-tl-stat__value {
+  font-family: var(--f-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--c-ink);
+}
+
+/* —— Responsive Design: Mobile (< 768px) —— */
+@media (max-width: 768px) {
+  .t26-tl-line {
+    left: 18px;
+    transform: none;
+  }
+  .t26-tl-node-wrapper {
+    left: 18px;
+    transform: translate(-50%, -50%);
+  }
+  .t26-tl-phase {
+    justify-content: flex-start;
+  }
+  .t26-tl-phase--left .t26-tl-phase__card,
+  .t26-tl-phase--right .t26-tl-phase__card {
+    width: calc(100% - 3rem);
+    margin-left: 3rem;
+  }
+  .t26-tl-phase--left .t26-tl-phase__card::after,
+  .t26-tl-phase--right .t26-tl-phase__card::after {
+    left: -1.25rem;
+    right: auto;
+    width: 1.25rem;
+  }
+  .t26-tl-phase__groups--two {
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t26-tl-phase__pulse,
+  .t26-tl-node__pulse {
+    animation: none;
+  }
+}

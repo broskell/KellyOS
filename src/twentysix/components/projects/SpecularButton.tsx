@@ -305,7 +305,9 @@ const SpecularButton = ({
   if (href && !disabled) {
     return (
       <a
-        ref={(el) => (btnRef.current = el)}
+        ref={(el) => {
+          btnRef.current = el;
+        }}
         href={href}
         target={target}
         rel={rel}
@@ -321,7 +323,9 @@ const SpecularButton = ({
 
   return (
     <button
-      ref={(el) => (btnRef.current = el)}
+      ref={(el) => {
+        btnRef.current = el;
+      }}
       type={type}
       disabled={disabled}
       onClick={onClick}

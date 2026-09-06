@@ -1,0 +1,224 @@
+/* —— Footer (#footer) — Bugatti-inspired columns + minimal name hover —— */
+
+.t26-footer {
+  /* No bottom padding — the giant wordmark bleeds flush to the page bottom. */
+  padding: 0 var(--gutter) 0;
+  min-height: min(980px, 100vh);
+  min-height: min(980px, 100dvh);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.t26-footer__inner {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  row-gap: clamp(2rem, 5vw, 4rem);
+  width: 100%;
+  min-height: clamp(38rem, 78vh, 56rem);
+  padding-top: clamp(2.5rem, 6vw, 5rem);
+  overflow: hidden;
+}
+
+.t26-footer__top {
+  grid-row: 1;
+}
+
+.t26-footer__middle {
+  grid-row: 3;
+}
+
+.t26-footer__top {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(10rem, 1fr)) minmax(12rem, 0.8fr);
+  gap: clamp(2rem, 7vw, 7rem);
+  align-items: start;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.t26-footer__column h2,
+.t26-footer__language h2 {
+  margin: 0 0 var(--sp-4);
+  font-family: var(--f-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+.t26-footer__column ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.t26-footer__column a,
+.t26-footer__column button,
+.t26-footer__middle button {
+  appearance: none;
+  width: fit-content;
+  border: 0;
+  background: transparent;
+  color: var(--c-text);
+  font: 600 0.9rem/1.25 var(--f-ui);
+  padding: 0;
+  cursor: pointer;
+  transition:
+    color var(--t26-dur-fast) var(--t26-ease),
+    opacity var(--t26-dur-fast) var(--t26-ease);
+}
+
+.t26-footer__column a:hover,
+.t26-footer__column a:focus-visible,
+.t26-footer__column button:hover,
+.t26-footer__column button:focus-visible,
+.t26-footer__middle button:hover,
+.t26-footer__middle button:focus-visible {
+  color: var(--c-ink-pure);
+}
+
+.t26-footer__language p {
+  display: flex;
+  margin: 0;
+  font: 600 0.9rem/1.25 var(--f-ui);
+}
+
+.t26-footer__language span {
+  color: var(--c-text);
+}
+
+.t26-footer__middle {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  margin-top: 0;
+  padding-bottom: 0.25rem;
+}
+
+.t26-footer__middle p {
+  margin: 0;
+  font: 700 0.95rem/1.3 var(--f-ui);
+  color: var(--c-ink);
+}
+
+.t26-footer__socials {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.t26-footer__socials a {
+  display: grid;
+  place-items: center;
+  color: var(--c-text);
+  transition:
+    color var(--t26-dur-fast) var(--t26-ease),
+    transform var(--t26-dur-fast) var(--t26-ease);
+}
+
+.t26-footer__socials a:hover,
+.t26-footer__socials a:focus-visible {
+  color: var(--c-ink-pure);
+  transform: translateY(-2px);
+}
+
+.t26-footer__socials svg {
+  width: 1.45rem;
+  height: 1.45rem;
+}
+
+.t26-footer__name {
+  position: relative;
+  grid-row: 4;
+  z-index: 1;
+  /* True viewport full-bleed — spans the whole viewport width regardless of any
+     ancestor max-width, so the wordmark runs edge to edge with zero side space.
+     `100vw` + `margin-inline: calc(50% - 50vw)` is the standard break-out; the
+     root's `overflow-x: clip` absorbs the scrollbar sliver. */
+  width: 100vw;
+  /* Box ratio == the SVG viewBox ratio (767 / 150) so `slice` fills the width
+     exactly with no side gap and no stretching; height derives from the width. */
+  aspect-ratio: 767 / 150;
+  /* top = gap under the copyright; left/right = break-out; bottom = 0 (flush). */
+  margin: clamp(1.25rem, 3.5vw, 3rem) calc(50% - 50vw) 0;
+  border: 0;
+  color: #232323;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.t26-footer__name svg {
+  overflow: hidden;
+}
+
+/* Compound selector beats the component's baked-in `font-mono font-light
+   tracking-wider` utilities regardless of stylesheet order. */
+.t26-footer__name .t26-footer__name-text {
+  font-family: var(--f-ui);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .t26-footer {
+    min-height: auto;
+  }
+
+  /* Drop the tall footer + 1fr spacer — stack the blocks naturally so there's
+     no giant empty band between the links and the copyright. */
+  .t26-footer__inner {
+    grid-template-rows: auto auto auto;
+    min-height: 0;
+    row-gap: clamp(2.5rem, 7vw, 4rem);
+  }
+
+  .t26-footer__top {
+    grid-row: 1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-8) var(--sp-12);
+    margin-top: var(--sp-8);
+  }
+
+  .t26-footer__middle {
+    grid-row: 2;
+    grid-template-columns: 1fr;
+    gap: var(--sp-6);
+    align-items: start;
+    margin-top: 0;
+  }
+
+  .t26-footer__name {
+    grid-row: 3;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Keep two columns (2×2) so the footer stays compact instead of one long
+     stack; tighter column gap to fit the narrow width. */
+  .t26-footer__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-8) var(--sp-6);
+  }
+
+  .t26-footer__middle {
+    margin-top: var(--sp-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t26-footer__column a,
+  .t26-footer__column button,
+  .t26-footer__middle button,
+  .t26-footer__socials a {
+    transition: none;
+  }
+}

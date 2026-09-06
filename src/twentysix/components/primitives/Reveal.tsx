@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ElementType, type ReactNode } from "react";
+import { createElement, useEffect, useRef, type ElementType, type ReactNode } from "react";
 import { revealOnScroll, type RevealDirection } from "../../motion/reveal";
 
 interface RevealProps {
@@ -32,13 +32,13 @@ export function Reveal({
     return revealOnScroll(ref.current, { direction, distance, delay, start });
   }, [direction, distance, delay, start]);
 
-  return (
-    <Tag
-      ref={ref as never}
-      id={id}
-      className={["t26-reveal", className].filter(Boolean).join(" ")}
-    >
-      {children}
-    </Tag>
+  return createElement(
+    Tag,
+    {
+      ref,
+      id,
+      className: ["t26-reveal", className].filter(Boolean).join(" "),
+    },
+    children,
   );
 }

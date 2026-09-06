@@ -261,7 +261,9 @@ const AccordionGallery = ({
         return (
           <div
             key={i}
-            ref={(el) => (panelRefs.current[i] = el)}
+            ref={(el) => {
+              panelRefs.current[i] = el;
+            }}
             className={`ag-panel${isActive ? " ag-panel--active" : ""}`}
             style={{ borderRadius: `${radius}px` }}
             onClick={() => open(i)}
@@ -274,7 +276,12 @@ const AccordionGallery = ({
             aria-label={`${item.label}${item.tagline ? ` — ${item.tagline}` : ""}. Open details.`}
           >
             <span className="ag-panel__frame">
-              <span className="ag-panel__media" ref={(el) => (mediaRefs.current[i] = el)}>
+              <span
+                className="ag-panel__media"
+                ref={(el) => {
+                  mediaRefs.current[i] = el;
+                }}
+              >
                 {item.image && !failed[i] ? (
                   <img
                     src={item.image}
@@ -293,8 +300,18 @@ const AccordionGallery = ({
 
             <span className="ag-panel__label" aria-hidden="true">
               <span className="ag-panel__index">{String(i + 1).padStart(2, "0")}</span>
-              <span className="ag-panel__bar" ref={(el) => (barRefs.current[i] = el)} />
-              <span className="ag-panel__text" ref={(el) => (textRefs.current[i] = el)}>
+              <span
+                className="ag-panel__bar"
+                ref={(el) => {
+                  barRefs.current[i] = el;
+                }}
+              />
+              <span
+                className="ag-panel__text"
+                ref={(el) => {
+                  textRefs.current[i] = el;
+                }}
+              >
                 <span className="ag-panel__title">{item.label}</span>
                 {item.tagline ? (
                   <span className="ag-panel__tagline">{item.tagline}</span>

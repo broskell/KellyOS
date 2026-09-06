@@ -29,8 +29,8 @@ export interface DockItem {
 export const dockItems: DockItem[] = [
   { id: "home", label: "Home", icon: IconHome({}), to: "home" },
   { id: "about", label: "About", icon: IconUser({}), to: "about" },
-  { id: "projects", label: "Work", icon: IconWork({}), to: "projects" },
-  { id: "techstack", label: "Stack", icon: IconStack({}), to: "techstack" },
+  { id: "projects", label: "Projects", icon: IconWork({}), to: "projects" },
+  { id: "techstack", label: "Tech Stack", icon: IconStack({}), to: "techstack" },
   { id: "timeline", label: "Timeline", icon: IconTimeline({}), to: "timeline" },
   { id: "contact", label: "Contact", icon: IconMail({}), to: "contact" },
   {
